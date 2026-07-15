@@ -56,7 +56,7 @@ const projectData = {
     videoSrc: "./assets/videos/SkimmU_Money_Sizzle.mp4",
     overviewHeading: "Overview",
     overviewCopy: "In 2022, The Skimm hosted a four-part financial education series designed to help women build confidence in investing and long-term financial planning. The event brought together expert-led sessions for both new and experienced investors, covering topics such as navigating market uncertainty, building an investment portfolio, planning for retirement, and understanding cryptocurrency.",
-    moduleHeading: "Creative Approach",
+    moduleHeading: "Creative Direction",
     moduleCopy: "The visual identity for the event had already been established, featuring a graph-paper-inspired aesthetic, hand-drawn illustrations, and collage-style photography. My role was to translate that static design system into motion. I used animated line work as a recurring visual device, guiding viewers through the piece while reinforcing the hand-crafted character of the brand. The result was a sizzle reel that preserved the personality of the original campaign while bringing its educational themes to life through movement, pacing, and visual storytelling.",
     moduleVideoSrcs: [
       "./assets/videos/skimmu-money/circles/skimmu-thumbnail-4-color.mp4",
@@ -165,7 +165,7 @@ const projectData = {
     videoSrc: "./assets/videos/kaplan/kaplan-live-online-ad.mp4",
     overviewHeading: "Overview",
     overviewCopy: "Kaplan Live Online promoted the company's virtual classroom experience at a time when online learning had become more important than ever. The objective was to quickly communicate the platform's key benefits-from live instruction to interactive coursework-in a concise, engaging format that encouraged prospective students to learn more.",
-    moduleHeading: "Creative Approach",
+    moduleHeading: "Creative Direction",
     moduleCopy: "I designed the piece to feel fluid, energetic, and approachable, using seamless transitions and rhythmic motion to connect the product's core features into a single visual narrative. Rather than presenting information as a checklist, the animation maintained a continuous sense of momentum, making the experience feel dynamic while keeping the messaging clear and accessible.",
     overviewCircleVideoSrcs: [
       "./assets/videos/kaplan/circles/lol-thumbnail-1.mp4",

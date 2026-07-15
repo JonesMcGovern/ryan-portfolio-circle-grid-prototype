@@ -767,8 +767,10 @@ function prepareIntroPuckSlide(attempt = 0) {
     return;
   }
 
+  const isStackedMobileLayout = window.matchMedia("(max-width: 700px)").matches;
+  const pushedTargetClass = isStackedMobileLayout ? "portfolio-puck-two" : "portfolio-puck-three";
   const state = puckPhysicsState.pucks.find((item) => item.element.classList.contains("portfolio-puck-one"));
-  const pushedState = puckPhysicsState.pucks.find((item) => item.element.classList.contains("portfolio-puck-two"));
+  const pushedState = puckPhysicsState.pucks.find((item) => item.element.classList.contains(pushedTargetClass));
   if (!state || !state.radius || !pushedState || !pushedState.radius) {
     if (attempt < 20) window.setTimeout(() => prepareIntroPuckSlide(attempt + 1), 80);
     return;
@@ -790,9 +792,10 @@ function prepareIntroPuckSlide(attempt = 0) {
   state.introFinalX = state.x;
   state.introFinalY = state.y;
   const combinedRadius = state.radius + pushedState.radius;
-  const isStackedMobileLayout = window.matchMedia("(max-width: 700px)").matches;
   state.introStartX = Math.max(state.radius, state.introFinalX - state.radius * (isStackedMobileLayout ? 3.3 : 2.2));
   state.introStartY = state.introFinalY;
+  state.introContactX = state.introFinalX;
+  state.introContactY = state.introFinalY;
   if (isStackedMobileLayout) {
     pushedState.introFinalX = state.introFinalX;
     pushedState.introFinalY = pushedState.y;
@@ -805,12 +808,12 @@ function prepareIntroPuckSlide(attempt = 0) {
     pushedState.introFinalX = pushedState.x;
     pushedState.introFinalY = pushedState.y;
     const contactY = state.introFinalY + combinedRadius * 0.42;
-    const contactXOffset = Math.sqrt(Math.max((combinedRadius * 0.96) ** 2 - (contactY - state.introFinalY) ** 2, 0));
-    pushedState.introStartX = Math.min(
-      Math.max(pushedState.radius, state.introFinalX + contactXOffset * 0.92),
-      Math.max(pushedState.radius, pushedState.introFinalX - pushedState.radius * 0.5)
-    );
+    const contactXOffset = Math.sqrt(Math.max((combinedRadius * 0.99) ** 2 - (contactY - state.introFinalY) ** 2, 0));
+    const desiredContactX = state.introFinalX + state.radius * 0.25;
+    pushedState.introStartX = Math.max(pushedState.radius, desiredContactX + contactXOffset);
     pushedState.introStartY = Math.max(pushedState.radius, contactY);
+    state.introContactX = pushedState.introStartX - contactXOffset;
+    state.introContactY = state.introFinalY;
   }
   state.introSlidePrepared = true;
   pushedState.introSlidePrepared = true;
@@ -828,8 +831,10 @@ function runIntroPuckSlide(attempt = 0) {
     return;
   }
 
+  const isStackedMobileLayout = window.matchMedia("(max-width: 700px)").matches;
+  const pushedTargetClass = isStackedMobileLayout ? "portfolio-puck-two" : "portfolio-puck-three";
   const state = puckPhysicsState.pucks.find((item) => item.element.classList.contains("portfolio-puck-one"));
-  const pushedState = puckPhysicsState.pucks.find((item) => item.element.classList.contains("portfolio-puck-two"));
+  const pushedState = puckPhysicsState.pucks.find((item) => item.element.classList.contains(pushedTargetClass));
   if (!state || !state.radius || !pushedState || !pushedState.radius) {
     if (attempt < 20) window.setTimeout(() => runIntroPuckSlide(attempt + 1), 100);
     return;
@@ -844,6 +849,7 @@ function runIntroPuckSlide(attempt = 0) {
   const finalX = state.introFinalX ?? state.x;
   const finalY = state.introFinalY ?? state.y;
   const startX = state.introStartX ?? Math.max(state.radius, finalX - state.radius * 2);
+  const contactTargetX = state.introContactX ?? finalX;
   const pushedFinalX = pushedState.introFinalX ?? pushedState.x;
   const pushedFinalY = pushedState.introFinalY ?? pushedState.y;
   const pushedStartX = pushedState.introStartX ?? Math.max(pushedState.radius, pushedFinalX - pushedState.radius * 1.25);
@@ -887,7 +893,8 @@ function runIntroPuckSlide(attempt = 0) {
 
   function step() {
     const elapsed = performance.now() - startTime;
-    const distance = finalX - state.x;
+    const driveTargetX = contactMade ? finalX : contactTargetX;
+    const distance = driveTargetX - state.x;
     velocityX += distance * 0.012;
     velocityX *= 0.88;
     state.x += velocityX;
@@ -907,7 +914,7 @@ function runIntroPuckSlide(attempt = 0) {
       );
     }
 
-    if (!contactMade && Math.abs(finalX - state.x) < 0.5) {
+    if (!contactMade && Math.abs(contactTargetX - finalX) < 0.5 && Math.abs(finalX - state.x) < 0.5) {
       contactMade = true;
     }
 
@@ -990,6 +997,8 @@ function initializePuckDragging() {
     introSliding: false,
     introStartX: 0,
     introStartY: 0,
+    introContactX: 0,
+    introContactY: 0,
     introFinalX: 0,
     introFinalY: 0,
   }));

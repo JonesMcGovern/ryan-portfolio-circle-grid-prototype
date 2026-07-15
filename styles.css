@@ -4226,6 +4226,18 @@ body.has-module-meta .module-one-image-row {
   line-height: 1.08;
 }
 
+body[data-project="flashpoint-mdlinx"] .module-one-meta dt {
+  color: var(--line);
+  font-size: 0.68rem;
+  line-height: 1;
+}
+
+body[data-project="flashpoint-mdlinx"] .module-one-meta dd {
+  color: var(--ink);
+  font-size: clamp(0.86rem, 1.15vw, 1.08rem);
+  line-height: 1.08;
+}
+
 .project-support-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -5257,6 +5269,16 @@ body[data-project="skimm-money-newsletter"] .additional-creative {
   .module-one-meta {
     grid-column: 1;
     width: 100%;
+  }
+
+  body[data-project="flashpoint-mdlinx"] .module-one-meta dt {
+    font-size: 0.68rem;
+    line-height: 1;
+  }
+
+  body[data-project="flashpoint-mdlinx"] .module-one-meta dd {
+    font-size: clamp(0.86rem, 1.15vw, 1.08rem);
+    line-height: 1.08;
   }
 
   .module-one-image-row {

@@ -1241,9 +1241,73 @@ body.palette-enter .shape-field::after {
   }
 
   .portfolio-puck::after {
+    opacity: 0;
+    scale: 0.76;
+    animation: none;
+  }
+
+  .portfolio-puck::before,
+  .portfolio-puck .puck-label {
+    opacity: 0;
+  }
+
+  .portfolio-puck::before {
+    transform: rotate(225deg) scaleX(0);
+  }
+
+  .portfolio-puck .puck-label {
+    clip-path: inset(0 0 0 100%);
+    transform: translateY(-50%) translateX(6px);
+  }
+
+  .portfolio-puck.is-puck-ready::after {
+    animation:
+      mobile-puck-orbit-on 360ms cubic-bezier(0.22, 1, 0.36, 1) calc(var(--puck-reveal-delay, 180ms) + 500ms) both,
+      puck-orbit-ring 1800ms linear calc(var(--puck-reveal-delay, 180ms) + 860ms) infinite;
+  }
+
+  .portfolio-puck.is-puck-ready::before {
+    opacity: 1;
+    transform: rotate(225deg) scaleX(1);
+    transition:
+      opacity 80ms ease calc(var(--puck-reveal-delay, 180ms) + 610ms),
+      transform 300ms cubic-bezier(0.76, 0, 0.24, 1) calc(var(--puck-reveal-delay, 180ms) + 610ms);
+  }
+
+  .portfolio-puck.is-puck-ready .puck-label {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+    transform: translateY(-50%) translateX(0);
+    transition:
+      clip-path 240ms cubic-bezier(0.76, 0, 0.24, 1) calc(var(--puck-reveal-delay, 180ms) + 760ms),
+      opacity 120ms ease calc(var(--puck-reveal-delay, 180ms) + 760ms),
+      transform 220ms cubic-bezier(0.32, 0.72, 0.32, 1) calc(var(--puck-reveal-delay, 180ms) + 760ms);
+  }
+}
+
+@keyframes puck-orbit-ring {
+  to {
+    rotate: 360deg;
+  }
+}
+
+@keyframes mobile-puck-orbit-on {
+  from {
+    opacity: 0;
+    scale: 0.76;
+  }
+
+  to {
     opacity: 1;
     scale: 1;
-    animation: puck-orbit-ring 1800ms linear infinite;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portfolio-puck::after {
+    opacity: 1;
+    scale: 1;
+    animation: none;
   }
 
   .portfolio-puck::before,
@@ -1258,13 +1322,7 @@ body.palette-enter .shape-field::after {
   }
 
   .portfolio-puck .puck-label {
-    transform: translateY(-50%);
-  }
-}
-
-@keyframes puck-orbit-ring {
-  to {
-    rotate: 360deg;
+    transform: translateY(-50%) translateX(0);
   }
 }
 
@@ -4955,10 +5013,10 @@ body[data-project="skimm-money-newsletter"] .additional-creative {
   }
 
   .puck-label {
-    right: calc(68% + clamp(12px, 4vw, 22px));
-    left: auto;
+    right: auto;
+    left: calc((var(--visual-width, 100vw) * -0.5) + var(--page-x) + (clamp(62px, 19vw, 82px) / 2));
     top: calc(26% - clamp(24px, 7.8vw, 42px));
-    max-width: min(54vw, 240px);
+    max-width: calc(var(--visual-width, 100vw) - (var(--page-x) * 2));
     padding: 4px 7px 5px;
     font-size: clamp(0.98rem, 4.8vw, 1.34rem);
     text-align: left;
@@ -4969,6 +5027,10 @@ body[data-project="skimm-money-newsletter"] .additional-creative {
   .portfolio-puck:focus-visible .puck-label,
   .portfolio-puck .puck-label {
     transform: translateY(-50%);
+  }
+
+  .portfolio-puck.is-puck-ready .puck-label {
+    transform: translateY(-50%) translateX(0);
   }
 
   .playground-grid {

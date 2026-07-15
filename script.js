@@ -704,8 +704,16 @@ function animatePuckPhysics() {
   const friction = 0.985;
   const restitution = 0.82;
   const maxSpeed = Math.max(18, fieldRect.width * 0.018);
+  const mobileRestingLayout = window.matchMedia("(max-width: 700px)").matches
+    && !puckPhysicsState.pucks.some((state) => state.dragging);
 
   puckPhysicsState.pucks.forEach((state) => {
+    if (mobileRestingLayout) {
+      state.vx = 0;
+      state.vy = 0;
+      return;
+    }
+
     if (!state.dragging && !state.introSliding) {
       state.x += state.vx;
       state.y += state.vy;
@@ -730,7 +738,9 @@ function animatePuckPhysics() {
     }
   });
 
-  resolvePuckCollisions();
+  if (!mobileRestingLayout) {
+    resolvePuckCollisions();
+  }
 
   puckPhysicsState.pucks.forEach((state) => {
     state.element.style.left = `${state.x}px`;

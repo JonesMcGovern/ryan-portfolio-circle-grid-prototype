@@ -789,12 +789,29 @@ function prepareIntroPuckSlide(attempt = 0) {
   clampPuckState(pushedState);
   state.introFinalX = state.x;
   state.introFinalY = state.y;
-  state.introStartX = Math.max(state.radius, state.introFinalX - state.radius * 2.2);
+  const combinedRadius = state.radius + pushedState.radius;
+  const isStackedMobileLayout = window.matchMedia("(max-width: 700px)").matches;
+  state.introStartX = Math.max(state.radius, state.introFinalX - state.radius * (isStackedMobileLayout ? 3.3 : 2.2));
   state.introStartY = state.introFinalY;
-  pushedState.introFinalX = pushedState.x;
-  pushedState.introFinalY = pushedState.y;
-  pushedState.introStartX = Math.max(pushedState.radius, pushedState.introFinalX - pushedState.radius * 1.25);
-  pushedState.introStartY = Math.max(pushedState.radius, pushedState.introFinalY - pushedState.radius * 0.62);
+  if (isStackedMobileLayout) {
+    pushedState.introFinalX = state.introFinalX;
+    pushedState.introFinalY = pushedState.y;
+    pushedState.introStartX = Math.max(pushedState.radius, state.introFinalX - pushedState.radius * 0.45);
+    pushedState.introStartY = Math.min(
+      Math.max(pushedState.radius, state.introFinalY + combinedRadius * 0.54),
+      pushedState.introFinalY - pushedState.radius * 0.5
+    );
+  } else {
+    pushedState.introFinalX = pushedState.x;
+    pushedState.introFinalY = pushedState.y;
+    const contactY = state.introFinalY + combinedRadius * 0.42;
+    const contactXOffset = Math.sqrt(Math.max((combinedRadius * 0.96) ** 2 - (contactY - state.introFinalY) ** 2, 0));
+    pushedState.introStartX = Math.min(
+      Math.max(pushedState.radius, state.introFinalX + contactXOffset * 0.92),
+      Math.max(pushedState.radius, pushedState.introFinalX - pushedState.radius * 0.5)
+    );
+    pushedState.introStartY = Math.max(pushedState.radius, contactY);
+  }
   state.introSlidePrepared = true;
   pushedState.introSlidePrepared = true;
   puckPhysicsState.introSlidePrepared = true;
@@ -840,7 +857,8 @@ function runIntroPuckSlide(attempt = 0) {
   let pushedVelocityY = 0;
   const startTime = performance.now();
   const maxDuration = 3300;
-  const contactDelay = 420;
+  const combinedRadius = state.radius + pushedState.radius;
+  let contactMade = false;
 
   state.introSliding = true;
   pushedState.introSliding = true;
@@ -875,7 +893,25 @@ function runIntroPuckSlide(attempt = 0) {
     state.x += velocityX;
     state.y = finalY;
 
-    if (elapsed > contactDelay) {
+    const centerDistance = Math.hypot(pushedState.x - state.x, pushedState.y - state.y);
+    if (!contactMade && centerDistance <= combinedRadius * 1.01) {
+      contactMade = true;
+      const normalX = (pushedState.x - state.x) / (centerDistance || 1);
+      const normalY = (pushedState.y - state.y) / (centerDistance || 1);
+      applyLineSmudgeAt(
+        fieldRect.left + (state.x + pushedState.x) / 2,
+        (state.y + pushedState.y) / 2,
+        normalX * Math.max(Math.abs(velocityX), 1.2),
+        normalY * Math.max(Math.abs(velocityX), 1.2),
+        1
+      );
+    }
+
+    if (!contactMade && Math.abs(finalX - state.x) < 0.5) {
+      contactMade = true;
+    }
+
+    if (contactMade) {
       pushedVelocityX += (pushedFinalX - pushedState.x) * 0.011;
       pushedVelocityY += (pushedFinalY - pushedState.y) * 0.011;
       pushedVelocityX *= 0.88;

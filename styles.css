@@ -4265,13 +4265,19 @@ body[data-project="social-system"] .module-one-meta {
 }
 
 body[data-project="event-graphics"] .illustration-card {
+  --illustration-image-width: calc(100% - clamp(12px, 2vw, 28px));
   padding: clamp(18px, 2.6vw, 38px);
 }
 
 body[data-project="event-graphics"] .illustration-card img {
   background: #fff;
-  width: calc(100% - clamp(12px, 2vw, 28px));
-  justify-self: center;
+  width: var(--illustration-image-width);
+  justify-self: start;
+}
+
+body[data-project="event-graphics"] .illustration-card figcaption {
+  width: var(--illustration-image-width);
+  justify-self: start;
 }
 
 body[data-project="event-graphics"] .illustration-card img[src$="rabbit.gif"],

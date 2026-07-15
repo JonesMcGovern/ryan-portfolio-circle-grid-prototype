@@ -242,7 +242,7 @@ const projectData = {
       ["Mother's Day", "./assets/images/skimm-spot-illustrations/teacups.gif"],
       ["Motherhood", "./assets/images/skimm-spot-illustrations/well-armadillos.gif"],
       ["Spa", "./assets/images/skimm-spot-illustrations/pug.gif"],
-      ["Newsletter and Well Known", "./assets/images/skimm-spot-illustrations/daily-skimm-newsletter.gif"],
+      ["Summer Newsletter", "./assets/images/skimm-spot-illustrations/daily-skimm-newsletter.gif"],
     ],
   },
   "editorial-motion": {

@@ -1247,6 +1247,72 @@ function createOverviewCircles(sources) {
   wrap.querySelectorAll("video").forEach((video) => video.play().catch(() => {}));
 }
 
+function isNearInitialViewport(element) {
+  if (!element) return false;
+  const rect = element.getBoundingClientRect();
+  if (rect.width <= 0 || rect.height <= 0) return false;
+  const viewportHeight = window.visualViewport?.height || window.innerHeight || document.documentElement.clientHeight;
+  return rect.top < viewportHeight + 160 && rect.bottom > -80;
+}
+
+function isLoadableMedia(media) {
+  if (media instanceof HTMLImageElement) return Boolean(media.currentSrc || media.src);
+  if (media instanceof HTMLVideoElement) return Boolean(media.currentSrc || media.src);
+  return false;
+}
+
+function waitForMediaReady(media) {
+  if (media instanceof HTMLImageElement) {
+    if (media.complete && media.naturalWidth > 0) return Promise.resolve();
+    return new Promise((resolve) => {
+      media.addEventListener("load", resolve, { once: true });
+      media.addEventListener("error", resolve, { once: true });
+    });
+  }
+
+  if (media instanceof HTMLVideoElement) {
+    if (media.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA || (media.poster && media.readyState >= HTMLMediaElement.HAVE_METADATA)) {
+      return Promise.resolve();
+    }
+    return new Promise((resolve) => {
+      ["loadeddata", "canplay", "error"].forEach((eventName) => {
+        media.addEventListener(eventName, resolve, { once: true });
+      });
+    });
+  }
+
+  return Promise.resolve();
+}
+
+function getAboveFoldProjectMedia() {
+  const media = [
+    ...document.querySelectorAll(".project-media-frame img, .project-media-frame video"),
+    ...document.querySelectorAll(".project-overview-circles img, .project-overview-circles video"),
+    ...document.querySelectorAll(".module-one-circle img, .module-one-circle video"),
+  ];
+
+  return media.filter((item) => {
+    const target = item.closest("figure, .project-media-frame, .project-overview-circle, .module-one-circle") || item;
+    return isLoadableMedia(item) && isNearInitialViewport(target);
+  });
+}
+
+function revealProjectContentWhenReady() {
+  if (!document.body.classList.contains("project-page") || document.body.classList.contains("project-content-ready")) return;
+  const aboveFoldMedia = getAboveFoldProjectMedia();
+  const mediaReady = aboveFoldMedia.length
+    ? Promise.allSettled(aboveFoldMedia.map(waitForMediaReady))
+    : Promise.resolve();
+  const fallback = new Promise((resolve) => window.setTimeout(resolve, 1150));
+
+  Promise.race([mediaReady, fallback]).then(() => {
+    window.requestAnimationFrame(() => {
+      document.body.classList.remove("project-content-loading");
+      document.body.classList.add("project-content-ready");
+    });
+  });
+}
+
 function hydrateModule(project) {
   const module = document.querySelector(".module-one");
   if (!module) return;
@@ -1411,10 +1477,7 @@ function hydrateProjectPage() {
   initializeProjectVideoControls();
   initializeProcessLightbox();
   window.requestAnimationFrame(stabilizeMobileDropCaps);
-  window.requestAnimationFrame(() => {
-    document.body.classList.remove("project-content-loading");
-    document.body.classList.add("project-content-ready");
-  });
+  window.requestAnimationFrame(revealProjectContentWhenReady);
 }
 
 function initializeProjectBuildTransition(project, key) {

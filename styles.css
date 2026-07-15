@@ -5012,6 +5012,10 @@ body[data-project="skimm-money-newsletter"] .additional-creative {
     transform-origin: left center;
   }
 
+  .portfolio-puck-one::before {
+    width: clamp(60px, 18vw, 82px);
+  }
+
   .puck-label {
     right: auto;
     left: calc((var(--visual-width, 100vw) * -0.5) + var(--page-x) + (clamp(62px, 19vw, 82px) / 2));

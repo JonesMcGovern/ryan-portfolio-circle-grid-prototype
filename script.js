@@ -791,7 +791,9 @@ function prepareIntroPuckSlide(attempt = 0) {
   state.introStartX = Math.max(state.radius, state.introFinalX - state.radius * 2);
   state.introSlidePrepared = true;
   puckPhysicsState.introSlidePrepared = true;
-  setPuckPosition(state, state.introStartX, state.introFinalY);
+  if (!window.matchMedia("(max-width: 700px)").matches) {
+    setPuckPosition(state, state.introStartX, state.introFinalY);
+  }
 }
 
 function runIntroPuckSlide(attempt = 0) {
@@ -1047,7 +1049,8 @@ function initializePuckLottieIcons(attempt = 0) {
       target.classList.add("is-lottie-ready");
       puck?.classList.add("is-puck-ready");
       if (puck?.classList.contains("portfolio-puck-one")) {
-        window.setTimeout(runIntroPuckSlide, 860);
+        const slideDelay = window.matchMedia("(max-width: 700px)").matches ? 1780 : 860;
+        window.setTimeout(runIntroPuckSlide, slideDelay);
       }
       if (shouldAutoplayPucks) {
         animation.play();

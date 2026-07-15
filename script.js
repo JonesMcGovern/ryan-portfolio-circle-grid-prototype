@@ -1411,6 +1411,10 @@ function hydrateProjectPage() {
   initializeProjectVideoControls();
   initializeProcessLightbox();
   window.requestAnimationFrame(stabilizeMobileDropCaps);
+  window.requestAnimationFrame(() => {
+    document.body.classList.remove("project-content-loading");
+    document.body.classList.add("project-content-ready");
+  });
 }
 
 function initializeProjectBuildTransition(project, key) {

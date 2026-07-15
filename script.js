@@ -1374,7 +1374,14 @@ function initializeProjectVideoControls(scope = document) {
       sync();
     });
     fullscreen?.addEventListener("click", () => {
-      (container.requestFullscreen?.() || video.requestFullscreen?.())?.catch?.(() => {});
+      const requestVideoFullscreen = video.requestFullscreen
+        || video.webkitEnterFullscreen
+        || video.webkitRequestFullscreen;
+      const requestContainerFullscreen = container?.requestFullscreen;
+      const fullscreenRequest = requestVideoFullscreen
+        ? requestVideoFullscreen.call(video)
+        : requestContainerFullscreen?.call(container);
+      fullscreenRequest?.catch?.(() => {});
     });
     video.addEventListener("loadedmetadata", sync);
     video.addEventListener("timeupdate", sync);

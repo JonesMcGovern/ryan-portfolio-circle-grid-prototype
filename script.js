@@ -705,7 +705,7 @@ function animatePuckPhysics() {
   const restitution = 0.82;
   const maxSpeed = Math.max(18, fieldRect.width * 0.018);
   const mobileRestingLayout = window.matchMedia("(max-width: 700px)").matches
-    && !puckPhysicsState.pucks.some((state) => state.dragging);
+    && !puckPhysicsState.pucks.some((state) => state.dragging || state.introSliding);
 
   puckPhysicsState.pucks.forEach((state) => {
     if (mobileRestingLayout) {
@@ -759,7 +759,6 @@ function prepareIntroPuckSlide(attempt = 0) {
     puckPhysicsState.introSlidePrepared ||
     puckPhysicsState.introSlideStarted ||
     !field ||
-    window.matchMedia("(max-width: 700px)").matches ||
     window.matchMedia("(prefers-reduced-motion: reduce)").matches
   ) {
     return;
@@ -771,6 +770,13 @@ function prepareIntroPuckSlide(attempt = 0) {
     return;
   }
 
+  state.element.style.left = "";
+  state.element.style.top = "";
+  const fieldRect = field.getBoundingClientRect();
+  const puckRect = state.element.getBoundingClientRect();
+  state.x = puckRect.left - fieldRect.left + puckRect.width / 2;
+  state.y = puckRect.top - fieldRect.top + puckRect.height / 2;
+  clampPuckState(state);
   state.introFinalX = state.x;
   state.introFinalY = state.y;
   state.introStartX = Math.max(state.radius, state.introFinalX - state.radius * 2);
@@ -783,7 +789,6 @@ function runIntroPuckSlide(attempt = 0) {
   if (
     puckPhysicsState.introSlideStarted ||
     !field ||
-    window.matchMedia("(max-width: 700px)").matches ||
     window.matchMedia("(prefers-reduced-motion: reduce)").matches
   ) {
     return;

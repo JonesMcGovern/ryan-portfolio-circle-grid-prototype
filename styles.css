@@ -5006,7 +5006,7 @@ body[data-project="skimm-money-newsletter"] .additional-creative {
     display: block;
     left: 20%;
     top: 26%;
-    width: clamp(36px, 12vw, 54px);
+    width: clamp(52px, 16vw, 76px);
     opacity: 0;
     transform: rotate(225deg) scaleX(0);
     transform-origin: left center;

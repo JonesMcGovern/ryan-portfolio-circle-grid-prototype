@@ -616,6 +616,29 @@ function syncPuckStateFromDom() {
   });
 }
 
+function resetMobilePuckLayoutFromCss() {
+  if (!field || !window.matchMedia("(max-width: 700px)").matches) return;
+
+  puckPhysicsState.introSlidePrepared = false;
+  puckPhysicsState.pucks.forEach((state) => {
+    state.dragging = false;
+    state.pointerId = null;
+    state.vx = 0;
+    state.vy = 0;
+    state.moved = false;
+    state.introSlidePrepared = false;
+    state.introSliding = false;
+    state.element.classList.remove("is-dragging");
+    state.element.style.left = "";
+    state.element.style.top = "";
+  });
+
+  window.requestAnimationFrame(() => {
+    syncPuckStateFromDom();
+    drawLineField();
+  });
+}
+
 function resolvePuckCollisions() {
   const pucks = puckPhysicsState.pucks;
   for (let index = 0; index < pucks.length; index += 1) {
@@ -726,6 +749,7 @@ function prepareIntroPuckSlide(attempt = 0) {
     puckPhysicsState.introSlidePrepared ||
     puckPhysicsState.introSlideStarted ||
     !field ||
+    window.matchMedia("(max-width: 700px)").matches ||
     window.matchMedia("(prefers-reduced-motion: reduce)").matches
   ) {
     return;
@@ -749,6 +773,7 @@ function runIntroPuckSlide(attempt = 0) {
   if (
     puckPhysicsState.introSlideStarted ||
     !field ||
+    window.matchMedia("(max-width: 700px)").matches ||
     window.matchMedia("(prefers-reduced-motion: reduce)").matches
   ) {
     return;
@@ -2106,5 +2131,16 @@ window.addEventListener("load", () => {
   syncPuckStateFromDom();
   drawLineField();
   updateHeaderScrollState();
+});
+window.addEventListener("pageshow", (event) => {
+  if (!field) return;
+  if (event.persisted || window.matchMedia("(max-width: 700px)").matches) {
+    window.setTimeout(resetMobilePuckLayoutFromCss, 0);
+  }
+});
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === "visible") {
+    window.setTimeout(resetMobilePuckLayoutFromCss, 0);
+  }
 });
 window.setTimeout(() => document.body.classList.remove("palette-enter"), 1020);

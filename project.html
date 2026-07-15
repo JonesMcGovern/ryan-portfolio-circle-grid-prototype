@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="./styles.css?v=flashpoint-meta-eyebrows-20260715a" />
+    <link rel="stylesheet" href="./styles.css?v=css-video-controls-20260715a" />
     <script>
       (() => {
         const reveal = () => document.documentElement.classList.remove("fonts-loading");
@@ -25,7 +25,7 @@
         ]).then(reveal, reveal);
       })();
     </script>
-    <script src="./script.js?v=creative-direction-headings-20260715a" defer></script>
+    <script src="./script.js?v=css-video-controls-20260715a" defer></script>
   </head>
   <body class="palette-enter project-page">
     <main class="page project-shell" aria-label="Ryan Pattison portfolio project">
@@ -223,7 +223,7 @@
                 aria-label="Play video"
                 data-video-play
               >
-                <span aria-hidden="true">&#9654;</span>
+                <span class="video-play-icon" aria-hidden="true"></span>
               </button>
               <span class="video-time" data-video-current>0:00</span>
               <input
@@ -267,7 +267,7 @@
                 aria-label="Enter fullscreen"
                 data-video-fullscreen
               >
-                <span aria-hidden="true">&#9974;</span>
+                <span class="video-fullscreen-icon" aria-hidden="true"></span>
               </button>
             </div>
           </div>

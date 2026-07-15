@@ -3115,15 +3115,55 @@ body:not([data-project="skimm-money-newsletter"]) .project-media-frame.has-video
   outline: none;
 }
 
-.video-control-button span {
-  display: block;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 0.72rem;
-}
-
 .video-volume-icon {
   width: 15px;
   height: 15px;
+}
+
+.video-play-icon {
+  display: block;
+  width: 0;
+  height: 0;
+  margin-left: 2px;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-left: 8px solid currentColor;
+}
+
+.video-play-toggle.is-playing .video-play-icon {
+  width: 10px;
+  height: 12px;
+  margin-left: 0;
+  border: 0;
+  background:
+    linear-gradient(currentColor, currentColor) left center / 3px 12px no-repeat,
+    linear-gradient(currentColor, currentColor) right center / 3px 12px no-repeat;
+}
+
+.video-fullscreen-icon {
+  position: relative;
+  display: block;
+  width: 14px;
+  height: 14px;
+}
+
+.video-fullscreen-icon::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(currentColor, currentColor) left top / 5px var(--stroke) no-repeat,
+    linear-gradient(currentColor, currentColor) left top / var(--stroke) 5px no-repeat,
+    linear-gradient(currentColor, currentColor) right top / 5px var(--stroke) no-repeat,
+    linear-gradient(currentColor, currentColor) right top / var(--stroke) 5px no-repeat,
+    linear-gradient(currentColor, currentColor) left bottom / 5px var(--stroke) no-repeat,
+    linear-gradient(currentColor, currentColor) left bottom / var(--stroke) 5px no-repeat,
+    linear-gradient(currentColor, currentColor) right bottom / 5px var(--stroke) no-repeat,
+    linear-gradient(currentColor, currentColor) right bottom / var(--stroke) 5px no-repeat;
+}
+
+.video-control-button.is-fullscreen .video-fullscreen-icon {
+  transform: rotate(180deg);
 }
 
 .video-volume-icon svg {

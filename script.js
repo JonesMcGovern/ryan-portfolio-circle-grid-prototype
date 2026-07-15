@@ -1433,13 +1433,13 @@ function initializeProjectBuildTransition(project, key) {
 function getVideoControlsMarkup() {
   return `
     <div class="project-video-controls" data-video-controls>
-      <button class="video-control-button video-play-toggle" type="button" aria-label="Play video" data-video-play><span aria-hidden="true">&#9654;</span></button>
+      <button class="video-control-button video-play-toggle" type="button" aria-label="Play video" data-video-play><span class="video-play-icon" aria-hidden="true"></span></button>
       <span class="video-time" data-video-current>0:00</span>
       <input class="video-timeline" type="range" min="0" max="1000" value="0" step="1" aria-label="Video timeline" data-video-timeline />
       <span class="video-time" data-video-duration>0:00</span>
       <button class="video-control-button" type="button" aria-label="Mute video" data-video-mute><span class="video-volume-icon" aria-hidden="true"><svg viewBox="0 0 18 18" focusable="false"><path class="volume-horn" d="M3.5 7H6l4-3v10l-4-3H3.5z" /><path class="volume-wave" d="M12 6.5c1 1.2 1 3.8 0 5" /><path class="volume-mute-mark" d="M14 6l-4 6" /></svg></span></button>
       <input class="video-volume" type="range" min="0" max="1" value="1" step="0.05" aria-label="Video volume" data-video-volume />
-      <button class="video-control-button" type="button" aria-label="Enter fullscreen" data-video-fullscreen><span aria-hidden="true">&#9974;</span></button>
+      <button class="video-control-button" type="button" aria-label="Enter fullscreen" data-video-fullscreen><span class="video-fullscreen-icon" aria-hidden="true"></span></button>
     </div>
   `;
 }
@@ -1465,7 +1465,6 @@ function initializeProjectVideoControls(scope = document) {
     const mute = controls.querySelector("[data-video-mute]");
     const volume = controls.querySelector("[data-video-volume]");
     const fullscreen = controls.querySelector("[data-video-fullscreen]");
-    const fullscreenIcon = fullscreen?.querySelector("span");
     const getFullscreenElement = () => document.fullscreenElement || document.webkitFullscreenElement;
     const isVideoFullscreen = () => Boolean(
       getFullscreenElement() === video ||
@@ -1476,7 +1475,7 @@ function initializeProjectVideoControls(scope = document) {
       if (!fullscreen) return;
       const active = isVideoFullscreen();
       fullscreen.setAttribute("aria-label", active ? "Exit fullscreen" : "Enter fullscreen");
-      if (fullscreenIcon) fullscreenIcon.textContent = active ? "↙" : "⛶";
+      fullscreen.classList.toggle("is-fullscreen", active);
     };
 
     const sync = () => {
@@ -1486,7 +1485,7 @@ function initializeProjectVideoControls(scope = document) {
         timeline.value = String(Math.round((video.currentTime / video.duration) * 1000));
         timeline.style.setProperty("--range-progress", `${(Number(timeline.value) / 1000) * 100}%`);
       }
-      play.querySelector("span").textContent = video.paused ? "▶" : "Ⅱ";
+      play?.classList.toggle("is-playing", !video.paused);
       mute.querySelector(".video-volume-icon")?.classList.toggle("is-muted", video.muted || video.volume === 0);
       syncFullscreen();
     };

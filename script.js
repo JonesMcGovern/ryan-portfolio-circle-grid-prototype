@@ -16,6 +16,8 @@ let marqueeResizeTimer = null;
 let scrollTicking = false;
 let shapeAnimationStarted = false;
 let lineAnimationStarted = false;
+let projectAmbientVideoObserver = null;
+let projectAmbientScrollRaf = null;
 const lineState = {
   width: 0,
   height: 0,
@@ -1277,26 +1279,78 @@ function playAmbientVideo(video) {
   video.defaultMuted = true;
   video.loop = true;
   video.autoplay = true;
+  video.preload = "auto";
   video.playsInline = true;
   video.setAttribute("muted", "");
   video.setAttribute("loop", "");
   video.setAttribute("autoplay", "");
   video.setAttribute("playsinline", "");
-  video.play().catch(() => {});
+  video.setAttribute("webkit-playsinline", "");
+  if (video.readyState === HTMLMediaElement.HAVE_NOTHING && (video.currentSrc || video.src)) {
+    video.load();
+  }
+  return video.play().catch(() => {});
 }
 
-function initializeProjectAmbientVideos() {
+function getProjectAmbientVideos() {
   const selector = [
     ".project-overview-circles video",
     ".module-one-circle video",
     "body[data-project=\"skimm-money-newsletter\"] .project-phone-screen video",
+    ".additional-creative video",
   ].join(", ");
-  const videos = [...document.querySelectorAll(selector)].filter((video) => video.currentSrc || video.src);
-  videos.forEach((video) => {
-    playAmbientVideo(video);
-    ["loadedmetadata", "loadeddata", "canplay"].forEach((eventName) => {
-      video.addEventListener(eventName, () => playAmbientVideo(video), { once: true });
+  return [...document.querySelectorAll(selector)].filter((video) => video.currentSrc || video.src);
+}
+
+function prepareProjectAmbientVideo(video) {
+  if (!video || video.dataset.ambientPrepared === "true") return;
+  video.dataset.ambientPrepared = "true";
+  ["loadedmetadata", "loadeddata", "canplay", "playing", "pause"].forEach((eventName) => {
+    video.addEventListener(eventName, () => {
+      if (document.hidden) return;
+      if (eventName === "pause" && video.dataset.ambientUserPaused !== "true") {
+        window.setTimeout(() => playAmbientVideo(video), 80);
+        return;
+      }
+      playAmbientVideo(video);
     });
+  });
+}
+
+function observeProjectAmbientVideos(videos) {
+  if (!("IntersectionObserver" in window)) return;
+  if (!projectAmbientVideoObserver) {
+    projectAmbientVideoObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const video = entry.target.matches("video") ? entry.target : entry.target.querySelector("video");
+        playAmbientVideo(video);
+      });
+    }, { rootMargin: "220px 0px", threshold: 0.01 });
+  }
+
+  videos.forEach((video) => {
+    if (video.dataset.ambientObserved === "true") return;
+    video.dataset.ambientObserved = "true";
+    projectAmbientVideoObserver.observe(video.closest("figure") || video);
+  });
+}
+
+function initializeProjectAmbientVideos() {
+  const videos = getProjectAmbientVideos();
+  videos.forEach((video) => {
+    prepareProjectAmbientVideo(video);
+    playAmbientVideo(video);
+  });
+  observeProjectAmbientVideos(videos);
+}
+
+function scheduleProjectAmbientVideoResume() {
+  if (projectAmbientScrollRaf) return;
+  projectAmbientScrollRaf = window.requestAnimationFrame(() => {
+    projectAmbientScrollRaf = null;
+    initializeProjectAmbientVideos();
+    window.setTimeout(initializeProjectAmbientVideos, 180);
   });
 }
 
@@ -1554,6 +1608,10 @@ document.addEventListener("visibilitychange", () => {
 });
 
 window.addEventListener("pageshow", initializeProjectAmbientVideos);
+window.addEventListener("scroll", scheduleProjectAmbientVideoResume, { passive: true });
+window.addEventListener("touchstart", scheduleProjectAmbientVideoResume, { passive: true });
+window.addEventListener("pointerdown", scheduleProjectAmbientVideoResume, { passive: true });
+window.addEventListener("focus", scheduleProjectAmbientVideoResume);
 
 function initializeProjectBuildTransition(project, key) {
   if (key !== "skimmu-money" || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {

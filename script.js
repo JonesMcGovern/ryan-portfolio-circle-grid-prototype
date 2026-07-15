@@ -704,11 +704,20 @@ function animatePuckPhysics() {
   const friction = 0.985;
   const restitution = 0.82;
   const maxSpeed = Math.max(18, fieldRect.width * 0.018);
-  const mobileRestingLayout = window.matchMedia("(max-width: 700px)").matches
+  const isMobilePuckLayout = window.matchMedia("(max-width: 700px)").matches;
+  const mobileIntroSliding = isMobilePuckLayout
+    && puckPhysicsState.pucks.some((state) => state.introSliding);
+  const mobileRestingLayout = isMobilePuckLayout
     && !puckPhysicsState.pucks.some((state) => state.dragging || state.introSliding);
 
   puckPhysicsState.pucks.forEach((state) => {
     if (mobileRestingLayout) {
+      state.vx = 0;
+      state.vy = 0;
+      return;
+    }
+
+    if (mobileIntroSliding && !state.introSliding) {
       state.vx = 0;
       state.vy = 0;
       return;
@@ -738,7 +747,7 @@ function animatePuckPhysics() {
     }
   });
 
-  if (!mobileRestingLayout) {
+  if (!mobileRestingLayout && !mobileIntroSliding) {
     resolvePuckCollisions();
   }
 

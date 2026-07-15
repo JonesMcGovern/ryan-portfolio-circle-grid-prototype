@@ -5015,7 +5015,7 @@ body[data-project="skimm-money-newsletter"] .additional-creative {
   .puck-label {
     right: auto;
     left: calc((var(--visual-width, 100vw) * -0.5) + var(--page-x) + (clamp(62px, 19vw, 82px) / 2));
-    top: calc(26% - clamp(24px, 7.8vw, 42px));
+    top: calc(26% - clamp(36px, 10.5vw, 58px));
     max-width: calc(var(--visual-width, 100vw) - (var(--page-x) * 2));
     padding: 4px 7px 5px;
     font-size: clamp(0.98rem, 4.8vw, 1.34rem);
@@ -5031,6 +5031,10 @@ body[data-project="skimm-money-newsletter"] .additional-creative {
 
   .portfolio-puck.is-puck-ready .puck-label {
     transform: translateY(-50%) translateX(0);
+  }
+
+  .portfolio-puck-one .puck-label {
+    min-width: clamp(128px, 34vw, 150px);
   }
 
   .playground-grid {

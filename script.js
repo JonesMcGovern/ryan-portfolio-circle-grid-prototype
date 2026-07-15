@@ -1378,13 +1378,13 @@ function initializeProjectVideoControls(scope = document) {
       sync();
     });
     fullscreen?.addEventListener("click", () => {
-      const requestVideoFullscreen = video.requestFullscreen
-        || video.webkitEnterFullscreen
+      const requestVideoFullscreen = video.webkitEnterFullscreen
+        || video.requestFullscreen
         || video.webkitRequestFullscreen;
-      const requestContainerFullscreen = container?.requestFullscreen;
       const fullscreenRequest = requestVideoFullscreen
         ? requestVideoFullscreen.call(video)
-        : requestContainerFullscreen?.call(container);
+        : container?.requestFullscreen?.();
+      if (video.paused) video.play().catch(() => {});
       fullscreenRequest?.catch?.(() => {});
     });
     video.addEventListener("loadedmetadata", sync);

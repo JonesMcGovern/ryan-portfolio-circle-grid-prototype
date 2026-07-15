@@ -783,9 +783,7 @@ function prepareIntroPuckSlide(attempt = 0) {
   state.introStartX = Math.max(state.radius, state.introFinalX - state.radius * 2);
   state.introSlidePrepared = true;
   puckPhysicsState.introSlidePrepared = true;
-  if (!window.matchMedia("(max-width: 700px)").matches) {
-    setPuckPosition(state, state.introStartX, state.introFinalY);
-  }
+  setPuckPosition(state, state.introStartX, state.introFinalY);
 }
 
 function runIntroPuckSlide(attempt = 0) {

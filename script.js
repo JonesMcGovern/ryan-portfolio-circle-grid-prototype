@@ -768,24 +768,38 @@ function prepareIntroPuckSlide(attempt = 0) {
   }
 
   const state = puckPhysicsState.pucks.find((item) => item.element.classList.contains("portfolio-puck-one"));
-  if (!state || !state.radius) {
+  const pushedState = puckPhysicsState.pucks.find((item) => item.element.classList.contains("portfolio-puck-two"));
+  if (!state || !state.radius || !pushedState || !pushedState.radius) {
     if (attempt < 20) window.setTimeout(() => prepareIntroPuckSlide(attempt + 1), 80);
     return;
   }
 
   state.element.style.left = "";
   state.element.style.top = "";
+  pushedState.element.style.left = "";
+  pushedState.element.style.top = "";
   const fieldRect = field.getBoundingClientRect();
   const puckRect = state.element.getBoundingClientRect();
+  const pushedRect = pushedState.element.getBoundingClientRect();
   state.x = puckRect.left - fieldRect.left + puckRect.width / 2;
   state.y = puckRect.top - fieldRect.top + puckRect.height / 2;
+  pushedState.x = pushedRect.left - fieldRect.left + pushedRect.width / 2;
+  pushedState.y = pushedRect.top - fieldRect.top + pushedRect.height / 2;
   clampPuckState(state);
+  clampPuckState(pushedState);
   state.introFinalX = state.x;
   state.introFinalY = state.y;
-  state.introStartX = Math.max(state.radius, state.introFinalX - state.radius * 2);
+  state.introStartX = Math.max(state.radius, state.introFinalX - state.radius * 2.2);
+  state.introStartY = state.introFinalY;
+  pushedState.introFinalX = pushedState.x;
+  pushedState.introFinalY = pushedState.y;
+  pushedState.introStartX = Math.max(pushedState.radius, pushedState.introFinalX - pushedState.radius * 1.25);
+  pushedState.introStartY = Math.max(pushedState.radius, pushedState.introFinalY - pushedState.radius * 0.62);
   state.introSlidePrepared = true;
+  pushedState.introSlidePrepared = true;
   puckPhysicsState.introSlidePrepared = true;
   setPuckPosition(state, state.introStartX, state.introFinalY);
+  setPuckPosition(pushedState, pushedState.introStartX, pushedState.introStartY);
 }
 
 function runIntroPuckSlide(attempt = 0) {
@@ -798,7 +812,8 @@ function runIntroPuckSlide(attempt = 0) {
   }
 
   const state = puckPhysicsState.pucks.find((item) => item.element.classList.contains("portfolio-puck-one"));
-  if (!state || !state.radius) {
+  const pushedState = puckPhysicsState.pucks.find((item) => item.element.classList.contains("portfolio-puck-two"));
+  if (!state || !state.radius || !pushedState || !pushedState.radius) {
     if (attempt < 20) window.setTimeout(() => runIntroPuckSlide(attempt + 1), 100);
     return;
   }
@@ -812,35 +827,70 @@ function runIntroPuckSlide(attempt = 0) {
   const finalX = state.introFinalX ?? state.x;
   const finalY = state.introFinalY ?? state.y;
   const startX = state.introStartX ?? Math.max(state.radius, finalX - state.radius * 2);
+  const pushedFinalX = pushedState.introFinalX ?? pushedState.x;
+  const pushedFinalY = pushedState.introFinalY ?? pushedState.y;
+  const pushedStartX = pushedState.introStartX ?? Math.max(pushedState.radius, pushedFinalX - pushedState.radius * 1.25);
+  const pushedStartY = pushedState.introStartY ?? Math.max(pushedState.radius, pushedFinalY - pushedState.radius * 0.62);
   let lastX = startX;
+  let lastY = finalY;
+  let pushedLastX = pushedStartX;
+  let pushedLastY = pushedStartY;
   let velocityX = 0;
+  let pushedVelocityX = 0;
+  let pushedVelocityY = 0;
   const startTime = performance.now();
-  const maxDuration = 2200;
+  const maxDuration = 3300;
+  const contactDelay = 420;
 
   state.introSliding = true;
+  pushedState.introSliding = true;
   state.dragging = false;
+  pushedState.dragging = false;
   state.vx = 0;
   state.vy = 0;
+  pushedState.vx = 0;
+  pushedState.vy = 0;
   setPuckPosition(state, startX, finalY);
+  setPuckPosition(pushedState, pushedStartX, pushedStartY);
 
   function finishIntroSlide() {
     state.introSliding = false;
     state.introSlidePrepared = false;
+    pushedState.introSliding = false;
+    pushedState.introSlidePrepared = false;
     state.vx = 0;
     state.vy = 0;
+    pushedState.vx = 0;
+    pushedState.vy = 0;
     setPuckPosition(state, finalX, finalY);
+    setPuckPosition(pushedState, pushedFinalX, pushedFinalY);
     lineState.pointer.active = false;
   }
 
   function step() {
     const elapsed = performance.now() - startTime;
     const distance = finalX - state.x;
-    velocityX += distance * 0.018;
-    velocityX *= 0.84;
+    velocityX += distance * 0.012;
+    velocityX *= 0.88;
     state.x += velocityX;
     state.y = finalY;
 
-    if (Math.abs(finalX - state.x) < 0.35 && Math.abs(velocityX) < 0.08) {
+    if (elapsed > contactDelay) {
+      pushedVelocityX += (pushedFinalX - pushedState.x) * 0.011;
+      pushedVelocityY += (pushedFinalY - pushedState.y) * 0.011;
+      pushedVelocityX *= 0.88;
+      pushedVelocityY *= 0.88;
+      pushedState.x += pushedVelocityX;
+      pushedState.y += pushedVelocityY;
+    }
+
+    if (
+      Math.abs(finalX - state.x) < 0.35 &&
+      Math.abs(velocityX) < 0.08 &&
+      Math.abs(pushedFinalX - pushedState.x) < 0.35 &&
+      Math.abs(pushedFinalY - pushedState.y) < 0.35 &&
+      Math.hypot(pushedVelocityX, pushedVelocityY) < 0.08
+    ) {
       finishIntroSlide();
       return;
     }
@@ -852,12 +902,25 @@ function runIntroPuckSlide(attempt = 0) {
 
     state.element.style.left = `${state.x}px`;
     state.element.style.top = `${state.y}px`;
+    pushedState.element.style.left = `${pushedState.x}px`;
+    pushedState.element.style.top = `${pushedState.y}px`;
 
     const deltaX = state.x - lastX;
+    const deltaY = state.y - lastY;
     lastX = state.x;
-    if (Math.abs(deltaX) > 0.05) {
+    lastY = state.y;
+    if (Math.hypot(deltaX, deltaY) > 0.05) {
       const center = getPuckCenterClient(state);
-      applyLineSmudgeAt(center.x, center.y - fieldRect.top, deltaX, 0, 0.58);
+      applyLineSmudgeAt(center.x, center.y - fieldRect.top, deltaX, deltaY, 0.58);
+    }
+
+    const pushedDeltaX = pushedState.x - pushedLastX;
+    const pushedDeltaY = pushedState.y - pushedLastY;
+    pushedLastX = pushedState.x;
+    pushedLastY = pushedState.y;
+    if (Math.hypot(pushedDeltaX, pushedDeltaY) > 0.05) {
+      const center = getPuckCenterClient(pushedState);
+      applyLineSmudgeAt(center.x, center.y - fieldRect.top, pushedDeltaX, pushedDeltaY, 0.58);
     }
 
     window.requestAnimationFrame(step);
@@ -890,6 +953,7 @@ function initializePuckDragging() {
     introSlidePrepared: false,
     introSliding: false,
     introStartX: 0,
+    introStartY: 0,
     introFinalX: 0,
     introFinalY: 0,
   }));

@@ -5490,9 +5490,15 @@ body[data-project="skimm-money-newsletter"] .additional-creative {
     grid-template-columns: none;
     gap: 28px;
     min-height: 0;
-    padding: 78px 16px 8px 0;
+    padding: 24px 16px 8px 0;
     aspect-ratio: auto;
     overflow: visible;
+  }
+
+  body[data-project="skimm-money-newsletter"] .project-device-heading {
+    position: static;
+    order: 0;
+    width: 100%;
   }
 
   body[data-project="skimm-money-newsletter"] .project-phone-shell {
@@ -5521,12 +5527,13 @@ body[data-project="skimm-money-newsletter"] .additional-creative {
     max-width: 100%;
     box-sizing: border-box;
     padding-right: 6px;
+    margin-bottom: clamp(36px, 10vw, 64px);
     justify-content: stretch;
     align-items: start;
   }
 
   body[data-project="skimm-money-newsletter"] .module-one {
-    margin-top: clamp(20px, 7vw, 34px);
+    margin-top: 0;
   }
 
   body[data-project="flashpoint-mdlinx"] .project-media-frame {

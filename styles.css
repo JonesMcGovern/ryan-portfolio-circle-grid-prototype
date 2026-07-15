@@ -4167,6 +4167,26 @@ body[data-project="brand-transitions"] .project-overview-copy p {
   object-position: center;
 }
 
+.ambient-video::-webkit-media-controls-start-playback-button,
+.project-overview-circle video::-webkit-media-controls-start-playback-button,
+.module-one-circle video::-webkit-media-controls-start-playback-button,
+body[data-project="skimm-money-newsletter"] .project-phone-screen video::-webkit-media-controls-start-playback-button {
+  display: none !important;
+  -webkit-appearance: none;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.ambient-video::-webkit-media-controls-overlay-play-button,
+.project-overview-circle video::-webkit-media-controls-overlay-play-button,
+.module-one-circle video::-webkit-media-controls-overlay-play-button,
+body[data-project="skimm-money-newsletter"] .project-phone-screen video::-webkit-media-controls-overlay-play-button {
+  display: none !important;
+  -webkit-appearance: none;
+  opacity: 0;
+  pointer-events: none;
+}
+
 .project-overview-placeholder {
   position: absolute;
   inset: 0;

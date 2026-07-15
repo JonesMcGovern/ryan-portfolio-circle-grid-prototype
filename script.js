@@ -1281,6 +1281,7 @@ function playAmbientVideo(video) {
   video.autoplay = true;
   video.preload = "auto";
   video.playsInline = true;
+  video.classList.add("ambient-video");
   video.setAttribute("muted", "");
   video.setAttribute("loop", "");
   video.setAttribute("autoplay", "");

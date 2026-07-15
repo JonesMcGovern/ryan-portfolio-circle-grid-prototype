@@ -4018,6 +4018,14 @@ body[data-project="skimmu-money"] .module-one-copy {
   line-height: 0.68;
 }
 
+.drop-cap-line-clear {
+  display: block;
+  clear: left;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
 .module-one-image-row {
   display: flex;
   justify-content: flex-end;
@@ -5072,6 +5080,22 @@ body[data-project="skimm-money-newsletter"] .additional-creative {
 
   .project-hero h2 {
     font-size: clamp(3.9rem, 20vw, 9rem);
+  }
+
+  .module-drop-cap {
+    --module-drop-cap-wrap-height: calc((3 * var(--module-copy-line-height) * 1em) + 0.045em);
+    height: calc((3 * var(--module-copy-line-height) * 1em) + 0.045em);
+    shape-outside: polygon(
+      0 0,
+      100% 0,
+      100% var(--module-drop-cap-wrap-height),
+      0 var(--module-drop-cap-wrap-height)
+    );
+  }
+
+  .module-drop-cap-letter {
+    font-size: calc(3 * var(--module-copy-line-height) * 1.34em);
+    line-height: 0.7;
   }
 
   .project-device-copy,

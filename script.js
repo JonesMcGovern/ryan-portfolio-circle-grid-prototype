@@ -1128,6 +1128,67 @@ function getDropCapMarkup(text = "") {
   return `<span class="module-drop-cap" aria-hidden="true"><span class="module-drop-cap-letter">${escapeHtml(first)}</span></span><span class="visually-hidden">${escapeHtml(first)}</span>${escapeHtml(trimmed.slice(1))}`;
 }
 
+function clearMobileDropCapStabilizers() {
+  document.querySelectorAll(".drop-cap-line-clear").forEach((element) => {
+    const paragraph = element.closest("p");
+    element.remove();
+    paragraph?.normalize();
+    paragraph?.removeAttribute("data-drop-cap-stabilized");
+  });
+}
+
+function stabilizeMobileDropCaps() {
+  clearMobileDropCapStabilizers();
+  if (!window.matchMedia("(max-width: 700px)").matches) return;
+
+  document.querySelectorAll(".module-drop-cap").forEach((dropCap) => {
+    const paragraph = dropCap.closest("p");
+    if (!paragraph) return;
+    const textNode = Array.from(paragraph.childNodes).find((node) => (
+      node.nodeType === Node.TEXT_NODE && node.textContent.trim().length > 20
+    ));
+    if (!textNode) return;
+
+    const range = document.createRange();
+    const samples = [];
+    const text = textNode.textContent;
+    for (let index = 0; index < Math.min(text.length, 220); index += 1) {
+      range.setStart(textNode, index);
+      range.setEnd(textNode, index + 1);
+      const rect = range.getBoundingClientRect();
+      if (rect.width && rect.height) {
+        samples.push({ index, top: Math.round(rect.top) });
+      }
+    }
+    range.detach?.();
+
+    const lineTops = [];
+    samples.forEach((sample) => {
+      if (!lineTops.some((top) => Math.abs(top - sample.top) <= 2)) {
+        lineTops.push(sample.top);
+      }
+    });
+    if (lineTops.length < 4) return;
+
+    const fourthLineTop = lineTops[3];
+    const fourthLineSample = samples.find((sample) => Math.abs(sample.top - fourthLineTop) <= 2);
+    if (!fourthLineSample) return;
+
+    let splitIndex = fourthLineSample.index;
+    while (splitIndex > 0 && !/\s/.test(text.charAt(splitIndex - 1))) {
+      splitIndex -= 1;
+    }
+    if (splitIndex <= 0 || splitIndex >= text.length) return;
+
+    const remainder = textNode.splitText(splitIndex);
+    const clear = document.createElement("span");
+    clear.className = "drop-cap-line-clear";
+    clear.setAttribute("aria-hidden", "true");
+    paragraph.insertBefore(clear, remainder);
+    paragraph.dataset.dropCapStabilized = "true";
+  });
+}
+
 function setVideoSource(video, source, options = {}) {
   if (!video || !source) return;
   video.muted = Boolean(options.muted || options.autoplay);
@@ -1322,6 +1383,7 @@ function hydrateProjectPage() {
   hydrateAdditionalCreativeVideos(key);
   initializeProjectVideoControls();
   initializeProcessLightbox();
+  window.requestAnimationFrame(stabilizeMobileDropCaps);
 }
 
 function initializeProjectBuildTransition(project, key) {
@@ -2121,6 +2183,7 @@ window.addEventListener("resize", () => {
   drawLineField();
   buildShapeField();
   updateHeaderScrollState();
+  stabilizeMobileDropCaps();
 });
 window.visualViewport?.addEventListener("resize", () => {
   syncVisualViewportWidth();
@@ -2150,12 +2213,14 @@ document.fonts?.ready.then(() => {
   updateHeaderScrollState();
   syncPuckStateFromDom();
   drawLineField();
+  stabilizeMobileDropCaps();
 });
 window.addEventListener("load", () => {
   fillMarquees();
   syncPuckStateFromDom();
   drawLineField();
   updateHeaderScrollState();
+  stabilizeMobileDropCaps();
 });
 window.addEventListener("pageshow", (event) => {
   if (!field) return;

@@ -1376,6 +1376,19 @@ function initializeProjectVideoControls(scope = document) {
     const mute = controls.querySelector("[data-video-mute]");
     const volume = controls.querySelector("[data-video-volume]");
     const fullscreen = controls.querySelector("[data-video-fullscreen]");
+    const fullscreenIcon = fullscreen?.querySelector("span");
+    const getFullscreenElement = () => document.fullscreenElement || document.webkitFullscreenElement;
+    const isVideoFullscreen = () => Boolean(
+      getFullscreenElement() === video ||
+      getFullscreenElement() === container ||
+      video.webkitDisplayingFullscreen
+    );
+    const syncFullscreen = () => {
+      if (!fullscreen) return;
+      const active = isVideoFullscreen();
+      fullscreen.setAttribute("aria-label", active ? "Exit fullscreen" : "Enter fullscreen");
+      if (fullscreenIcon) fullscreenIcon.textContent = active ? "↙" : "⛶";
+    };
 
     const sync = () => {
       current.textContent = formatTime(video.currentTime);
@@ -1386,6 +1399,7 @@ function initializeProjectVideoControls(scope = document) {
       }
       play.querySelector("span").textContent = video.paused ? "▶" : "Ⅱ";
       mute.querySelector(".video-volume-icon")?.classList.toggle("is-muted", video.muted || video.volume === 0);
+      syncFullscreen();
     };
 
     play?.addEventListener("click", () => (video.paused ? video.play() : video.pause()));
@@ -1403,6 +1417,12 @@ function initializeProjectVideoControls(scope = document) {
       sync();
     });
     fullscreen?.addEventListener("click", () => {
+      if (isVideoFullscreen()) {
+        const exitRequest = document.exitFullscreen?.() || document.webkitExitFullscreen?.() || video.webkitExitFullscreen?.();
+        exitRequest?.catch?.(() => {});
+        syncFullscreen();
+        return;
+      }
       const requestVideoFullscreen = video.webkitEnterFullscreen
         || video.requestFullscreen
         || video.webkitRequestFullscreen;
@@ -1411,7 +1431,12 @@ function initializeProjectVideoControls(scope = document) {
         : container?.requestFullscreen?.();
       if (video.paused) video.play().catch(() => {});
       fullscreenRequest?.catch?.(() => {});
+      syncFullscreen();
     });
+    document.addEventListener("fullscreenchange", syncFullscreen);
+    document.addEventListener("webkitfullscreenchange", syncFullscreen);
+    video.addEventListener("webkitbeginfullscreen", syncFullscreen);
+    video.addEventListener("webkitendfullscreen", syncFullscreen);
     video.addEventListener("loadedmetadata", sync);
     video.addEventListener("timeupdate", sync);
     video.addEventListener("play", sync);

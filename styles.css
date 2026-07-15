@@ -90,6 +90,25 @@ h3,
   -moz-osx-font-smoothing: grayscale;
 }
 
+html.fonts-loading h1,
+html.fonts-loading .masthead-copy p,
+html.fonts-loading .selected-work-heading h2,
+html.fonts-loading .site-menu-title,
+html.fonts-loading .puck-label,
+html.fonts-loading .playground-type-label,
+html.fonts-loading .project-build-title,
+html.fonts-loading .project-compact-title,
+html.fonts-loading .project-hero h2,
+html.fonts-loading .project-device-heading,
+html.fonts-loading .project-process h3,
+html.fonts-loading .module-one-process-title,
+html.fonts-loading .project-overview-copy h3,
+html.fonts-loading .module-one-title,
+html.fonts-loading .module-drop-cap-letter,
+html.fonts-loading .additional-creative h3 {
+  visibility: hidden;
+}
+
 .page {
   width: min(100% - (var(--page-x) * 2), 1320px);
   margin: 0 auto;

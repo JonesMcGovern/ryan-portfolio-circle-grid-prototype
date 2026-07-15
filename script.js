@@ -1254,17 +1254,50 @@ function stabilizeMobileDropCaps() {
 function setVideoSource(video, source, options = {}) {
   if (!video || !source) return;
   video.muted = Boolean(options.muted || options.autoplay);
+  video.defaultMuted = Boolean(options.muted || options.autoplay);
   video.loop = Boolean(options.loop);
   video.autoplay = Boolean(options.autoplay);
   video.playsInline = true;
   video.setAttribute("playsinline", "");
+  if (video.muted) video.setAttribute("muted", "");
+  if (video.loop) video.setAttribute("loop", "");
+  if (video.autoplay) video.setAttribute("autoplay", "");
   if (options.preload) video.preload = options.preload;
   video.src = source;
   if (options.autoplay) {
     video.load();
-    video.play().catch(() => {});
+    playAmbientVideo(video);
   }
   if (options.poster) video.poster = options.poster;
+}
+
+function playAmbientVideo(video) {
+  if (!video) return;
+  video.muted = true;
+  video.defaultMuted = true;
+  video.loop = true;
+  video.autoplay = true;
+  video.playsInline = true;
+  video.setAttribute("muted", "");
+  video.setAttribute("loop", "");
+  video.setAttribute("autoplay", "");
+  video.setAttribute("playsinline", "");
+  video.play().catch(() => {});
+}
+
+function initializeProjectAmbientVideos() {
+  const selector = [
+    ".project-overview-circles video",
+    ".module-one-circle video",
+    "body[data-project=\"skimm-money-newsletter\"] .project-phone-screen video",
+  ].join(", ");
+  const videos = [...document.querySelectorAll(selector)].filter((video) => video.currentSrc || video.src);
+  videos.forEach((video) => {
+    playAmbientVideo(video);
+    ["loadedmetadata", "loadeddata", "canplay"].forEach((eventName) => {
+      video.addEventListener(eventName, () => playAmbientVideo(video), { once: true });
+    });
+  });
 }
 
 function createOverviewCircles(sources) {
@@ -1274,12 +1307,12 @@ function createOverviewCircles(sources) {
   wrap.className = "project-overview-circles";
   wrap.innerHTML = sources.map((source) => `
     <figure class="project-overview-circle">
-      ${source ? `<video muted loop autoplay playsinline preload="metadata" src="${source}"></video>` : ""}
+      ${source ? `<video muted loop autoplay playsinline preload="auto" src="${source}"></video>` : ""}
       <div class="project-overview-placeholder" aria-hidden="true"></div>
     </figure>
   `).join("");
   copy.after(wrap);
-  wrap.querySelectorAll("video").forEach((video) => video.play().catch(() => {}));
+  wrap.querySelectorAll("video").forEach(playAmbientVideo);
 }
 
 function isNearInitialViewport(element) {
@@ -1510,10 +1543,17 @@ function hydrateProjectPage() {
   hydrateEditorialAlternate(project);
   hydrateAdditionalCreativeVideos(key);
   initializeProjectVideoControls();
+  initializeProjectAmbientVideos();
   initializeProcessLightbox();
   window.requestAnimationFrame(stabilizeMobileDropCaps);
   window.requestAnimationFrame(revealProjectContentWhenReady);
 }
+
+document.addEventListener("visibilitychange", () => {
+  if (!document.hidden) initializeProjectAmbientVideos();
+});
+
+window.addEventListener("pageshow", initializeProjectAmbientVideos);
 
 function initializeProjectBuildTransition(project, key) {
   if (key !== "skimmu-money" || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {

@@ -5033,10 +5033,6 @@ body[data-project="skimm-money-newsletter"] .additional-creative {
     transform: translateY(-50%) translateX(0);
   }
 
-  .portfolio-puck-one .puck-label {
-    min-width: clamp(128px, 34vw, 150px);
-  }
-
   .playground-grid {
     grid-template-columns: 1fr;
     margin-top: 0;

@@ -2212,7 +2212,9 @@ window.addEventListener("resize", () => {
 window.visualViewport?.addEventListener("resize", () => {
   syncVisualViewportWidth();
   scheduleMarqueeFill();
+  updateHeaderScrollState();
 });
+window.visualViewport?.addEventListener("scroll", updateHeaderScrollState, { passive: true });
 window.addEventListener("scroll", requestHeaderScrollUpdate, { passive: true });
 
 resetInitialScrollPosition();

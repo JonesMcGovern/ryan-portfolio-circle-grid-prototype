@@ -5505,6 +5505,16 @@ body[data-project="skimm-money-newsletter"] .additional-creative {
   position: fixed !important;
 }
 
+.project-page .masthead,
+.playground-page .masthead {
+  position: fixed !important;
+  top: var(--masthead-top) !important;
+  left: 50% !important;
+  right: auto !important;
+  bottom: auto !important;
+  transform: translateX(-50%) !important;
+}
+
 @media (max-width: 700px) {
   .masthead {
     left: var(--page-x) !important;
@@ -5514,6 +5524,19 @@ body[data-project="skimm-money-newsletter"] .additional-creative {
     max-width: calc(var(--visual-width, 100vw) - (var(--page-x) * 2)) !important;
     gap: 8px;
     overflow: visible;
+    transform: none !important;
+    z-index: 40;
+  }
+
+  .project-page .masthead,
+  .playground-page .masthead {
+    position: fixed !important;
+    top: var(--masthead-top) !important;
+    left: var(--page-x) !important;
+    right: auto !important;
+    bottom: auto !important;
+    width: calc(var(--visual-width, 100vw) - (var(--page-x) * 2)) !important;
+    max-width: calc(var(--visual-width, 100vw) - (var(--page-x) * 2)) !important;
     transform: none !important;
     z-index: 40;
   }

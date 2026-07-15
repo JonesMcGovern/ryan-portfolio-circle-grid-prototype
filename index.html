@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ryan Pattison Vertical Field Prototype</title>
+    <meta
+      name="description"
+      content="A vertical-line portfolio prototype for Ryan Pattison."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./styles.css?v=puck-inner-scale-wave-20260714b" />
+    <script src="./assets/vendor/lottie.min.js?v=20260709d" defer></script>
+    <script src="./assets/icons/puck-lottie-data.js?v=20260714b" defer></script>
+    <script src="./script.js?v=puck-intro-slide-20260714c" defer></script>
+    <script src="./cylinder-stage.bundle.js?v=restored-wireframe-bundle-20260714j" defer></script>
+  </head>
+  <body class="palette-enter">
+    <main class="page" aria-label="Ryan Pattison vertical field prototype">
+      <header class="masthead">
+        <div class="masthead-copy">
+          <h1>
+            <span class="title-full">RYAN PATTISON</span>
+            <span class="title-compact" aria-hidden="true">R_P</span>
+          </h1>
+          <p>Motion Design, Graphic Design, and Visual Direction</p>
+        </div>
+        <nav class="site-nav" aria-label="Site controls">
+          <div class="palette-switcher" aria-label="Color schemes">
+            <button
+              class="palette-swatch"
+              type="button"
+              aria-label="Teal color scheme"
+              aria-pressed="false"
+              data-bg="#c4bcb0"
+              data-ink="#3d3a35"
+              data-line="#5b8b87"
+            >
+              <span style="background: #5b8b87"></span>
+            </button>
+            <button
+              class="palette-swatch"
+              type="button"
+              aria-label="Clay color scheme"
+              aria-pressed="false"
+              data-bg="#b58f81"
+              data-ink="#3d3a35"
+              data-line="#3d3a35"
+              style="background: #b58f81"
+            >
+              <span style="background: #3d3a35"></span>
+            </button>
+            <button
+              class="palette-swatch"
+              type="button"
+              aria-label="Charcoal color scheme"
+              aria-pressed="false"
+              data-bg="#3b3a35"
+              data-ink="#c4bcb0"
+              data-line="#c4bcb0"
+              data-glow="false"
+              style="background: #3b3a35"
+            >
+              <span style="background: #c4bcb0"></span>
+            </button>
+            <button
+              class="palette-swatch"
+              type="button"
+              aria-label="Gold color scheme"
+              aria-pressed="true"
+              data-bg="#322724"
+              data-ink="#f1975b"
+              data-line="#f1975b"
+              style="background: #322724"
+            >
+              <span style="background: #f1975b"></span>
+            </button>
+            <button
+              class="palette-swatch"
+              type="button"
+              aria-label="Blue color scheme"
+              aria-pressed="false"
+              data-bg="#3152ca"
+              data-ink="#d7d6d1"
+              data-line="#d7d6d1"
+              data-headline="#f8e86a"
+              data-glow="false"
+              style="background: #3152ca"
+            >
+              <span style="background: #f8e86a"></span>
+            </button>
+          </div>
+
+          <button class="nav-menu" type="button" aria-label="Open site navigation" aria-expanded="false" aria-controls="site-menu-panel">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </nav>
+      </header>
+
+      <div class="selected-work-heading" aria-hidden="true">
+        <h2 data-marquee-label="Selected Work"></h2>
+      </div>
+
+      <section class="line-field" aria-label="Interactive portfolio field">
+        <canvas class="smudge-canvas" aria-hidden="true"></canvas>
+        <a class="portfolio-puck portfolio-puck-one" href="./project.html?project=skimmu-money" draggable="false" aria-label="Open SkimmU Money project">
+          <span class="puck-shell" aria-hidden="true">
+            <span class="puck-lottie" data-puck-lottie="./assets/icons/sum-icon.json?v=20260710k"></span>
+          </span>
+          <span class="puck-label">SkimmU Money</span>
+        </a>
+        <a class="portfolio-puck portfolio-puck-two" href="./project.html?project=flashpoint-mdlinx" draggable="false" aria-label="Open Flashpoint by MDLinx project">
+          <span class="puck-shell" aria-hidden="true">
+            <span
+              class="puck-lottie"
+              data-puck-lottie="./assets/icons/fp-icon.json?v=20260709l"
+              data-puck-lottie-rest-frame="0"
+              data-puck-lottie-hover-start-frame="0"
+              data-puck-lottie-continue-on-leave="true"
+            ></span>
+          </span>
+          <span class="puck-label">Flashpoint by MDLinx</span>
+        </a>
+        <a class="portfolio-puck portfolio-puck-three" href="./project.html?project=skimm-money-newsletter" draggable="false" aria-label="Open Skimm Money Newsletter project">
+          <span class="puck-shell" aria-hidden="true">
+            <span
+              class="puck-lottie"
+              data-puck-lottie="./assets/icons/smn-icon.json?v=20260710h"
+              data-puck-lottie-rest-frame="274"
+              data-puck-lottie-hover-start-frame="0"
+              data-puck-lottie-hover-end-frame="274"
+              data-puck-lottie-continue-on-leave="true"
+            ></span>
+          </span>
+          <span class="puck-label">Skimm Money Newsletter</span>
+        </a>
+        <a class="portfolio-puck portfolio-puck-four" href="./project.html?project=interface-studies" draggable="false" aria-label="Open Is Gay Marriage Next? Intro project">
+          <span class="puck-shell" aria-hidden="true">
+            <span
+              class="puck-lottie"
+              data-puck-lottie="./assets/icons/igmn-icon.json?v=20260710i"
+              data-puck-lottie-rest-frame="52"
+              data-puck-lottie-hover-start-frame="0"
+              data-puck-lottie-hover-end-frame="52"
+              data-puck-lottie-continue-on-leave="true"
+            ></span>
+          </span>
+          <span class="puck-label">"Is Gay Marriage Next?" Intro</span>
+        </a>
+      </section>
+
+      <section class="secondary-projects" aria-label="Secondary project list">
+        <div class="secondary-projects-heading">
+          <h2 data-marquee-label="Selected Additional Work" aria-label="Selected Additional Work"></h2>
+        </div>
+        <div class="secondary-project-list">
+          <a href="./project.html?project=launch-cutdowns">
+            <span>01</span>
+            <strong>Kaplan SAT<br />Prep Ad</strong>
+            <div class="secondary-project-aside">
+              <figure class="secondary-project-preview" aria-hidden="true">
+                <div class="secondary-project-preview-media"></div>
+                <svg viewBox="0 0 100 100">
+                  <circle class="preview-ring-trail" cx="50" cy="50" r="48"></circle>
+                  <circle class="preview-ring-main" cx="50" cy="50" r="48"></circle>
+                </svg>
+              </figure>
+            </div>
+          </a>
+          <a href="./project.html?project=social-system">
+            <span>02</span>
+            <strong>Kaplan Live<br />Online Ad</strong>
+            <div class="secondary-project-aside">
+              <figure class="secondary-project-preview" aria-hidden="true">
+                <div class="secondary-project-preview-media"></div>
+                <svg viewBox="0 0 100 100">
+                  <circle class="preview-ring-trail" cx="50" cy="50" r="48"></circle>
+                  <circle class="preview-ring-main" cx="50" cy="50" r="48"></circle>
+                </svg>
+              </figure>
+            </div>
+          </a>
+          <a href="./project.html?project=brand-transitions">
+            <span>03</span>
+            <strong>Skimm Lab<br />Illustrations</strong>
+            <div class="secondary-project-aside">
+              <figure class="secondary-project-preview" aria-hidden="true">
+                <div class="secondary-project-preview-media"></div>
+                <svg viewBox="0 0 100 100">
+                  <circle class="preview-ring-trail" cx="50" cy="50" r="48"></circle>
+                  <circle class="preview-ring-main" cx="50" cy="50" r="48"></circle>
+                </svg>
+              </figure>
+            </div>
+          </a>
+          <a class="secondary-project-long-title" href="./project.html?project=event-graphics">
+            <span>04</span>
+            <strong>Skimm Spot <span class="keep-together">Illustration Animations</span></strong>
+            <div class="secondary-project-aside">
+              <figure class="secondary-project-preview" aria-hidden="true">
+                <div class="secondary-project-preview-media"></div>
+                <svg viewBox="0 0 100 100">
+                  <circle class="preview-ring-trail" cx="50" cy="50" r="48"></circle>
+                  <circle class="preview-ring-main" cx="50" cy="50" r="48"></circle>
+                </svg>
+              </figure>
+            </div>
+          </a>
+          <a href="./project.html?project=kaplan-virtual-spelling-bee">
+            <span>05</span>
+            <strong>Kaplan Virtual<br />Spelling Bee</strong>
+            <div class="secondary-project-aside">
+              <figure class="secondary-project-preview" aria-hidden="true">
+                <div class="secondary-project-preview-media"></div>
+                <svg viewBox="0 0 100 100">
+                  <circle class="preview-ring-trail" cx="50" cy="50" r="48"></circle>
+                  <circle class="preview-ring-main" cx="50" cy="50" r="48"></circle>
+                </svg>
+              </figure>
+            </div>
+          </a>
+          <a href="./project.html?project=editorial-motion">
+            <span>06</span>
+            <strong>Skimm NASDAQ billboard</strong>
+            <div class="secondary-project-aside">
+              <figure class="secondary-project-preview" aria-hidden="true">
+                <div class="secondary-project-preview-media"></div>
+                <svg viewBox="0 0 100 100">
+                  <circle class="preview-ring-trail" cx="50" cy="50" r="48"></circle>
+                  <circle class="preview-ring-main" cx="50" cy="50" r="48"></circle>
+                </svg>
+              </figure>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <div class="playground-heading" aria-hidden="true">
+        <h2 data-marquee-label="Playground"></h2>
+      </div>
+
+      <section class="playground-grid" aria-label="Interactive studies">
+        <a class="playground-tile can-field" href="./wireframe-cylinder.html" aria-label="Open soda can playground" data-cylinder-mode="preview">
+          <span class="playground-type-label" aria-hidden="true" style="--type-ch: 20ch; --type-steps: 20;">
+            <span class="playground-type-text">Interactive Soda Can</span>
+          </span>
+          <canvas class="cylinder-canvas" aria-label="Rotating soda can preview"></canvas>
+        </a>
+
+        <a class="playground-tile shape-field" href="./shape-drawer.html" aria-label="Open shape drawing playground" data-shape-mode="preview">
+          <span class="playground-type-label" aria-hidden="true" style="--type-ch: 12ch;">
+            <span class="playground-type-text">Shape Drawer</span>
+          </span>
+          <svg class="shape-svg shape-preview-svg" aria-hidden="true" viewBox="0 0 360 360">
+            <defs class="shape-preview-fallback">
+              <pattern id="shape-preview-pixel-fill" width="8" height="8" patternUnits="userSpaceOnUse">
+                <rect class="shape-pixel-fill-base" width="8" height="8"></rect>
+                <path class="shape-pixel-fill-grid" d="M0 0H8M0 0V8M4 0V8M0 4H8"></path>
+              </pattern>
+            </defs>
+            <path class="shape-preview-fallback shape-preview-trace shape-preview-trace-one" d="M78 103 L156 241 L20 239 L78 103"></path>
+            <polygon class="shape-preview-fallback shape-preview-object shape-preview-object-one" points="78,103 156,241 20,239"></polygon>
+            <path class="shape-preview-fallback shape-preview-trace shape-preview-trace-two" d="M212 84 L308 84 L309 180 L211 180 L212 84"></path>
+            <rect class="shape-preview-fallback shape-preview-object shape-preview-object-two" x="211" y="84" width="98" height="96"></rect>
+            <path class="shape-preview-fallback shape-preview-trace shape-preview-trace-three" d="M227 250 C232 212 286 201 308 231 C336 270 296 314 253 296 C235 288 223 271 227 250"></path>
+            <ellipse class="shape-preview-fallback shape-preview-object shape-preview-object-three" cx="270" cy="255" rx="44" ry="42"></ellipse>
+          </svg>
+        </a>
+      </section>
+    </main>
+    <span class="mobile-menu-mark" aria-hidden="true">
+      <span></span>
+      <span></span>
+      <span></span>
+    </span>
+  </body>
+</html>

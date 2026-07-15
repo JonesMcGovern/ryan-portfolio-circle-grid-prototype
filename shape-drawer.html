@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shape Drawer | Ryan Pattison</title>
+    <meta
+      name="description"
+      content="Interactive shape drawing playground by Ryan Pattison."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./styles.css?v=playground-frame-20260714b" />
+    <script src="./script.js?v=playground-frame-20260714b" defer></script>
+  </head>
+  <body class="palette-enter playground-page">
+    <main class="page playground-shell" aria-label="Ryan Pattison playground">
+      <header class="masthead">
+        <div class="masthead-copy">
+          <h1>
+            <a class="home-link" href="./index.html">
+              <span class="title-full">RYAN PATTISON</span>
+              <span class="title-compact" aria-hidden="true">R_P</span>
+            </a>
+          </h1>
+          <p>Motion Design, Graphic Design, and Visual Direction</p>
+        </div>
+        <nav class="site-nav" aria-label="Site controls">
+          <button class="nav-menu" type="button" aria-label="Open site navigation" aria-expanded="false" aria-controls="site-menu-panel">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </nav>
+      </header>
+
+      <section class="playground-detail playground-detail-single" id="shape-drawer">
+        <div class="playground-detail-copy">
+          <p class="playground-kicker">Playground 02</p>
+          <h2>Shape Drawer</h2>
+          <p>
+            Draw a loose triangle, square, or circle and the sketch resolves into a physical object. Shapes fall into the field, bounce, collide, and settle into a shifting pile.
+          </p>
+        </div>
+        <section class="shape-field playground-detail-module" aria-label="Interactive shape drawing field" data-shape-mode="interactive">
+          <svg class="shape-svg" aria-hidden="true"></svg>
+        </section>
+      </section>
+    </main>
+    <span class="mobile-menu-mark" aria-hidden="true">
+      <span></span>
+      <span></span>
+      <span></span>
+    </span>
+  </body>
+</html>

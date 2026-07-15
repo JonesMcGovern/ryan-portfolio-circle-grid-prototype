@@ -5168,7 +5168,7 @@ body[data-project="skimm-money-newsletter"] .additional-creative {
 
   .line-field {
     height: max(
-      300px,
+      520px,
       calc(100svh - var(--masthead-spacer) - var(--masthead-top) - clamp(48px, 12vw, 64px) - var(--home-marquee-reclaim))
     );
     min-height: 0;
@@ -5186,19 +5186,19 @@ body[data-project="skimm-money-newsletter"] .additional-creative {
   }
 
   .portfolio-puck-one {
-    top: 18%;
+    top: 14%;
   }
 
   .portfolio-puck-two {
-    top: 38%;
+    top: 39%;
   }
 
   .portfolio-puck-three {
-    top: 58%;
+    top: 64%;
   }
 
   .portfolio-puck-four {
-    top: 78%;
+    top: 89%;
   }
 
   .portfolio-puck::before {

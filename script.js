@@ -707,16 +707,8 @@ function animatePuckPhysics() {
   const isMobilePuckLayout = window.matchMedia("(max-width: 700px)").matches;
   const mobileIntroSliding = isMobilePuckLayout
     && puckPhysicsState.pucks.some((state) => state.introSliding);
-  const mobileRestingLayout = isMobilePuckLayout
-    && !puckPhysicsState.pucks.some((state) => state.dragging || state.introSliding);
 
   puckPhysicsState.pucks.forEach((state) => {
-    if (mobileRestingLayout) {
-      state.vx = 0;
-      state.vy = 0;
-      return;
-    }
-
     if (mobileIntroSliding && !state.introSliding) {
       state.vx = 0;
       state.vy = 0;
@@ -747,7 +739,7 @@ function animatePuckPhysics() {
     }
   });
 
-  if (!mobileRestingLayout && !mobileIntroSliding) {
+  if (!mobileIntroSliding) {
     resolvePuckCollisions();
   }
 
@@ -892,6 +884,8 @@ function initializePuckDragging() {
     startY: 0,
     previousClientX: 0,
     previousClientY: 0,
+    releaseVx: 0,
+    releaseVy: 0,
     moved: false,
     introSlidePrepared: false,
     introSliding: false,
@@ -900,6 +894,51 @@ function initializePuckDragging() {
     introFinalY: 0,
   }));
   syncPuckStateFromDom();
+
+  const updateDragFromEvent = (state, event) => {
+    if (!state.dragging || state.pointerId !== event.pointerId || !field) return false;
+    const movedDistance = Math.hypot(event.clientX - state.startX, event.clientY - state.startY);
+    const fieldRect = field.getBoundingClientRect();
+    state.moved = state.moved || movedDistance > 3;
+    const deltaX = event.clientX - state.previousClientX;
+    const deltaY = event.clientY - state.previousClientY;
+    state.vx = deltaX;
+    state.vy = deltaY;
+    if (Math.hypot(deltaX, deltaY) > 0.08) {
+      state.releaseVx = state.releaseVx * 0.35 + deltaX * 0.65;
+      state.releaseVy = state.releaseVy * 0.35 + deltaY * 0.65;
+    }
+    state.previousClientX = event.clientX;
+    state.previousClientY = event.clientY;
+    setPuckPosition(
+      state,
+      event.clientX - fieldRect.left - state.pointerOffsetX,
+      event.clientY - fieldRect.top - state.pointerOffsetY
+    );
+    if (Math.hypot(state.vx, state.vy) > 0.2) {
+      const center = getPuckCenterClient(state);
+      applyLineSmudgeAt(center.x, center.y - fieldRect.top, state.vx, state.vy, 0.46);
+    }
+    return true;
+  };
+
+  const finishDragForState = (state, event) => {
+    if (!state.dragging || state.pointerId !== event.pointerId) return false;
+    lineState.pointer.active = false;
+    state.dragging = false;
+    state.pointerId = null;
+    if (state.moved) {
+      const releaseSpeed = Math.hypot(state.releaseVx, state.releaseVy);
+      const fallbackVx = (event.clientX - state.startX) * 0.18;
+      const fallbackVy = (event.clientY - state.startY) * 0.18;
+      state.vx = (releaseSpeed > 0.1 ? state.releaseVx : fallbackVx) * 1.12;
+      state.vy = (releaseSpeed > 0.1 ? state.releaseVy : fallbackVy) * 1.12;
+    }
+    state.element.classList.remove("is-dragging");
+    if (state.element.hasPointerCapture?.(event.pointerId)) state.element.releasePointerCapture(event.pointerId);
+    state.element.dataset.dragMoved = state.moved ? "true" : "false";
+    return true;
+  };
 
   portfolioPucks.forEach((puck) => {
     const state = puckPhysicsState.pucks.find((item) => item.element === puck);
@@ -914,6 +953,8 @@ function initializePuckDragging() {
       state.startY = event.clientY;
       state.previousClientX = event.clientX;
       state.previousClientY = event.clientY;
+      state.releaseVx = 0;
+      state.releaseVy = 0;
       state.pointerOffsetX = event.clientX - puckRect.left - puckRect.width / 2;
       state.pointerOffsetY = event.clientY - puckRect.top - puckRect.height / 2;
       state.vx = 0;
@@ -926,33 +967,11 @@ function initializePuckDragging() {
     });
 
     puck.addEventListener("pointermove", (event) => {
-      if (!state.dragging || state.pointerId !== event.pointerId || !field) return;
-      const movedDistance = Math.hypot(event.clientX - state.startX, event.clientY - state.startY);
-      const fieldRect = field.getBoundingClientRect();
-      state.moved = state.moved || movedDistance > 3;
-      state.vx = event.clientX - state.previousClientX;
-      state.vy = event.clientY - state.previousClientY;
-      state.previousClientX = event.clientX;
-      state.previousClientY = event.clientY;
-      setPuckPosition(
-        state,
-        event.clientX - fieldRect.left - state.pointerOffsetX,
-        event.clientY - fieldRect.top - state.pointerOffsetY
-      );
-      if (Math.hypot(state.vx, state.vy) > 0.2) {
-        const center = getPuckCenterClient(state);
-        applyLineSmudgeAt(center.x, center.y - fieldRect.top, state.vx, state.vy, 0.46);
-      }
+      if (updateDragFromEvent(state, event)) event.puckDragHandled = true;
     });
 
     const finishDrag = (event) => {
-      if (!state.dragging || state.pointerId !== event.pointerId) return;
-      lineState.pointer.active = false;
-      state.dragging = false;
-      state.pointerId = null;
-      puck.classList.remove("is-dragging");
-      if (puck.hasPointerCapture(event.pointerId)) puck.releasePointerCapture(event.pointerId);
-      puck.dataset.dragMoved = state.moved ? "true" : "false";
+      if (finishDragForState(state, event)) event.puckDragFinished = true;
     };
 
     puck.addEventListener("pointerup", finishDrag);
@@ -963,6 +982,24 @@ function initializePuckDragging() {
         puck.dataset.dragMoved = "false";
       }
     });
+  });
+
+  window.addEventListener("pointermove", (event) => {
+    if (event.puckDragHandled) return;
+    const state = puckPhysicsState.pucks.find((item) => item.dragging && item.pointerId === event.pointerId);
+    if (state) updateDragFromEvent(state, event);
+  });
+
+  window.addEventListener("pointerup", (event) => {
+    if (event.puckDragFinished) return;
+    const state = puckPhysicsState.pucks.find((item) => item.dragging && item.pointerId === event.pointerId);
+    if (state) finishDragForState(state, event);
+  });
+
+  window.addEventListener("pointercancel", (event) => {
+    if (event.puckDragFinished) return;
+    const state = puckPhysicsState.pucks.find((item) => item.dragging && item.pointerId === event.pointerId);
+    if (state) finishDragForState(state, event);
   });
 
   if (!puckPhysicsState.animationStarted) {

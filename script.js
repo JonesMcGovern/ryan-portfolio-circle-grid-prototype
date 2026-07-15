@@ -1105,14 +1105,15 @@ function getDropCapMarkup(text = "") {
 
 function setVideoSource(video, source, options = {}) {
   if (!video || !source) return;
-  video.src = source;
-  video.muted = Boolean(options.muted);
+  video.muted = Boolean(options.muted || options.autoplay);
   video.loop = Boolean(options.loop);
+  video.autoplay = Boolean(options.autoplay);
   video.playsInline = true;
   video.setAttribute("playsinline", "");
+  if (options.preload) video.preload = options.preload;
+  video.src = source;
   if (options.autoplay) {
-    video.autoplay = true;
-    video.muted = true;
+    video.load();
     video.play().catch(() => {});
   }
   if (options.poster) video.poster = options.poster;
@@ -1275,7 +1276,10 @@ function hydrateProjectPage() {
   }
 
   const mainVideo = document.querySelector("[data-project-video]");
-  setVideoSource(mainVideo, project.videoSrc, { poster: project.posterSrc, muted: false, loop: Boolean(project.loopVideo) });
+  const mainVideoOptions = key === "skimm-money-newsletter"
+    ? { muted: true, loop: true, autoplay: true, preload: "auto" }
+    : { poster: project.posterSrc, muted: false, loop: Boolean(project.loopVideo) };
+  setVideoSource(mainVideo, project.videoSrc, mainVideoOptions);
   document.querySelector(".project-media-frame")?.classList.toggle("has-video", Boolean(project.videoSrc));
   setVideoSource(document.querySelector("[data-project-secondary-video]"), project.secondaryVideoSrc, { muted: true, loop: true, autoplay: true });
 

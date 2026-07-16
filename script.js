@@ -437,9 +437,15 @@ function getCssNumber(name, fallback) {
   return Number.isFinite(value) ? value : fallback;
 }
 
-function drawLineField() {
+function drawLineField({ preserveDisplacement = false } = {}) {
   if (!canvas || !context || !field) return;
   const rect = field.getBoundingClientRect();
+  const previousLines = preserveDisplacement ? lineState.lines : null;
+  const previousLineStep = lineState.lineStep || 1;
+  const previousSegmentStep = previousLines?.[0]?.[1]
+    ? Math.max(previousLines[0][1].y - previousLines[0][0].y, 1)
+    : 1;
+  const previousFirstX = previousLines?.[0]?.[0]?.baseX ?? previousLines?.[0]?.[0]?.x ?? 0;
   lineState.dpr = Math.min(window.devicePixelRatio || 1, 2);
   lineState.height = Math.max(rect.height, 1);
   lineState.width = Math.max(window.innerWidth, rect.width, 1);
@@ -462,11 +468,44 @@ function drawLineField() {
   lineState.lines = Array.from({ length: columns }, (_, column) => {
     const x = rect.left + column * lineState.lineStep + lineState.stroke / 2;
     return Array.from({ length: rows }, (_, row) => ({
-      x,
+      baseX: x,
+      x: x + getPreservedLineOffset(previousLines, previousFirstX, previousLineStep, previousSegmentStep, x, row * segmentStep),
       y: Math.min(row * segmentStep, lineState.height),
       vx: 0,
     }));
   });
+}
+
+function getPreservedLineOffset(previousLines, previousFirstX, previousLineStep, previousSegmentStep, x, y) {
+  if (!previousLines?.length) return 0;
+  const column = Math.round((x - previousFirstX) / previousLineStep);
+  const previousLine = previousLines[Math.min(Math.max(column, 0), previousLines.length - 1)];
+  if (!previousLine?.length) return 0;
+  const row = Math.round(y / previousSegmentStep);
+  const point = previousLine[Math.min(Math.max(row, 0), previousLine.length - 1)];
+  if (!point) return 0;
+  const baseX = point.baseX ?? previousFirstX + column * previousLineStep;
+  return point.x - baseX;
+}
+
+function drawLineFieldIfLayoutChanged() {
+  if (!field) return;
+  const rect = field.getBoundingClientRect();
+  const nextWidth = Math.max(window.innerWidth, rect.width, 1);
+  const nextHeight = Math.max(rect.height, 1);
+  const nextCanvasLeft = rect.left * -1;
+  const nextDpr = Math.min(window.devicePixelRatio || 1, 2);
+  const nextLineStep = Math.max(4, getCssNumber("--line-step", 6));
+  const nextStroke = Math.max(1, getCssNumber("--stroke", 1));
+  const hasLayoutChanged =
+    Math.abs(nextWidth - lineState.width) > 1 ||
+    Math.abs(nextHeight - lineState.height) > 1 ||
+    Math.abs(nextCanvasLeft - lineState.canvasLeft) > 1 ||
+    Math.abs(nextDpr - lineState.dpr) > 0.01 ||
+    Math.abs(nextLineStep - lineState.lineStep) > 0.01 ||
+    Math.abs(nextStroke - lineState.stroke) > 0.01;
+
+  if (hasLayoutChanged) drawLineField({ preserveDisplacement: true });
 }
 
 function setLinePointerFromClient(clientX, clientY, activate = true) {
@@ -2516,7 +2555,7 @@ window.addEventListener("resize", () => {
   syncVisualViewportWidth();
   scheduleMarqueeFill();
   syncPuckStateFromDom();
-  drawLineField();
+  drawLineFieldIfLayoutChanged();
   buildShapeField();
   updateHeaderScrollState();
   stabilizeMobileDropCaps();
@@ -2550,13 +2589,13 @@ document.fonts?.ready.then(() => {
   fillMarquees();
   updateHeaderScrollState();
   syncPuckStateFromDom();
-  drawLineField();
+  drawLineFieldIfLayoutChanged();
   stabilizeMobileDropCaps();
 });
 window.addEventListener("load", () => {
   fillMarquees();
   syncPuckStateFromDom();
-  drawLineField();
+  drawLineFieldIfLayoutChanged();
   updateHeaderScrollState();
   stabilizeMobileDropCaps();
 });

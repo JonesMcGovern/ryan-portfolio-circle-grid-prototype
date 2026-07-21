@@ -132,7 +132,7 @@ function initializeCylinderStage(stage) {
   });
 
   function syncWireColor() {
-    const lineColor = new THREE.Color(getCssColor("--line", "#f1975b"));
+    const lineColor = new THREE.Color(getCssColor("--line", "#F77F3F"));
     primaryMaterial.color.copy(lineColor);
     secondaryMaterial.color.copy(lineColor);
     accentMaterial.color.copy(lineColor);

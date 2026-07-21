@@ -25,7 +25,7 @@ const lineState = {
   lineStep: 6,
   stroke: 1,
   canvasLeft: 0,
-  color: "#f1975b",
+  color: "#F77F3F",
   lines: [],
   pointer: {
     active: false,
@@ -451,7 +451,7 @@ function drawLineField({ preserveDisplacement = false } = {}) {
   lineState.width = Math.max(window.innerWidth, rect.width, 1);
   lineState.lineStep = Math.max(4, getCssNumber("--line-step", 6));
   lineState.stroke = Math.max(1, getCssNumber("--stroke", 1));
-  lineState.color = getCssColor("--line", "#f1975b");
+  lineState.color = getCssColor("--line", "#F77F3F");
   lineState.canvasLeft = rect.left * -1;
 
   canvas.width = Math.round(lineState.width * lineState.dpr);
@@ -1160,6 +1160,46 @@ function revealHomePucks() {
   if (!portfolioPucks.length) return;
   document.querySelectorAll("[data-puck-lottie].is-lottie-ready").forEach((target) => {
     target.closest(".portfolio-puck")?.classList.add("is-puck-ready");
+  });
+  document.querySelectorAll(".puck-video.is-video-ready").forEach((target) => {
+    target.closest(".portfolio-puck")?.classList.add("is-puck-ready");
+  });
+}
+
+function initializePuckVideos() {
+  const videos = document.querySelectorAll(".puck-video");
+  if (!videos.length) return;
+
+  videos.forEach((video) => {
+    if (video.dataset.videoInitialized === "true") return;
+    video.dataset.videoInitialized = "true";
+    video.muted = true;
+    video.loop = true;
+    video.playsInline = true;
+    video.setAttribute("muted", "");
+    video.setAttribute("loop", "");
+    video.setAttribute("playsinline", "");
+    video.setAttribute("webkit-playsinline", "");
+
+    const puck = video.closest(".portfolio-puck");
+    const markReady = () => {
+      if (video.classList.contains("is-video-ready")) return;
+      if (puck?.classList.contains("portfolio-puck-one")) {
+        prepareIntroPuckSlide();
+      }
+      video.classList.add("is-video-ready");
+      puck?.classList.add("is-puck-ready");
+      video.play?.().catch(() => {});
+      if (puck?.classList.contains("portfolio-puck-one")) {
+        const slideDelay = window.matchMedia("(max-width: 700px)").matches ? 1780 : 860;
+        window.setTimeout(runIntroPuckSlide, slideDelay);
+      }
+    };
+
+    video.addEventListener("loadeddata", markReady, { once: true });
+    video.addEventListener("canplay", markReady, { once: true });
+    if (video.readyState >= 2) markReady();
+    window.setTimeout(markReady, 900);
   });
 }
 
@@ -2576,13 +2616,13 @@ initializePalette();
 hydrateProjectPage();
 initializeSiteMenu();
 hydrateSecondaryProjectPreviews();
-initializePuckLottieIcons();
 initializePuckDragging();
 initializeLineField();
 initializeShapeField();
 initializeShapePreviewFields();
 updateHeaderScrollState();
 revealHomePucks();
+initializePuckVideos();
 initializePlaygroundTypeLabels();
 window.setInterval(updateDataRail, 1000);
 document.fonts?.ready.then(() => {

@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Circular Drum Machine - Ryan Pattison</title>
+    <meta
+      name="description"
+      content="A hidden circular drum-machine playground by Ryan Pattison."
+    />
+    <meta name="robots" content="noindex" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./styles.css?v=circular-drum-machine-20260723ai" />
+    <script src="./script.js?v=menu-wheel-sequencer-20260723a" defer></script>
+  </head>
+  <body class="palette-enter playground-page drum-page is-scrolled">
+    <main class="page playground-shell" aria-label="Ryan Pattison circular drum machine">
+      <header class="masthead">
+        <div class="masthead-copy">
+          <h1>
+            <a class="home-link" href="./index.html">
+              <span class="title-full">RYAN PATTISON</span>
+              <span class="title-compact" aria-hidden="true">R_P</span>
+            </a>
+          </h1>
+          <p>Motion Design, Graphic Design, and Visual Direction</p>
+        </div>
+        <nav class="site-nav" aria-label="Site controls">
+          <button class="nav-menu" type="button" aria-label="Open site navigation" aria-expanded="false" aria-controls="site-menu-panel">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </nav>
+      </header>
+
+      <section class="drum-machine" aria-labelledby="drum-title">
+        <div class="drum-copy">
+          <h2 id="drum-title">Wheel Sequencer</h2>
+          <p>
+            Just start clicking random circles and then press play.
+          </p>
+        </div>
+
+        <section class="drum-stage" aria-label="Circular drum sequencer">
+          <div class="drum-wheel-field">
+            <div class="drum-synth-stack" aria-label="Four-bar synth chord sequence">
+              <div class="drum-synth-cell is-active" data-synth-cell="0">
+                <div class="drum-dial drum-dial-synth" data-drum-dial="synth-0">
+                  <div class="drum-playhead" aria-hidden="true">
+                    <span class="drum-playhead-dot"></span>
+                  </div>
+                  <div class="drum-orbit" data-drum-orbit="synth-0">
+                    <div class="drum-ring drum-ring-pad" data-drum-ring="pad" aria-hidden="true"></div>
+                    <div class="drum-ring drum-ring-lead" data-drum-ring="lead" aria-hidden="true"></div>
+                    <svg class="drum-pad-layer" data-drum-pad-layer="synth-0" aria-label="Pad sequencer steps"></svg>
+                  </div>
+                  <span class="drum-orbit-label drum-orbit-label-pad" aria-hidden="true">Pad</span>
+                  <span class="drum-orbit-label drum-orbit-label-lead" aria-hidden="true">Lead</span>
+                  <label class="drum-center drum-center-synth drum-chord-select">
+                    <span>01</span>
+                    <select data-synth-chord="0">
+                      <option value="Am" selected>Am</option>
+                      <option value="F">F</option>
+                      <option value="C">C</option>
+                      <option value="G">G</option>
+                      <option value="Dm">Dm</option>
+                      <option value="Em">Em</option>
+                    </select>
+                  </label>
+                </div>
+              </div>
+
+              <div class="drum-synth-cell" data-synth-cell="1">
+                <div class="drum-dial drum-dial-synth" data-drum-dial="synth-1">
+                  <div class="drum-playhead" aria-hidden="true">
+                    <span class="drum-playhead-dot"></span>
+                  </div>
+                  <div class="drum-orbit" data-drum-orbit="synth-1">
+                    <div class="drum-ring drum-ring-pad" data-drum-ring="pad" aria-hidden="true"></div>
+                    <div class="drum-ring drum-ring-lead" data-drum-ring="lead" aria-hidden="true"></div>
+                    <svg class="drum-pad-layer" data-drum-pad-layer="synth-1" aria-label="Pad sequencer steps"></svg>
+                  </div>
+                  <span class="drum-orbit-label drum-orbit-label-pad" aria-hidden="true">Pad</span>
+                  <span class="drum-orbit-label drum-orbit-label-lead" aria-hidden="true">Lead</span>
+                  <label class="drum-center drum-center-synth drum-chord-select">
+                    <span>02</span>
+                    <select data-synth-chord="1">
+                      <option value="Am">Am</option>
+                      <option value="F" selected>F</option>
+                      <option value="C">C</option>
+                      <option value="G">G</option>
+                      <option value="Dm">Dm</option>
+                      <option value="Em">Em</option>
+                    </select>
+                  </label>
+                </div>
+              </div>
+
+              <div class="drum-synth-cell" data-synth-cell="2">
+                <div class="drum-dial drum-dial-synth" data-drum-dial="synth-2">
+                  <div class="drum-playhead" aria-hidden="true">
+                    <span class="drum-playhead-dot"></span>
+                  </div>
+                  <div class="drum-orbit" data-drum-orbit="synth-2">
+                    <div class="drum-ring drum-ring-pad" data-drum-ring="pad" aria-hidden="true"></div>
+                    <div class="drum-ring drum-ring-lead" data-drum-ring="lead" aria-hidden="true"></div>
+                    <svg class="drum-pad-layer" data-drum-pad-layer="synth-2" aria-label="Pad sequencer steps"></svg>
+                  </div>
+                  <span class="drum-orbit-label drum-orbit-label-pad" aria-hidden="true">Pad</span>
+                  <span class="drum-orbit-label drum-orbit-label-lead" aria-hidden="true">Lead</span>
+                  <label class="drum-center drum-center-synth drum-chord-select">
+                    <span>03</span>
+                    <select data-synth-chord="2">
+                      <option value="Am">Am</option>
+                      <option value="F">F</option>
+                      <option value="C" selected>C</option>
+                      <option value="G">G</option>
+                      <option value="Dm">Dm</option>
+                      <option value="Em">Em</option>
+                    </select>
+                  </label>
+                </div>
+              </div>
+
+              <div class="drum-synth-cell" data-synth-cell="3">
+                <div class="drum-dial drum-dial-synth" data-drum-dial="synth-3">
+                  <div class="drum-playhead" aria-hidden="true">
+                    <span class="drum-playhead-dot"></span>
+                  </div>
+                  <div class="drum-orbit" data-drum-orbit="synth-3">
+                    <div class="drum-ring drum-ring-pad" data-drum-ring="pad" aria-hidden="true"></div>
+                    <div class="drum-ring drum-ring-lead" data-drum-ring="lead" aria-hidden="true"></div>
+                    <svg class="drum-pad-layer" data-drum-pad-layer="synth-3" aria-label="Pad sequencer steps"></svg>
+                  </div>
+                  <span class="drum-orbit-label drum-orbit-label-pad" aria-hidden="true">Pad</span>
+                  <span class="drum-orbit-label drum-orbit-label-lead" aria-hidden="true">Lead</span>
+                  <label class="drum-center drum-center-synth drum-chord-select">
+                    <span>04</span>
+                    <select data-synth-chord="3">
+                      <option value="Am">Am</option>
+                      <option value="F">F</option>
+                      <option value="C">C</option>
+                      <option value="G" selected>G</option>
+                      <option value="Dm">Dm</option>
+                      <option value="Em">Em</option>
+                    </select>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="drum-dial drum-dial-drums" data-drum-dial="drums">
+              <div class="drum-playhead" aria-hidden="true">
+                <span class="drum-playhead-dot"></span>
+              </div>
+              <div class="drum-orbit" data-drum-orbit="drums">
+                <div class="drum-ring drum-ring-kick" data-drum-ring="kick" aria-hidden="true"></div>
+                <div class="drum-ring drum-ring-snare" data-drum-ring="snare" aria-hidden="true"></div>
+                <div class="drum-ring drum-ring-hat" data-drum-ring="hat" aria-hidden="true"></div>
+                <div class="drum-ring drum-ring-tom" data-drum-ring="tom" aria-hidden="true"></div>
+              </div>
+              <svg class="drum-label-layer" data-drum-label-layer="drums" aria-hidden="true"></svg>
+              <span class="drum-orbit-label drum-orbit-label-kick" aria-hidden="true">B. Drum</span>
+              <span class="drum-orbit-label drum-orbit-label-snare" aria-hidden="true">Snare</span>
+              <span class="drum-orbit-label drum-orbit-label-hat" aria-hidden="true">H. Hat</span>
+              <span class="drum-orbit-label drum-orbit-label-tom" aria-hidden="true">Tom</span>
+              <div class="drum-center">
+                <button class="drum-transport" type="button" data-drum-play aria-label="Play"></button>
+                <span class="drum-center-glyph" aria-hidden="true">
+                  <span class="drum-center-play"></span>
+                  <span class="drum-center-pause"></span>
+                </span>
+              </div>
+            </div>
+            <div class="drum-controls" aria-label="Sequencer controls">
+              <button class="drum-random" type="button" data-drum-random aria-label="Randomize pattern">
+                <span class="drum-control-icon drum-control-icon-random" aria-hidden="true"></span>
+              </button>
+              <button class="drum-clear" type="button" data-drum-clear aria-label="Clear pattern">
+                <span class="drum-control-icon drum-control-icon-clear" aria-hidden="true"></span>
+              </button>
+              <label class="drum-range">
+                <span><span data-drum-tempo>112</span><span>BPM</span></span>
+                <input type="range" min="72" max="148" value="112" step="1" data-drum-bpm />
+                <span class="drum-range-meter" aria-hidden="true">
+                  <span class="drum-range-fill"></span>
+                  <span class="drum-range-thumb"></span>
+                </span>
+              </label>
+            </div>
+          </div>
+        </section>
+      </section>
+    </main>
+    <span class="mobile-menu-mark" aria-hidden="true">
+      <span></span>
+      <span></span>
+      <span></span>
+    </span>
+
+    <script>
+      (() => {
+        const wheels = Array.from(document.querySelectorAll("[data-drum-dial]")).reduce((map, dial) => {
+          const id = dial.dataset.drumDial;
+          map[id] = {
+            dial,
+            orbit: document.querySelector(`[data-drum-orbit="${id}"]`),
+            padLayer: document.querySelector(`[data-drum-pad-layer="${id}"]`),
+            labelLayer: document.querySelector(`[data-drum-label-layer="${id}"]`),
+          };
+          return map;
+        }, {});
+        Object.values(wheels).forEach((wheel) => {
+          const haloOrbit = document.createElement("div");
+          const noteOrbit = document.createElement("div");
+          haloOrbit.className = "drum-halo-orbit";
+          noteOrbit.className = "drum-note-orbit";
+          wheel.dial.append(haloOrbit, noteOrbit);
+          wheel.haloOrbit = haloOrbit;
+          wheel.noteOrbit = noteOrbit;
+        });
+        const playButton = document.querySelector("[data-drum-play]");
+        const clearButton = document.querySelector("[data-drum-clear]");
+        const randomButton = document.querySelector("[data-drum-random]");
+        const bpmInput = document.querySelector("[data-drum-bpm]");
+        const tempoLabel = document.querySelector("[data-drum-tempo]");
+        const tempoControl = document.querySelector(".drum-range");
+        const synthCells = Array.from(document.querySelectorAll("[data-synth-cell]"));
+        const chordSelectors = Array.from(document.querySelectorAll("[data-synth-chord]"));
+        if (!wheels.drums?.dial || !wheels["synth-0"]?.dial || !playButton || !bpmInput || !tempoLabel) return;
+
+        const chordVoicings = {
+          Am: [220, 261.63, 329.63],
+          F: [174.61, 220, 261.63],
+          C: [196, 261.63, 329.63],
+          G: [196, 246.94, 293.66],
+          Dm: [146.83, 174.61, 220],
+          Em: [164.81, 196, 246.94],
+        };
+        const leadVoicings = {
+          Am: [440, 523.25, 659.25, 880, 659.25, 523.25, 587.33, 783.99, 880, 783.99, 659.25, 587.33, 523.25, 587.33, 659.25, 523.25],
+          F: [349.23, 440, 523.25, 698.46, 523.25, 440, 392, 659.25, 698.46, 659.25, 523.25, 440, 392, 440, 523.25, 440],
+          C: [392, 523.25, 659.25, 783.99, 659.25, 523.25, 440, 659.25, 783.99, 659.25, 523.25, 440, 392, 440, 523.25, 659.25],
+          G: [392, 493.88, 587.33, 783.99, 587.33, 493.88, 440, 659.25, 783.99, 659.25, 587.33, 493.88, 440, 493.88, 587.33, 493.88],
+          Dm: [293.66, 349.23, 440, 587.33, 440, 349.23, 392, 523.25, 587.33, 523.25, 440, 392, 349.23, 392, 440, 349.23],
+          Em: [329.63, 392, 493.88, 659.25, 493.88, 392, 440, 587.33, 659.25, 587.33, 493.88, 440, 392, 440, 493.88, 392],
+        };
+        const synthChord = (bar) => chordSelectors[bar]?.value || "Am";
+        let activeSynthBar = 0;
+
+        const instruments = [
+          {
+            id: "kick",
+            label: "bass drum",
+            wheel: "drums",
+            radius: 0.46,
+            pattern: Array.from({ length: 16 }, (_, index) => [0, 4, 8, 12].includes(index)),
+          },
+          {
+            id: "snare",
+            label: "snare",
+            wheel: "drums",
+            radius: 0.71,
+            pattern: Array.from({ length: 16 }, (_, index) => [4, 12].includes(index)),
+          },
+          {
+            id: "hat",
+            label: "hi-hat",
+            wheel: "drums",
+            radius: 0.96,
+            pattern: Array.from({ length: 16 }, (_, index) => index % 2 === 0),
+          },
+          {
+            id: "tom",
+            label: "tom",
+            wheel: "drums",
+            radius: 1.21,
+            pattern: Array.from({ length: 16 }, (_, index) => [6, 14].includes(index)),
+          },
+          {
+            id: "pad-0",
+            label: "pad 1",
+            group: "pad",
+            wheel: "synth-0",
+            radius: 0.92,
+            type: "arc",
+            bar: 0,
+            pattern: Array.from({ length: 16 }, (_, index) => [1, 2, 3, 9, 10, 11].includes(index)),
+          },
+          {
+            id: "lead-0",
+            label: "lead synth 1",
+            group: "lead",
+            wheel: "synth-0",
+            radius: 0.66,
+            bar: 0,
+            pattern: Array.from({ length: 16 }, (_, index) => [0, 3, 7, 10, 14].includes(index)),
+          },
+          {
+            id: "pad-1",
+            label: "pad 2",
+            group: "pad",
+            wheel: "synth-1",
+            radius: 0.92,
+            type: "arc",
+            bar: 1,
+            pattern: Array.from({ length: 16 }, (_, index) => [0, 1, 2, 8, 9, 10].includes(index)),
+          },
+          {
+            id: "lead-1",
+            label: "lead synth 2",
+            group: "lead",
+            wheel: "synth-1",
+            radius: 0.66,
+            bar: 1,
+            pattern: Array.from({ length: 16 }, (_, index) => [2, 5, 9, 13].includes(index)),
+          },
+          {
+            id: "pad-2",
+            label: "pad 3",
+            group: "pad",
+            wheel: "synth-2",
+            radius: 0.92,
+            type: "arc",
+            bar: 2,
+            pattern: Array.from({ length: 16 }, (_, index) => [3, 4, 5, 11, 12, 13].includes(index)),
+          },
+          {
+            id: "lead-2",
+            label: "lead synth 3",
+            group: "lead",
+            wheel: "synth-2",
+            radius: 0.66,
+            bar: 2,
+            pattern: Array.from({ length: 16 }, (_, index) => [1, 6, 8, 11, 15].includes(index)),
+          },
+          {
+            id: "pad-3",
+            label: "pad 4",
+            group: "pad",
+            wheel: "synth-3",
+            radius: 0.92,
+            type: "arc",
+            bar: 3,
+            pattern: Array.from({ length: 16 }, (_, index) => [0, 1, 7, 8, 14, 15].includes(index)),
+          },
+          {
+            id: "lead-3",
+            label: "lead synth 4",
+            group: "lead",
+            wheel: "synth-3",
+            radius: 0.66,
+            bar: 3,
+            pattern: Array.from({ length: 16 }, (_, index) => [0, 4, 7, 12].includes(index)),
+          },
+        ];
+        const slots = [];
+        let audioContext = null;
+        let isPlaying = false;
+        let currentStep = 0;
+        let nextStepTime = 0;
+        let schedulerId = 0;
+        let visualFrameId = 0;
+        let visualLastTime = 0;
+        let visualStepPosition = 0;
+        let dragPaint = null;
+        let hasScheduledAudio = false;
+
+        const polarPoint = (center, radius, angle) => {
+          const radians = angle * Math.PI / 180;
+          return {
+            x: center + Math.cos(radians) * radius,
+            y: center + Math.sin(radians) * radius,
+          };
+        };
+
+        const arcPath = (center, radius, startAngle, endAngle) => {
+          const start = polarPoint(center, radius, startAngle);
+          const end = polarPoint(center, radius, endAngle);
+          const largeArc = Math.abs(endAngle - startAngle) > 180 ? 1 : 0;
+          return `M ${start.x} ${start.y} A ${radius} ${radius} 0 ${largeArc} 1 ${end.x} ${end.y}`;
+        };
+
+        const capsuleArcPath = (center, radius, startAngle, endAngle, width) => {
+          const innerRadius = radius - width / 2;
+          const outerRadius = radius + width / 2;
+          const capRadius = width / 2;
+          const outerStart = polarPoint(center, outerRadius, startAngle);
+          const outerEnd = polarPoint(center, outerRadius, endAngle);
+          const innerEnd = polarPoint(center, innerRadius, endAngle);
+          const innerStart = polarPoint(center, innerRadius, startAngle);
+          const largeArc = Math.abs(endAngle - startAngle) > 180 ? 1 : 0;
+          return [
+            `M ${outerStart.x} ${outerStart.y}`,
+            `A ${outerRadius} ${outerRadius} 0 ${largeArc} 1 ${outerEnd.x} ${outerEnd.y}`,
+            `A ${capRadius} ${capRadius} 0 0 1 ${innerEnd.x} ${innerEnd.y}`,
+            `A ${innerRadius} ${innerRadius} 0 ${largeArc} 0 ${innerStart.x} ${innerStart.y}`,
+            `A ${capRadius} ${capRadius} 0 0 1 ${outerStart.x} ${outerStart.y}`,
+            "Z",
+          ].join(" ");
+        };
+
+        const segmentHitPath = (center, radius, startAngle, endAngle, width) => {
+          const innerRadius = radius - width / 2;
+          const outerRadius = radius + width / 2;
+          const outerStart = polarPoint(center, outerRadius, startAngle);
+          const outerEnd = polarPoint(center, outerRadius, endAngle);
+          const innerEnd = polarPoint(center, innerRadius, endAngle);
+          const innerStart = polarPoint(center, innerRadius, startAngle);
+          const largeArc = Math.abs(endAngle - startAngle) > 180 ? 1 : 0;
+          return [
+            `M ${outerStart.x} ${outerStart.y}`,
+            `A ${outerRadius} ${outerRadius} 0 ${largeArc} 1 ${outerEnd.x} ${outerEnd.y}`,
+            `L ${innerEnd.x} ${innerEnd.y}`,
+            `A ${innerRadius} ${innerRadius} 0 ${largeArc} 0 ${innerStart.x} ${innerStart.y}`,
+            "Z",
+          ].join(" ");
+        };
+
+        const normalizeStep = (step) => (step + 16) % 16;
+
+        const drumLabelConfig = [
+          { id: "kick", label: "Kick", radius: 0.585 },
+          { id: "snare", label: "Snare", radius: 0.835 },
+          { id: "hat", label: "Hi-Hat", radius: 1.085 },
+          { id: "tom", label: "Tom", radius: 1.315 },
+        ];
+
+        const padSegmentAngles = (instrument, index) => {
+          const isActive = instrument.pattern[index];
+          const previousActive = instrument.pattern[normalizeStep(index - 1)];
+          const nextActive = instrument.pattern[normalizeStep(index + 1)];
+          const inactiveGap = 4.8;
+          const activeBoundaryGap = 3.1;
+          const activeJoinOverlap = -0.25;
+          const startGap = isActive && previousActive ? activeJoinOverlap : isActive ? activeBoundaryGap : inactiveGap;
+          const endGap = isActive && nextActive ? activeJoinOverlap : isActive ? activeBoundaryGap : inactiveGap;
+          return {
+            startAngle: index * 22.5 + startGap,
+            endAngle: (index + 1) * 22.5 - endGap,
+          };
+        };
+
+        const setArcSlotGeometry = (instrument, index) => {
+          const slot = slots.find((item) => item.instrument === instrument && item.index === index)?.button;
+          const wheel = wheels[instrument.wheel];
+          if (!slot || !wheel?.dial) return;
+          const dialSize = wheel.dial.offsetWidth;
+          const center = dialSize / 2;
+          const radius = center * instrument.radius;
+          const { startAngle, endAngle } = padSegmentAngles(instrument, index);
+          const visiblePath = slot.querySelector(".drum-pad-visual");
+          const hitPath = slot.querySelector(".drum-pad-hit");
+          wheel.padLayer?.setAttribute("viewBox", `0 0 ${dialSize} ${dialSize}`);
+          visiblePath?.setAttribute("d", capsuleArcPath(center, radius, startAngle, endAngle, dialSize * 0.034));
+          hitPath?.setAttribute("d", segmentHitPath(center, radius, index * 22.5 + 1.2, (index + 1) * 22.5 - 1.2, dialSize * 0.08));
+        };
+
+        const renderDrumLabels = () => {
+          const wheel = wheels.drums;
+          if (!wheel?.dial || !wheel.labelLayer) return;
+          const namespace = "http://www.w3.org/2000/svg";
+          const xlinkNamespace = "http://www.w3.org/1999/xlink";
+          const dialSize = wheel.dial.offsetWidth;
+          const center = dialSize / 2;
+          const labelLayer = wheel.labelLayer;
+          labelLayer.setAttribute("viewBox", `0 0 ${dialSize} ${dialSize}`);
+          labelLayer.innerHTML = "";
+
+          const defs = document.createElementNS(namespace, "defs");
+          labelLayer.append(defs);
+          drumLabelConfig.forEach(({ id, label, radius }) => {
+            const pathId = `drum-label-path-${id}`;
+            const path = document.createElementNS(namespace, "path");
+            const text = document.createElementNS(namespace, "text");
+            const textPath = document.createElementNS(namespace, "textPath");
+            path.setAttribute("id", pathId);
+            path.setAttribute("d", arcPath(center, center * radius, 250, 290));
+            defs.append(path);
+            textPath.setAttribute("href", `#${pathId}`);
+            textPath.setAttributeNS(xlinkNamespace, "href", `#${pathId}`);
+            textPath.setAttribute("startOffset", "50%");
+            textPath.setAttribute("text-anchor", "middle");
+            textPath.textContent = label;
+            text.append(textPath);
+            labelLayer.append(text);
+          });
+        };
+
+        const setPatternStep = (instrument, index, value, preview = true) => {
+          if (instrument.pattern[index] === value) return;
+          instrument.pattern[index] = value;
+          if (value && preview) {
+            ensureAudio();
+            playInstrument(instrument, index, audioContext.currentTime + 0.01, 0.72, 60 / Number(bpmInput.value) / 4);
+          }
+          renderStep(instrument, index);
+        };
+
+        const startPaint = (instrument, index, event) => {
+          if (event.button != null && event.button !== 0) return;
+          event.preventDefault();
+          const value = !instrument.pattern[index];
+          dragPaint = {
+            pointerId: event.pointerId,
+            value,
+          };
+          setPatternStep(instrument, index, value, true);
+        };
+
+        const paintStep = (instrument, index, event) => {
+          if (!dragPaint || dragPaint.pointerId !== event.pointerId) return;
+          setPatternStep(instrument, index, dragPaint.value, true);
+        };
+
+        const endPaint = (event) => {
+          if (!dragPaint || dragPaint.pointerId !== event.pointerId) return;
+          dragPaint = null;
+        };
+
+        const movePaint = (event) => {
+          if (!dragPaint || dragPaint.pointerId !== event.pointerId) return;
+          const target = document.elementFromPoint(event.clientX, event.clientY)?.closest("[data-instrument][data-step]");
+          if (!target) return;
+          const instrument = instruments.find((item) => item.id === target.dataset.instrument);
+          const index = Number(target.dataset.step);
+          if (!instrument || Number.isNaN(index)) return;
+          setPatternStep(instrument, index, dragPaint.value, true);
+        };
+
+        document.addEventListener("pointermove", movePaint);
+        document.addEventListener("pointerup", endPaint);
+        document.addEventListener("pointercancel", endPaint);
+
+        const createSlot = (instrument, index) => {
+          const wheel = wheels[instrument.wheel];
+          if (!wheel?.orbit) return;
+          if (instrument.type === "arc") {
+            const group = document.createElementNS("http://www.w3.org/2000/svg", "g");
+            const hitPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
+            const visualPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
+            group.classList.add("drum-pad-segment", `drum-step-${instrument.id}`);
+            group.dataset.instrument = instrument.id;
+            group.dataset.step = String(index);
+            group.setAttribute("role", "button");
+            group.setAttribute("tabindex", "0");
+            group.setAttribute("aria-label", `${instrument.label} step ${index + 1}`);
+            hitPath.classList.add("drum-pad-hit");
+            visualPath.classList.add("drum-pad-visual");
+            group.append(hitPath, visualPath);
+            group.addEventListener("pointerdown", (event) => startPaint(instrument, index, event));
+            group.addEventListener("pointerenter", (event) => paintStep(instrument, index, event));
+            group.addEventListener("pointerup", endPaint);
+            group.addEventListener("pointercancel", endPaint);
+            group.addEventListener("keydown", (event) => {
+              if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                setPatternStep(instrument, index, !instrument.pattern[index], true);
+              }
+            });
+            wheel.padLayer?.append(group);
+            slots.push({ button: group, instrument, index });
+            return;
+          }
+
+          const halo = document.createElement("span");
+          halo.className = "drum-step-halo";
+          halo.setAttribute("aria-hidden", "true");
+          wheel.haloOrbit?.append(halo);
+          const button = document.createElement("button");
+          button.className = `drum-step drum-step-${instrument.id}`;
+          button.type = "button";
+          button.dataset.instrument = instrument.id;
+          button.dataset.step = String(index);
+          button.setAttribute("aria-label", `${instrument.label} step ${index + 1}`);
+          button.innerHTML = `<span class="drum-step-index">${String(index + 1).padStart(2, "0")}</span>`;
+          const setHoverState = (isHovered) => {
+            button.classList.toggle("is-hovered", isHovered);
+            halo.classList.toggle("is-hovered", isHovered);
+          };
+          button.addEventListener("pointerdown", (event) => startPaint(instrument, index, event));
+          button.addEventListener("pointerenter", (event) => {
+            setHoverState(true);
+            paintStep(instrument, index, event);
+          });
+          button.addEventListener("pointerleave", () => setHoverState(false));
+          button.addEventListener("pointerup", endPaint);
+          button.addEventListener("pointercancel", endPaint);
+          button.addEventListener("focus", () => setHoverState(true));
+          button.addEventListener("blur", () => setHoverState(false));
+          button.addEventListener("keydown", (event) => {
+            if (event.key === "Enter" || event.key === " ") {
+              event.preventDefault();
+              setPatternStep(instrument, index, !instrument.pattern[index], true);
+            }
+          });
+          wheel.noteOrbit?.append(button);
+          slots.push({ button, halo, instrument, index });
+        };
+
+        const renderStep = (instrument, index) => {
+          const slot = slots.find((item) => item.instrument === instrument && item.index === index)?.button;
+          if (!slot) return;
+          slot.classList.toggle("has-hit", instrument.pattern[index]);
+          slot.setAttribute("aria-label", `${instrument.label} step ${index + 1}${instrument.pattern[index] ? ": active" : ""}`);
+          if (instrument.type === "arc") {
+            setArcSlotGeometry(instrument, normalizeStep(index - 1));
+            setArcSlotGeometry(instrument, index);
+            setArcSlotGeometry(instrument, normalizeStep(index + 1));
+          }
+        };
+
+        const renderPattern = () => {
+          instruments.forEach((instrument) => {
+            instrument.pattern.forEach((_, index) => renderStep(instrument, index));
+          });
+        };
+
+        const positionSlots = () => {
+          renderDrumLabels();
+          slots.forEach(({ button, halo, instrument, index }) => {
+            const wheel = wheels[instrument.wheel];
+            if (!wheel?.dial) return;
+            const dialSize = wheel.dial.offsetWidth;
+            const center = dialSize / 2;
+            wheel.padLayer?.setAttribute("viewBox", `0 0 ${dialSize} ${dialSize}`);
+            if (instrument.type === "arc") {
+              setArcSlotGeometry(instrument, index);
+              return;
+            }
+            const angle = index * 22.5;
+            const radius = center * instrument.radius;
+            const { x, y } = polarPoint(center, radius, angle);
+            button.style.left = `${x}px`;
+            button.style.top = `${y}px`;
+            if (halo) {
+              halo.style.left = `${x}px`;
+              halo.style.top = `${y}px`;
+            }
+          });
+        };
+
+        const ensureAudio = () => {
+          if (!audioContext) {
+            audioContext = new (window.AudioContext || window.webkitAudioContext)();
+          }
+          if (audioContext.state === "suspended") audioContext.resume();
+        };
+
+        const envelope = (gain, time, peak, decay) => {
+          gain.gain.cancelScheduledValues(time);
+          gain.gain.setValueAtTime(0.0001, time);
+          gain.gain.exponentialRampToValueAtTime(peak, time + 0.006);
+          gain.gain.exponentialRampToValueAtTime(0.0001, time + decay);
+        };
+
+        const playKick = (time, volume) => {
+          const osc = audioContext.createOscillator();
+          const gain = audioContext.createGain();
+          osc.type = "sine";
+          osc.frequency.setValueAtTime(132, time);
+          osc.frequency.exponentialRampToValueAtTime(42, time + 0.16);
+          envelope(gain, time, 0.95 * volume, 0.26);
+          osc.connect(gain).connect(audioContext.destination);
+          osc.start(time);
+          osc.stop(time + 0.28);
+        };
+
+        const playSnare = (time, volume) => {
+          const noise = audioContext.createBufferSource();
+          const buffer = audioContext.createBuffer(1, audioContext.sampleRate * 0.26, audioContext.sampleRate);
+          const data = buffer.getChannelData(0);
+          for (let index = 0; index < data.length; index += 1) {
+            data[index] = Math.random() * 2 - 1;
+          }
+          const noiseFilter = audioContext.createBiquadFilter();
+          const noiseGain = audioContext.createGain();
+          noise.buffer = buffer;
+          noiseFilter.type = "bandpass";
+          noiseFilter.frequency.setValueAtTime(2300, time);
+          noiseFilter.Q.setValueAtTime(1.15, time);
+          envelope(noiseGain, time, 0.72 * volume, 0.16);
+          noise.connect(noiseFilter).connect(noiseGain).connect(audioContext.destination);
+          noise.start(time);
+          noise.stop(time + 0.2);
+
+          const crack = audioContext.createBufferSource();
+          const crackBuffer = audioContext.createBuffer(1, audioContext.sampleRate * 0.035, audioContext.sampleRate);
+          const crackData = crackBuffer.getChannelData(0);
+          for (let index = 0; index < crackData.length; index += 1) {
+            crackData[index] = Math.random() * 2 - 1;
+          }
+          const crackFilter = audioContext.createBiquadFilter();
+          const crackGain = audioContext.createGain();
+          crack.buffer = crackBuffer;
+          crackFilter.type = "highpass";
+          crackFilter.frequency.setValueAtTime(3600, time);
+          envelope(crackGain, time, 0.42 * volume, 0.035);
+          crack.connect(crackFilter).connect(crackGain).connect(audioContext.destination);
+          crack.start(time);
+          crack.stop(time + 0.05);
+
+          const body = audioContext.createOscillator();
+          const bodyGain = audioContext.createGain();
+          body.type = "triangle";
+          body.frequency.setValueAtTime(225, time);
+          body.frequency.exponentialRampToValueAtTime(142, time + 0.07);
+          envelope(bodyGain, time, 0.38 * volume, 0.1);
+          body.connect(bodyGain).connect(audioContext.destination);
+          body.start(time);
+          body.stop(time + 0.16);
+        };
+
+        const playHat = (time, volume) => {
+          const noise = audioContext.createBufferSource();
+          const buffer = audioContext.createBuffer(1, audioContext.sampleRate * 0.11, audioContext.sampleRate);
+          const data = buffer.getChannelData(0);
+          for (let index = 0; index < data.length; index += 1) {
+            data[index] = Math.random() * 2 - 1;
+          }
+          const noiseFilter = audioContext.createBiquadFilter();
+          const noiseGain = audioContext.createGain();
+          noise.buffer = buffer;
+          noiseFilter.type = "highpass";
+          noiseFilter.frequency.setValueAtTime(5200, time);
+          envelope(noiseGain, time, 0.34 * volume, 0.08);
+          noise.connect(noiseFilter).connect(noiseGain).connect(audioContext.destination);
+          noise.start(time);
+          noise.stop(time + 0.12);
+        };
+
+        const playTom = (time, volume) => {
+          const osc = audioContext.createOscillator();
+          const body = audioContext.createOscillator();
+          const gain = audioContext.createGain();
+          const bodyGain = audioContext.createGain();
+          osc.type = "sine";
+          body.type = "triangle";
+          osc.frequency.setValueAtTime(210, time);
+          osc.frequency.exponentialRampToValueAtTime(88, time + 0.2);
+          body.frequency.setValueAtTime(112, time);
+          body.frequency.exponentialRampToValueAtTime(76, time + 0.24);
+          envelope(gain, time, 0.58 * volume, 0.28);
+          envelope(bodyGain, time, 0.22 * volume, 0.22);
+          osc.connect(gain).connect(audioContext.destination);
+          body.connect(bodyGain).connect(audioContext.destination);
+          osc.start(time);
+          body.start(time);
+          osc.stop(time + 0.32);
+          body.stop(time + 0.3);
+        };
+
+        const playPad = (instrument, time, volume, duration) => {
+          const output = audioContext.createGain();
+          const filter = audioContext.createBiquadFilter();
+          const release = 0.18;
+          const frequencies = chordVoicings[synthChord(instrument.bar)] || chordVoicings.Am;
+          filter.type = "lowpass";
+          filter.frequency.setValueAtTime(1100, time);
+          filter.Q.setValueAtTime(0.8, time);
+          output.gain.setValueAtTime(0.0001, time);
+          output.gain.linearRampToValueAtTime(0.18 * volume, time + 0.08);
+          output.gain.setValueAtTime(0.16 * volume, time + Math.max(duration - release, 0.12));
+          output.gain.exponentialRampToValueAtTime(0.0001, time + duration + release);
+          filter.connect(output).connect(audioContext.destination);
+
+          frequencies.forEach((frequency) => {
+            const osc = audioContext.createOscillator();
+            const gain = audioContext.createGain();
+            osc.type = "sawtooth";
+            osc.frequency.setValueAtTime(frequency, time);
+            gain.gain.setValueAtTime(0.16 * volume, time);
+            osc.connect(gain).connect(filter);
+            osc.start(time);
+            osc.stop(time + duration + release + 0.02);
+          });
+        };
+
+        const countHeldSteps = (instrument, step) => {
+          let count = 0;
+          while (count < 16 && instrument.pattern[(step + count) % 16]) {
+            count += 1;
+          }
+          return count;
+        };
+
+        const shouldStartPad = (instrument, step) => {
+          if (instrument.pattern.every(Boolean)) return step === 0;
+          return instrument.pattern[step] && !instrument.pattern[(step + 15) % 16];
+        };
+
+        const playLead = (instrument, step, time, volume) => {
+          const notes = leadVoicings[synthChord(instrument.bar)] || leadVoicings.Am;
+          const frequency = notes[step] || 440;
+          const osc = audioContext.createOscillator();
+          const sub = audioContext.createOscillator();
+          const filter = audioContext.createBiquadFilter();
+          const gain = audioContext.createGain();
+          const subGain = audioContext.createGain();
+          osc.type = "sawtooth";
+          sub.type = "square";
+          osc.frequency.setValueAtTime(frequency, time);
+          sub.frequency.setValueAtTime(frequency / 2, time);
+          filter.type = "lowpass";
+          filter.frequency.setValueAtTime(3200, time);
+          filter.frequency.exponentialRampToValueAtTime(1050, time + 0.12);
+          filter.Q.setValueAtTime(5.5, time);
+          gain.gain.setValueAtTime(0.0001, time);
+          gain.gain.exponentialRampToValueAtTime(0.34 * volume, time + 0.003);
+          gain.gain.exponentialRampToValueAtTime(0.0001, time + 0.18);
+          subGain.gain.setValueAtTime(0.08 * volume, time);
+          osc.connect(filter);
+          sub.connect(subGain).connect(filter);
+          filter.connect(gain).connect(audioContext.destination);
+          osc.start(time);
+          sub.start(time);
+          osc.stop(time + 0.2);
+          sub.stop(time + 0.2);
+        };
+
+        const playInstrument = (instrument, step, time, volume, duration = 0.25) => {
+          if (instrument.id === "snare") {
+            playSnare(time, volume);
+          } else if (instrument.id === "hat") {
+            playHat(time, volume);
+          } else if (instrument.id === "tom") {
+            playTom(time, volume);
+          } else if (instrument.group === "pad") {
+            playPad(instrument, time, volume, duration);
+          } else if (instrument.group === "lead") {
+            playLead(instrument, step, time, volume);
+          } else {
+            playKick(time, volume);
+          }
+        };
+
+        const setActiveStep = (step) => {
+          slots.forEach(({ button, index }) => button.classList.toggle("is-active", index === step));
+        };
+
+        const setActiveSynthBar = (bar) => {
+          activeSynthBar = bar;
+          synthCells.forEach((cell) => {
+            cell.classList.toggle("is-active", Number(cell.dataset.synthCell) === activeSynthBar);
+          });
+        };
+
+        const animateOrbit = (timestamp) => {
+          if (!isPlaying) return;
+          if (!visualLastTime) visualLastTime = timestamp;
+          const elapsed = (timestamp - visualLastTime) / 1000;
+          const secondsPerStep = 60 / Number(bpmInput.value) / 4;
+          visualStepPosition = (visualStepPosition + elapsed / secondsPerStep) % 16;
+          Object.values(wheels).forEach((wheel) => {
+            if (wheel.orbit) wheel.orbit.style.rotate = `${-visualStepPosition * 22.5}deg`;
+            if (wheel.haloOrbit) wheel.haloOrbit.style.rotate = `${-visualStepPosition * 22.5}deg`;
+            if (wheel.noteOrbit) wheel.noteOrbit.style.rotate = `${-visualStepPosition * 22.5}deg`;
+          });
+          visualLastTime = timestamp;
+          visualFrameId = window.requestAnimationFrame(animateOrbit);
+        };
+
+        const scheduleStep = (step, time) => {
+          const secondsPerStep = 60 / Number(bpmInput.value) / 4;
+          instruments.forEach((instrument) => {
+            if (typeof instrument.bar === "number" && instrument.bar !== activeSynthBar) return;
+            if (instrument.type === "arc") {
+              if (shouldStartPad(instrument, step)) {
+                playInstrument(instrument, step, time, 1, countHeldSteps(instrument, step) * secondsPerStep);
+              }
+            } else if (instrument.pattern[step]) {
+              playInstrument(instrument, step, time, 1);
+            }
+          });
+          window.setTimeout(() => setActiveStep(step), Math.max((time - audioContext.currentTime) * 1000, 0));
+        };
+
+        const scheduler = () => {
+          const secondsPerStep = 60 / Number(bpmInput.value) / 4;
+          while (nextStepTime < audioContext.currentTime + 0.12) {
+            scheduleStep(currentStep, nextStepTime);
+            const nextStep = (currentStep + 1) % 16;
+            if (nextStep === 0) {
+              const nextBar = (activeSynthBar + 1) % synthCells.length;
+              window.setTimeout(() => setActiveSynthBar(nextBar), Math.max((nextStepTime - audioContext.currentTime) * 1000, 0));
+              activeSynthBar = nextBar;
+            }
+            currentStep = nextStep;
+            nextStepTime += secondsPerStep;
+          }
+          if (isPlaying) schedulerId = window.setTimeout(scheduler, 25);
+        };
+
+        const startAudioScheduler = () => {
+          if (!audioContext || audioContext.state !== "running") return;
+          hasScheduledAudio = true;
+          window.clearTimeout(schedulerId);
+          nextStepTime = audioContext.currentTime + 0.06;
+          scheduler();
+        };
+
+        const enableAudio = () => {
+          ensureAudio();
+          if (audioContext.state === "running") {
+            startAudioScheduler();
+            return;
+          }
+          audioContext.resume().then(() => {
+            if (isPlaying) startAudioScheduler();
+          }).catch(() => {});
+        };
+
+        const start = (withAudio = true) => {
+          isPlaying = true;
+          playButton.classList.add("is-playing");
+          transportCenter?.classList.add("is-playing");
+          playButton.setAttribute("aria-label", "Pause");
+          currentStep = currentStep % 16;
+          visualStepPosition = currentStep;
+          visualLastTime = 0;
+          if (withAudio) enableAudio();
+          window.cancelAnimationFrame(visualFrameId);
+          visualFrameId = window.requestAnimationFrame(animateOrbit);
+        };
+
+        const stop = () => {
+          isPlaying = false;
+          hasScheduledAudio = false;
+          window.clearTimeout(schedulerId);
+          window.cancelAnimationFrame(visualFrameId);
+          playButton.classList.remove("is-playing");
+          transportCenter?.classList.remove("is-playing");
+          playButton.setAttribute("aria-label", "Play");
+        };
+
+        const transportCenter = playButton.closest(".drum-center");
+        const toggleTransport = () => {
+          transportCenter?.classList.remove("is-transport-pulsing");
+          void transportCenter?.offsetWidth;
+          transportCenter?.classList.add("is-transport-pulsing");
+          if (isPlaying) {
+            stop();
+          } else {
+            start();
+          }
+        };
+
+        transportCenter?.addEventListener("click", toggleTransport);
+        playButton.addEventListener("click", (event) => {
+          if (event.detail === 0) {
+            event.stopPropagation();
+            toggleTransport();
+          }
+        });
+
+        transportCenter?.addEventListener("animationend", (event) => {
+          if (event.animationName === "drum-center-press") {
+            event.currentTarget.classList.remove("is-transport-pulsing");
+          }
+        });
+
+        const unlockDemoAudio = () => {
+          if (isPlaying && !hasScheduledAudio) enableAudio();
+        };
+        document.addEventListener("pointerdown", unlockDemoAudio);
+        document.addEventListener("keydown", unlockDemoAudio);
+
+        clearButton?.addEventListener("click", () => {
+          instruments.forEach((instrument) => instrument.pattern.fill(false));
+          renderPattern();
+        });
+
+        const randomChoice = (items) => items[Math.floor(Math.random() * items.length)];
+
+        const randomizePattern = () => {
+          const chordValues = Object.keys(chordVoicings);
+          chordSelectors.forEach((selector) => {
+            selector.value = randomChoice(chordValues);
+            selector.blur();
+          });
+          instruments.forEach((instrument) => {
+            if (instrument.group === "pad") {
+              instrument.pattern.fill(false);
+              const runs = 1 + Math.floor(Math.random() * 3);
+              for (let run = 0; run < runs; run += 1) {
+                const startIndex = Math.floor(Math.random() * 16);
+                const length = 2 + Math.floor(Math.random() * 5);
+                for (let offset = 0; offset < length; offset += 1) {
+                  instrument.pattern[(startIndex + offset) % 16] = true;
+                }
+              }
+              return;
+            }
+            const probability = {
+              kick: 0.28,
+              snare: 0.18,
+              hat: 0.46,
+              tom: 0.14,
+            }[instrument.id] || 0.24;
+            instrument.pattern.forEach((_, index) => {
+              instrument.pattern[index] = Math.random() < probability;
+            });
+          });
+          renderPattern();
+        };
+
+        randomButton?.addEventListener("click", randomizePattern);
+
+        const updateTempoControl = () => {
+          tempoLabel.textContent = bpmInput.value;
+          const min = Number(bpmInput.min || 0);
+          const max = Number(bpmInput.max || 100);
+          const value = Number(bpmInput.value || min);
+          const progress = ((value - min) / (max - min)) * 100;
+          bpmInput.style.setProperty("--drum-bpm-progress", `${progress}%`);
+          tempoControl?.style.setProperty("--drum-bpm-progress", `${progress}%`);
+        };
+
+        updateTempoControl();
+
+        bpmInput.addEventListener("input", updateTempoControl);
+
+        tempoControl?.addEventListener("click", () => {
+          tempoControl.classList.add("is-open");
+        });
+
+        bpmInput.addEventListener("focus", () => {
+          tempoControl?.classList.add("is-open");
+        });
+
+        document.addEventListener("pointerdown", (event) => {
+          if (!tempoControl?.contains(event.target)) tempoControl?.classList.remove("is-open");
+        });
+
+        chordSelectors.forEach((selector) => {
+          selector.addEventListener("change", () => {
+            selector.blur();
+          });
+        });
+
+        instruments.forEach((instrument) => {
+          for (let index = 0; index < 16; index += 1) createSlot(instrument, index);
+        });
+        renderPattern();
+        positionSlots();
+        setActiveStep(0);
+        setActiveSynthBar(0);
+        start(false);
+        window.addEventListener("resize", positionSlots);
+        document.addEventListener("visibilitychange", () => {
+          if (document.hidden) stop();
+        });
+      })();
+    </script>
+  </body>
+</html>

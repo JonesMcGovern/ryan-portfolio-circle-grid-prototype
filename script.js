@@ -353,7 +353,7 @@ function syncVisualViewportWidth() {
 }
 
 function updateHeaderScrollState() {
-  document.body.classList.toggle("is-scrolled", window.scrollY > 18);
+  document.body.classList.toggle("is-scrolled", window.scrollY > 18 || document.body.classList.contains("drum-page"));
   const hero = document.querySelector(".project-hero");
   if (hero) {
     document.body.classList.toggle("is-project-title-pinned", hero.getBoundingClientRect().bottom < 120);
@@ -1300,7 +1300,7 @@ function initializeSiteMenu() {
   const panel = document.createElement("div");
   panel.className = "site-menu-panel";
   panel.id = "site-menu-panel";
-  panel.innerHTML = projectOrder.map((key, index) => {
+  const projectLinks = projectOrder.map((key, index) => {
     const project = projectData[key];
     const current = document.body.dataset.project === key;
     return `
@@ -1310,6 +1310,14 @@ function initializeSiteMenu() {
       </a>
     `;
   }).join("");
+  const drumCurrent = document.body.classList.contains("drum-page");
+  const drumLink = `
+    <a href="./circular-drum-machine.html" ${drumCurrent ? 'aria-current="page"' : ""}>
+      <span class="site-menu-count">${String(projectOrder.length + 1).padStart(2, "0")}</span>
+      <span class="site-menu-title">Wheel Sequencer</span>
+    </a>
+  `;
+  panel.innerHTML = projectLinks + drumLink;
   document.body.append(panel);
 
   const close = () => {

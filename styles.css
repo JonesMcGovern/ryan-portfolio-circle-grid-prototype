@@ -6374,21 +6374,21 @@ body[data-project="skimm-money-newsletter"] .additional-creative {
 
   .drum-machine {
     grid-template-columns: 1fr;
-    gap: 10px;
+    gap: 6px;
     min-height: 0;
-    padding-top: 12px;
-    padding-bottom: 22px;
+    padding-top: 6px;
+    padding-bottom: 10px;
   }
 
   .drum-copy h2 {
-    margin-block: 2px 6px;
-    font-size: clamp(2.2rem, 10vw, 3.55rem);
+    margin-block: 0 4px;
+    font-size: clamp(2.15rem, 9vw, 3.15rem);
     line-height: 0.78;
   }
 
   .drum-copy p:not(.playground-kicker) {
-    font-size: clamp(0.8rem, 3.25vw, 0.92rem);
-    line-height: 1.32;
+    font-size: clamp(0.74rem, 3vw, 0.86rem);
+    line-height: 1.24;
   }
 
   .drum-stage {
@@ -6403,17 +6403,17 @@ body[data-project="skimm-money-newsletter"] .additional-creative {
     grid-column: 1;
     grid-row: 1;
     grid-template-columns: 1fr;
-    gap: 36px;
+    gap: 18px;
     width: min(calc(var(--visual-width, 100vw) - (var(--page-x) * 2)), 390px);
     min-width: 0;
     padding-top: 0;
-    margin-top: 32px;
+    margin-top: 10px;
     transform: none;
   }
 
   .drum-dial-drums {
-    --drum-step-size: 10px;
-    width: min(59vw, 232px);
+    --drum-step-size: 9px;
+    width: min(54vw, 212px);
     min-width: 0;
     grid-column: 1;
     grid-row: auto;
@@ -6422,9 +6422,9 @@ body[data-project="skimm-money-newsletter"] .additional-creative {
   }
 
   .drum-dial-synth {
-    --drum-step-size: 9.5px;
-    width: min(37vw, 144px);
-    min-width: 122px;
+    --drum-step-size: 8.5px;
+    width: min(31vw, 122px);
+    min-width: 104px;
   }
 
   .drum-synth-stack {
@@ -6432,7 +6432,7 @@ body[data-project="skimm-money-newsletter"] .additional-creative {
     grid-row: auto;
     order: 2;
     grid-template-columns: repeat(2, auto);
-    gap: 22px;
+    gap: 16px;
     width: auto;
     transform: none;
     justify-items: center;
@@ -6488,10 +6488,10 @@ body[data-project="skimm-money-newsletter"] .additional-creative {
     order: 3;
     position: static;
     display: grid;
-    grid-template-columns: 42px 42px minmax(0, 1fr);
-    grid-template-rows: 42px;
-    gap: 8px;
-    width: min(100%, calc((min(37vw, 144px) * 2) + 22px));
+    grid-template-columns: 38px 38px minmax(0, 1fr);
+    grid-template-rows: 38px;
+    gap: 7px;
+    width: min(100%, calc((min(31vw, 122px) * 2) + 16px));
     height: auto;
     margin-top: 4px;
     justify-self: center;
@@ -6525,9 +6525,9 @@ body[data-project="skimm-money-newsletter"] .additional-creative {
     grid-row: 1;
     flex-direction: row;
     align-items: center;
-    min-height: 42px;
-    padding: 6px 17px;
-    font-size: clamp(0.84rem, 3.4vw, 1rem);
+    min-height: 38px;
+    padding: 5px 15px;
+    font-size: clamp(0.78rem, 3vw, 0.92rem);
     order: initial;
     justify-content: flex-start;
     transform: translateY(2px);
@@ -6536,8 +6536,8 @@ body[data-project="skimm-money-newsletter"] .additional-creative {
   .drum-range input {
     order: initial;
     min-width: 0;
-    left: 78px;
-    right: 17px;
+    left: 72px;
+    right: 15px;
     top: 50%;
     width: auto;
     height: 28px;
@@ -6566,8 +6566,8 @@ body[data-project="skimm-money-newsletter"] .additional-creative {
   .drum-range-meter {
     order: initial;
     position: absolute;
-    left: 78px;
-    right: 17px;
+    left: 72px;
+    right: 15px;
     top: 50%;
     width: auto;
     height: 10px;
@@ -7290,6 +7290,24 @@ body[data-project="skimm-money-newsletter"] .additional-creative {
 
   .nav-menu {
     display: grid !important;
+  }
+
+  .drum-page .masthead {
+    padding-block: 8px !important;
+  }
+
+  .drum-page .site-nav {
+    min-height: 44px;
+  }
+
+  .drum-page .nav-menu {
+    width: 44px;
+    height: 44px;
+    gap: 6px;
+  }
+
+  .drum-page .nav-menu span {
+    width: 22px;
   }
 
   .mobile-menu-mark {

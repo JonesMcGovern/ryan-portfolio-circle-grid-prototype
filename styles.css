@@ -2752,11 +2752,12 @@ body.playground-page {
 
 .drum-center-cog {
   position: absolute;
-  inset: -38.5%;
+  left: 50%;
+  top: 50%;
   z-index: 0;
   display: block;
-  width: auto;
-  height: auto;
+  width: 177%;
+  height: 177%;
   overflow: visible;
   color: var(--line);
   fill: none;
@@ -2764,6 +2765,7 @@ body.playground-page {
   stroke-width: calc(var(--stroke) * 1.5);
   stroke-linecap: butt;
   stroke-linejoin: round;
+  transform: translate(-50%, -50%);
   pointer-events: none;
 }
 

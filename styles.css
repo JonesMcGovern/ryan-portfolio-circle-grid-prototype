@@ -2735,10 +2735,10 @@ body.playground-page {
   display: grid;
   place-items: center;
   align-content: center;
-  border: calc(var(--stroke) * 1.5) dashed var(--line);
-  border-radius: 50%;
-  background: var(--drum-clickable-fill);
-  cursor: pointer;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  cursor: default;
   transform: translate(-50%, -50%);
 }
 
@@ -2750,6 +2750,37 @@ body.playground-page {
   display: none;
 }
 
+.drum-center-cog {
+  position: absolute;
+  inset: -38.5%;
+  z-index: 0;
+  display: block;
+  width: auto;
+  height: auto;
+  overflow: visible;
+  color: var(--line);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: calc(var(--stroke) * 1.5);
+  stroke-linecap: butt;
+  stroke-linejoin: round;
+  pointer-events: none;
+}
+
+.drum-center-spindle {
+  transform: rotate(var(--drum-cog-rotation, 0deg));
+  transform-box: view-box;
+  transform-origin: 50% 50%;
+}
+
+.drum-center-spindle * {
+  vector-effect: non-scaling-stroke;
+}
+
+.drum-center-cog circle {
+  fill: var(--bg);
+}
+
 .drum-center-synth {
   left: 50%;
   top: 50%;
@@ -2757,8 +2788,16 @@ body.playground-page {
 
 .drum-dial-synth .drum-center {
   width: clamp(48px, 5.6vw, 68px);
-  border: calc(var(--stroke) * 1.5) dashed var(--line);
-  background: var(--drum-clickable-fill);
+  border: 0;
+  background: transparent;
+}
+
+.drum-dial-synth .drum-center-cog {
+  fill: none;
+}
+
+.drum-dial-synth .drum-center-cog circle {
+  fill: var(--drum-clickable-fill);
 }
 
 .drum-dial-synth .drum-center::before {
@@ -2964,6 +3003,7 @@ body.playground-page {
 
 .drum-controls {
   --drum-toolbar-width: clamp(42px, 3.45vw, 52px);
+  --drum-play-size: calc(var(--drum-toolbar-width) * 1.5);
   grid-column: auto;
   grid-row: auto;
   position: absolute;
@@ -2975,9 +3015,9 @@ body.playground-page {
   justify-self: auto;
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: repeat(2, var(--drum-toolbar-width)) clamp(246px, 34svh, 296px);
+  grid-template-rows: var(--drum-play-size) repeat(2, var(--drum-toolbar-width)) clamp(178px, 24svh, 228px);
   gap: 8px;
-  width: var(--drum-toolbar-width);
+  width: var(--drum-play-size);
   height: auto;
   margin-top: 0;
   pointer-events: auto;
@@ -3006,17 +3046,30 @@ body.playground-page {
 
 .drum-random {
   grid-column: 1;
-  grid-row: 1;
+  grid-row: 2;
+  justify-self: center;
+  width: var(--drum-toolbar-width);
+  height: var(--drum-toolbar-width);
 }
 
 .drum-clear {
   grid-column: 1;
-  grid-row: 2;
+  grid-row: 3;
+  justify-self: center;
+  width: var(--drum-toolbar-width);
+  height: var(--drum-toolbar-width);
 }
 
 .drum-transport {
   grid-column: 1;
   grid-row: 1;
+  width: var(--drum-play-size);
+  height: var(--drum-play-size);
+}
+
+.drum-range {
+  justify-self: center;
+  width: var(--drum-toolbar-width);
 }
 
 .drum-control-icon {
@@ -3026,6 +3079,27 @@ body.playground-page {
   height: 100%;
 }
 
+.drum-control-icon img {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: block;
+  max-width: 68%;
+  max-height: 68%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.drum-control-icon-random img {
+  max-width: 64%;
+  max-height: 64%;
+}
+
+.drum-control-icon-clear img {
+  max-width: 72%;
+  max-height: 72%;
+}
+
 .drum-control-icon-play::before {
   content: "";
   position: absolute;
@@ -3033,70 +3107,19 @@ body.playground-page {
   top: 50%;
   width: 0;
   height: 0;
-  border-top: 8px solid transparent;
-  border-bottom: 8px solid transparent;
-  border-left: 13px solid currentColor;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-left: 16px solid currentColor;
   transform: translate(-38%, -50%);
 }
 
 .drum-transport.is-playing .drum-control-icon-play::before {
-  width: 6px;
-  height: 18px;
+  width: 8px;
+  height: 24px;
   border: 0;
   border-left: calc(var(--stroke) * 2.2) solid currentColor;
   border-right: calc(var(--stroke) * 2.2) solid currentColor;
   transform: translate(-50%, -50%);
-}
-
-.drum-control-icon-clear::before,
-.drum-control-icon-clear::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  border: var(--stroke) solid currentColor;
-  transform: translate(-50%, -50%) rotate(-18deg);
-}
-
-.drum-control-icon-clear::before {
-  width: 17px;
-  height: 10px;
-  border-radius: 2px;
-}
-
-.drum-control-icon-clear::after {
-  width: 18px;
-  height: 0;
-  border-top: 0;
-  border-left: 0;
-  border-right: 0;
-  translate: 3px 8px;
-}
-
-.drum-control-icon-random::before,
-.drum-control-icon-random::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 18px;
-  height: 18px;
-  border: var(--stroke) solid currentColor;
-  transform: translate(-50%, -50%);
-}
-
-.drum-control-icon-random::before {
-  border-radius: 50%;
-}
-
-.drum-control-icon-random::after {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: currentColor;
-  box-shadow:
-    -6px -6px 0 0 currentColor,
-    6px 6px 0 0 currentColor;
 }
 
 .drum-readout {
@@ -3131,18 +3154,18 @@ body.playground-page {
 }
 
 .drum-range {
-  --drum-meter-size: clamp(150px, 22svh, 206px);
+  --drum-meter-size: clamp(104px, 15svh, 136px);
   grid-column: 1;
-  grid-row: 3;
+  grid-row: 4;
   display: inline-flex;
   position: relative;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  width: 100%;
+  gap: 8px;
+  width: var(--drum-toolbar-width);
   min-height: 0;
-  padding: 16px 6px 17px;
+  padding: 14px 6px 15px;
   border: var(--stroke) solid var(--line);
   border-radius: 999px;
   background: var(--bg);
@@ -3168,7 +3191,7 @@ body.playground-page {
   order: -1;
   position: absolute;
   left: 50%;
-  top: 16px;
+  top: 14px;
   z-index: 10;
   min-width: 0;
   width: 28px;
@@ -3264,96 +3287,6 @@ body.playground-page {
   transform: translateX(-50%);
 }
 
-.drum-center .drum-random,
-.drum-center .drum-transport,
-.drum-center .drum-clear {
-  position: absolute;
-  inset: 0;
-  place-self: center;
-  width: 100%;
-  height: 100%;
-  min-width: 0;
-  min-height: 0;
-  aspect-ratio: auto;
-  border: 0;
-  border-radius: 50%;
-  background: transparent;
-  color: var(--line);
-  cursor: pointer;
-  pointer-events: none;
-}
-
-.drum-center-glyph {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  z-index: 2;
-  display: block;
-  width: 42%;
-  height: 42%;
-  pointer-events: none;
-  transform: translate(-50%, -50%);
-}
-
-.drum-center .drum-transport.is-playing {
-  background: transparent;
-  color: var(--line);
-}
-
-.drum-center-play,
-.drum-center-pause {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  display: block;
-  transform: translate(-50%, -50%);
-}
-
-.drum-center-play {
-  width: 24px;
-  height: 28px;
-  background: currentColor;
-  clip-path: polygon(0 0, 100% 50%, 0 100%);
-}
-
-.drum-center-pause {
-  display: none;
-  width: 13px;
-  height: 26px;
-  border-left: calc(var(--stroke) * 2.2) solid currentColor;
-  border-right: calc(var(--stroke) * 2.2) solid currentColor;
-}
-
-.drum-center.is-playing .drum-center-play {
-  display: none;
-}
-
-.drum-center.is-playing .drum-center-pause {
-  display: block;
-}
-
-.drum-center .drum-control-icon-clear::before {
-  width: 16px;
-  height: 9px;
-}
-
-.drum-center .drum-control-icon-clear::after {
-  width: 17px;
-}
-
-.drum-center .drum-control-icon-random::before {
-  width: 15px;
-  height: 15px;
-}
-
-.drum-center .drum-control-icon-random::after {
-  width: 4px;
-  height: 4px;
-  box-shadow:
-    -5px -5px 0 0 currentColor,
-    5px 5px 0 0 currentColor;
-}
-
 .drum-chord-select {
   display: inline-flex;
   align-items: center;
@@ -3365,10 +3298,13 @@ body.playground-page {
   font-family: var(--display-font);
   font-size: clamp(0.9rem, 1.25vw, 1.28rem);
   line-height: 1;
+  cursor: pointer;
 }
 
 .drum-chord-select::after {
   content: "";
+  position: relative;
+  z-index: 2;
   width: 0.38em;
   aspect-ratio: 1;
   border-right: calc(var(--stroke) * 1.25) solid currentColor;
@@ -3382,6 +3318,8 @@ body.playground-page {
 }
 
 .drum-chord-select select {
+  position: relative;
+  z-index: 2;
   width: auto;
   min-width: 0;
   padding: 0;
@@ -6407,7 +6345,7 @@ body[data-project="skimm-money-newsletter"] .additional-creative {
     width: min(calc(var(--visual-width, 100vw) - (var(--page-x) * 2)), 390px);
     min-width: 0;
     padding-top: 0;
-    margin-top: 18px;
+    margin-top: 32px;
     transform: none;
   }
 
@@ -6488,12 +6426,14 @@ body[data-project="skimm-money-newsletter"] .additional-creative {
     order: 3;
     position: static;
     display: grid;
-    grid-template-columns: 34px 34px minmax(0, 1fr);
-    grid-template-rows: 34px;
+    --drum-toolbar-width: 34px;
+    --drum-play-size: 51px;
+    grid-template-columns: var(--drum-play-size) var(--drum-toolbar-width) var(--drum-toolbar-width) minmax(0, 1fr);
+    grid-template-rows: var(--drum-play-size);
     gap: 6px;
     width: min(100%, calc((min(27vw, 106px) * 2) + 14px));
     height: auto;
-    margin-top: 4px;
+    margin-top: 10px;
     justify-self: center;
     transform: none;
   }
@@ -6505,26 +6445,32 @@ body[data-project="skimm-money-newsletter"] .additional-creative {
   }
 
   .drum-transport {
-    order: initial;
-  }
-
-  .drum-clear {
-    grid-column: 2;
-    grid-row: 1;
-    order: initial;
-  }
-
-  .drum-random {
     grid-column: 1;
     grid-row: 1;
     order: initial;
+    align-self: center;
+  }
+
+  .drum-clear {
+    grid-column: 3;
+    grid-row: 1;
+    order: initial;
+    align-self: center;
+  }
+
+  .drum-random {
+    grid-column: 2;
+    grid-row: 1;
+    order: initial;
+    align-self: center;
   }
 
   .drum-range {
-    grid-column: 3;
+    grid-column: 4;
     grid-row: 1;
     flex-direction: row;
     align-items: center;
+    width: 100%;
     min-height: 34px;
     padding: 5px 12px;
     font-size: clamp(0.68rem, 2.65vw, 0.82rem);
@@ -6536,7 +6482,7 @@ body[data-project="skimm-money-newsletter"] .additional-creative {
   .drum-range input {
     order: initial;
     min-width: 0;
-    left: 64px;
+    left: 54px;
     right: 12px;
     top: 50%;
     width: auto;
@@ -6566,7 +6512,7 @@ body[data-project="skimm-money-newsletter"] .additional-creative {
   .drum-range-meter {
     order: initial;
     position: absolute;
-    left: 64px;
+    left: 54px;
     right: 12px;
     top: 50%;
     width: auto;
@@ -6592,65 +6538,6 @@ body[data-project="skimm-money-newsletter"] .additional-creative {
     flex-direction: row;
     gap: 0.28em;
     white-space: nowrap;
-  }
-
-  .drum-center .drum-controls {
-    grid-column: auto;
-    grid-row: auto;
-    position: static;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    grid-template-rows: 50% 50%;
-    gap: 0;
-    width: 100%;
-    height: 100%;
-    margin-top: 0;
-    transform: none;
-  }
-
-  .drum-center .drum-random {
-    grid-column: 1;
-    grid-row: 1;
-    width: 100%;
-  }
-
-  .drum-center .drum-transport {
-    grid-column: auto;
-    grid-row: auto;
-    width: 100%;
-    height: 100%;
-  }
-
-  .drum-center .drum-clear {
-    grid-column: 2;
-    grid-row: 1;
-    width: 100%;
-  }
-
-  .drum-center .drum-range {
-    grid-column: 1 / -1;
-    grid-row: 2;
-    flex-direction: column;
-    min-height: 0;
-    padding: 7px 12%;
-    font-size: clamp(0.48rem, 2.35vw, 0.68rem);
-    justify-content: center;
-  }
-
-  .drum-center .drum-range input {
-    position: absolute;
-    left: 50%;
-    top: calc(100% - 3px);
-    width: 96px;
-    opacity: 0;
-    pointer-events: none;
-    transform: translateX(-50%) translateY(-4px);
-  }
-
-  .drum-center .drum-range.is-open input,
-  .drum-center .drum-range:focus-within input {
-    opacity: 1;
-    pointer-events: auto;
-    transform: translateX(-50%) translateY(0);
   }
 
   .secondary-projects {
@@ -7089,8 +6976,10 @@ body[data-project="skimm-money-newsletter"] .additional-creative {
     order: 3;
     position: static;
     display: grid;
-    grid-template-columns: 48px 48px minmax(0, 1fr);
-    grid-template-rows: 48px;
+    --drum-toolbar-width: 48px;
+    --drum-play-size: 72px;
+    grid-template-columns: var(--drum-play-size) var(--drum-toolbar-width) var(--drum-toolbar-width) minmax(0, 1fr);
+    grid-template-rows: var(--drum-play-size);
     gap: 10px;
     width: min(100%, calc((min(27vw, 216px) * 2) + clamp(24px, 4vw, 38px)));
     height: auto;
@@ -7100,20 +6989,27 @@ body[data-project="skimm-money-newsletter"] .additional-creative {
   }
 
   .drum-clear {
-    grid-column: 2;
+    grid-column: 3;
     grid-row: 1;
   }
 
   .drum-random {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .drum-transport {
     grid-column: 1;
     grid-row: 1;
   }
 
   .drum-range {
-    grid-column: 3;
+    grid-column: 4;
     grid-row: 1;
     flex-direction: row;
     align-items: center;
+    align-self: center;
+    width: 100%;
     min-height: 48px;
     padding: 6px 18px;
     font-size: clamp(0.9rem, 2vw, 1.08rem);
@@ -7122,7 +7018,7 @@ body[data-project="skimm-money-newsletter"] .additional-creative {
   }
 
   .drum-range input {
-    left: 84px;
+    left: 76px;
     right: 18px;
     top: 50%;
     width: auto;
@@ -7140,7 +7036,7 @@ body[data-project="skimm-money-newsletter"] .additional-creative {
   .drum-range-meter {
     order: initial;
     position: absolute;
-    left: 84px;
+    left: 76px;
     right: 18px;
     top: 50%;
     width: auto;

@@ -892,6 +892,26 @@ body:not(.project-page):not(.playground-page):not(.is-scrolled) .site-nav {
     grid-row: auto;
   }
 
+  .home-selected-list {
+    order: 1;
+  }
+
+  .home-wheel-module {
+    order: 2;
+  }
+
+  .home-additional-list {
+    order: 3;
+  }
+
+  .home-selected-work {
+    order: 4;
+  }
+
+  .home-playground-grid {
+    order: 5;
+  }
+
   .home-wheel-preview {
     height: clamp(240px, 58vw, 380px);
   }
@@ -8055,6 +8075,63 @@ body.playground-page.is-scrolled .masthead {
 
   .masthead-copy p {
     display: none;
+  }
+
+  body:not(.project-page):not(.playground-page):not(.is-scrolled) {
+    --masthead-spacer: clamp(138px, 34vw, 176px);
+  }
+
+  body:not(.project-page):not(.playground-page):not(.is-scrolled) .masthead {
+    grid-template-rows: auto auto;
+    align-items: center;
+    min-height: 0;
+    padding: clamp(12px, 3.2vw, 18px) 0 0;
+  }
+
+  body:not(.project-page):not(.playground-page):not(.is-scrolled) .masthead-copy {
+    display: contents;
+  }
+
+  body:not(.project-page):not(.playground-page):not(.is-scrolled) h1 {
+    grid-column: 1;
+    grid-row: 1;
+    width: 7.15ch;
+    flex-basis: auto;
+    font-size: clamp(2.35rem, 12.8vw, 4.05rem);
+    line-height: 0.78;
+  }
+
+  body:not(.project-page):not(.playground-page):not(.is-scrolled) .title-full {
+    width: 7.15ch;
+  }
+
+  body:not(.project-page):not(.playground-page):not(.is-scrolled) .masthead-copy p {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.1em 0.45em;
+    width: 100%;
+    max-width: none;
+    margin-top: clamp(9px, 2.6vw, 13px);
+    padding: clamp(9px, 2.6vw, 13px) 0 clamp(10px, 2.8vw, 14px);
+    border-top: var(--stroke) solid var(--line);
+    overflow: visible;
+    font-size: clamp(0.98rem, 4.4vw, 1.22rem);
+    line-height: 1.05;
+    text-overflow: clip;
+    white-space: normal;
+    opacity: 1;
+    transform: none;
+  }
+
+  body:not(.project-page):not(.playground-page):not(.is-scrolled) .masthead-copy p span {
+    display: inline;
+  }
+
+  body:not(.project-page):not(.playground-page):not(.is-scrolled) .site-nav {
+    align-self: start;
+    padding-bottom: 0;
   }
 
   .site-nav {

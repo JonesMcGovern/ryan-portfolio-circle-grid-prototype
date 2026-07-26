@@ -871,7 +871,9 @@ body:not(.project-page):not(.playground-page):not(.is-scrolled) .site-nav {
 
   .home-intro p {
     column-count: 1;
-    text-align: left;
+    text-align: justify;
+    text-align-last: left;
+    text-justify: inter-word;
   }
 
   .home-feature-row {
@@ -8127,7 +8129,7 @@ body.playground-page.is-scrolled .masthead {
     padding: clamp(8px, 2.2vw, 11px) 0 clamp(9px, 2.4vw, 12px);
     border-top: var(--stroke) solid var(--line);
     overflow: hidden;
-    font-size: clamp(0.72rem, 3.25vw, 0.92rem);
+    font-size: clamp(0.792rem, 3.575vw, 1.012rem);
     line-height: 1.05;
     text-overflow: clip;
     white-space: nowrap;

@@ -3,31 +3,20 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ryan Pattison, Motion Graphic Designer</title>
+    <title>Smudge Module - Ryan Pattison</title>
     <meta
       name="description"
-      content="Ryan Pattison is a motion graphic designer working across motion design, graphic design, and visual direction."
+      content="An interactive smudge module by Ryan Pattison."
     />
-    <meta property="og:title" content="Ryan Pattison, Motion Graphic Designer" />
-    <meta
-      property="og:description"
-      content="Motion design, graphic design, and visual direction portfolio by Ryan Pattison."
-    />
-    <meta property="og:type" content="website" />
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="Ryan Pattison, Motion Graphic Designer" />
-    <meta
-      name="twitter:description"
-      content="Motion design, graphic design, and visual direction portfolio by Ryan Pattison."
-    />
+    <meta name="robots" content="noindex" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="./styles.css?v=home-smudge-module-link-20260726a" />
     <script src="./script.js?v=home-smudge-module-link-20260726a" defer></script>
   </head>
-  <body class="palette-enter playground-page">
-    <main class="page playground-shell" aria-label="Ryan Pattison playground">
+  <body class="palette-enter playground-page smudge-page is-scrolled">
+    <main class="page playground-shell" aria-label="Ryan Pattison smudge module">
       <header class="masthead">
         <div class="masthead-copy">
           <h1>
@@ -47,16 +36,25 @@
         </nav>
       </header>
 
-      <section class="playground-detail playground-detail-single" id="shape-drawer">
-        <div class="playground-detail-copy">
-          <p class="playground-kicker">Playground 02</p>
-          <h2>Shape Drawer</h2>
-          <p>
-            Draw a loose triangle, square, or circle and the sketch resolves into a physical object. Shapes fall into the field, bounce, collide, and settle into a shifting pile.
-          </p>
+      <section class="smudge-detail" aria-labelledby="smudge-title">
+        <div class="smudge-detail-copy">
+          <h2 id="smudge-title">Smudge Module</h2>
         </div>
-        <section class="shape-field playground-detail-module" aria-label="Interactive shape drawing field" data-shape-mode="interactive">
-          <svg class="shape-svg" aria-hidden="true"></svg>
+
+        <section class="line-field smudge-detail-field" aria-label="Interactive smudge field">
+          <canvas class="smudge-canvas" aria-hidden="true"></canvas>
+          <button class="portfolio-puck portfolio-puck-one" type="button" draggable="false" aria-label="Interactive smudge puck 1">
+            <span class="puck-shell" aria-hidden="true"></span>
+          </button>
+          <button class="portfolio-puck portfolio-puck-two" type="button" draggable="false" aria-label="Interactive smudge puck 2">
+            <span class="puck-shell" aria-hidden="true"></span>
+          </button>
+          <button class="portfolio-puck portfolio-puck-three" type="button" draggable="false" aria-label="Interactive smudge puck 3">
+            <span class="puck-shell" aria-hidden="true"></span>
+          </button>
+          <button class="portfolio-puck portfolio-puck-four" type="button" draggable="false" aria-label="Interactive smudge puck 4">
+            <span class="puck-shell" aria-hidden="true"></span>
+          </button>
         </section>
       </section>
     </main>

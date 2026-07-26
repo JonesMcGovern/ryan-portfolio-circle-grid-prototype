@@ -14,6 +14,8 @@ const siteStartTime = performance.now();
 let dataRail = null;
 let marqueeResizeTimer = null;
 let scrollTicking = false;
+let mastheadTransitionFrame = null;
+let mastheadRestingRailTop = null;
 let shapeAnimationStarted = false;
 let lineAnimationStarted = false;
 let projectAmbientVideoObserver = null;
@@ -25,6 +27,7 @@ const lineState = {
   lineStep: 6,
   stroke: 1,
   canvasLeft: 0,
+  topInset: 0,
   color: "#F77F3F",
   lines: [],
   pointer: {
@@ -47,7 +50,8 @@ const puckPhysicsState = {
 
 const projectData = {
   "skimmu-money": {
-    title: "SkimmU Money",
+    title: "SkimmU Money Sizzle Reel",
+    heroTitleHtml: "<span class=\"title-line\">SkimmU Money</span><span class=\"title-line\">Sizzle Reel</span>",
     type: "Launch Film",
     summary: "Sizzle reel promoting a four-day investing series helping women build financial confidence and knowledge.",
     role: "Motion Designer",
@@ -70,7 +74,7 @@ const projectData = {
   },
   "flashpoint-mdlinx": {
     title: "Flashpoint by MDLinx",
-    heroTitleHtml: "Flashpoint <span class=\"title-keep-together\">by MDLinx</span>",
+    heroTitleHtml: "<span class=\"title-line\">Flashpoint</span><span class=\"title-line\">by MDLinx</span>",
     type: "Campaign System",
     summary: "Sizzle reel introducing Flashpoint, a new MDLinx product offering.",
     role: "Visual Direction, Motion Design",
@@ -93,6 +97,7 @@ const projectData = {
   },
   "skimm-money-newsletter": {
     title: "Skimm Money Awareness Campaign",
+    heroTitleHtml: "<span class=\"title-line\">Skimm Money</span><span class=\"title-line\">Awareness <span class=\"title-mobile-break\">Campaign</span></span>",
     type: "Campaign System",
     summary: "An awareness campaign created to support the launch of a new personal finance newsletter.",
     role: "Visual Direction, Campaign Design",
@@ -114,6 +119,7 @@ const projectData = {
   },
   "interface-studies": {
     title: "\"Is Gay Marriage Next?\" Intro",
+    heroTitleHtml: "<span class=\"title-line\">&ldquo;Is Gay Marriage</span><span class=\"title-line\">Next?&rdquo; <span class=\"title-mobile-break\">Intro</span></span>",
     type: "Editorial Motion",
     summary: "Editorial intro animation for a video segment examining the political future of marriage equality.",
     role: "Motion Designer",
@@ -135,6 +141,7 @@ const projectData = {
   },
   "launch-cutdowns": {
     title: "Kaplan SAT Prep Ad",
+    heroTitleHtml: "<span class=\"title-line\">Kaplan SAT</span><span class=\"title-line\">Prep Ad</span>",
     type: "Video Ad",
     summary: "A concise Kaplan ad promoting SAT Prep Plus 2020.",
     role: "Motion Designer, Graphic Designer",
@@ -157,6 +164,7 @@ const projectData = {
   },
   "social-system": {
     title: "Kaplan Live Online Ad",
+    heroTitleHtml: "<span class=\"title-line\">Kaplan Live</span><span class=\"title-line\">Online Ad</span>",
     type: "Video Ad",
     summary: "A YouTube ad promoting Kaplan's virtual classroom experience.",
     role: "Motion Designer, Graphic Designer",
@@ -178,6 +186,7 @@ const projectData = {
   },
   "kaplan-virtual-spelling-bee": {
     title: "Kaplan Virtual Spelling Bee",
+    heroTitleHtml: "<span class=\"title-line\">Kaplan Virtual</span><span class=\"title-line\">Spelling Bee</span>",
     type: "Event Graphics",
     summary: "A virtual spelling bee identity and motion package created with Kaplan and Hexco.",
     role: "Motion Designer, Graphic Designer",
@@ -200,6 +209,7 @@ const projectData = {
   },
   "brand-transitions": {
     title: "Skimm Lab Illustrations",
+    heroTitleHtml: "<span class=\"title-line\">Skimm Lab</span><span class=\"title-line\">Illustrations</span>",
     type: "Illustration Animation",
     summary: "Looping animations created from commissioned Skimm Lab illustrations.",
     role: "Motion Designer",
@@ -226,6 +236,7 @@ const projectData = {
   },
   "event-graphics": {
     title: "Skimm Spot Illustration Animations",
+    heroTitleHtml: "<span class=\"title-line\">Skimm Spot</span><span class=\"title-line\">Illustration <span class=\"title-mobile-break\">Animations</span></span>",
     type: "Illustration Animation",
     summary: "Lightweight looping animations adapted from theSkimm spot illustration library.",
     role: "Motion Designer",
@@ -249,6 +260,7 @@ const projectData = {
   },
   "editorial-motion": {
     title: "Skimm NASDAQ Billboard",
+    heroTitleHtml: "<span class=\"title-line\">Skimm NASDAQ</span><span class=\"title-line\">Billboard</span>",
     type: "Billboard Motion",
     summary: "Portrait motion designed for the Nasdaq billboard in Times Square.",
     role: "Motion Designer",
@@ -309,6 +321,8 @@ function createMarqueeSet(label, repeatCount) {
 }
 
 function fillMarquee(heading) {
+  if (heading.dataset.staticHeading === "true") return;
+
   const label = heading.dataset.marqueeLabel || heading.textContent.trim();
   const container = heading.parentElement;
 
@@ -342,7 +356,16 @@ function scheduleMarqueeFill() {
 }
 
 function resetInitialScrollPosition() {
-  if (!window.location.hash && window.scrollY < 4) {
+  if (history.scrollRestoration) {
+    history.scrollRestoration = "manual";
+  }
+
+  const shouldResetHomeScroll =
+    !document.body.classList.contains("project-page") &&
+    !document.body.classList.contains("playground-page") &&
+    !document.body.classList.contains("drum-page");
+
+  if (!window.location.hash && shouldResetHomeScroll) {
     window.scrollTo(0, 0);
   }
 }
@@ -352,30 +375,75 @@ function syncVisualViewportWidth() {
   document.documentElement.style.setProperty("--visual-width", `${Math.round(width)}px`);
 }
 
-function updateHeaderScrollState() {
-  document.body.classList.toggle("is-scrolled", window.scrollY > 18 || document.body.classList.contains("drum-page"));
-  const hero = document.querySelector(".project-hero");
-  if (hero) {
-    document.body.classList.toggle("is-project-title-pinned", hero.getBoundingClientRect().bottom < 120);
-  }
-  const masthead = document.querySelector(".masthead");
-  if (masthead) {
-    const mastheadRect = masthead.getBoundingClientRect();
-    const layoutWidth = document.documentElement.clientWidth || window.innerWidth;
-    document.documentElement.style.setProperty("--masthead-bottom", `${Math.round(mastheadRect.bottom)}px`);
-    document.documentElement.style.setProperty("--masthead-left", `${Math.round(mastheadRect.left)}px`);
-    document.documentElement.style.setProperty("--masthead-right", `${Math.round(layoutWidth - mastheadRect.right)}px`);
-  }
-}
-
-function syncSiteMenuPosition() {
+function syncMastheadMetrics() {
   const masthead = document.querySelector(".masthead");
   if (!masthead) return;
   const mastheadRect = masthead.getBoundingClientRect();
   const layoutWidth = document.documentElement.clientWidth || window.innerWidth;
+  const mastheadBottom = mastheadRect.bottom.toFixed(3);
+  const mastheadLeft = mastheadRect.left.toFixed(3);
+  const mastheadRight = (layoutWidth - mastheadRect.right).toFixed(3);
+  const mastheadWidth = mastheadRect.width.toFixed(3);
   document.documentElement.style.setProperty("--masthead-bottom", `${Math.round(mastheadRect.bottom)}px`);
-  document.documentElement.style.setProperty("--masthead-left", `${Math.round(mastheadRect.left)}px`);
-  document.documentElement.style.setProperty("--masthead-right", `${Math.round(layoutWidth - mastheadRect.right)}px`);
+  document.documentElement.style.setProperty("--masthead-left", `${mastheadLeft}px`);
+  document.documentElement.style.setProperty("--masthead-right", `${mastheadRight}px`);
+  document.documentElement.style.setProperty("--masthead-width", `${mastheadWidth}px`);
+  const mastheadTitle = masthead.querySelector("h1");
+  const isScrolled = document.body.classList.contains("is-scrolled");
+  const isNonHomePage =
+    document.body.classList.contains("project-page") ||
+    document.body.classList.contains("playground-page") ||
+    document.body.classList.contains("drum-page");
+  const titleRailTop = mastheadTitle ? mastheadTitle.getBoundingClientRect().top + 8 : mastheadRect.top;
+  if (!isNonHomePage && (!isScrolled || mastheadRestingRailTop === null)) {
+    mastheadRestingRailTop = titleRailTop;
+  }
+  const railTop = isNonHomePage ? mastheadRect.top : isScrolled ? mastheadRestingRailTop : titleRailTop;
+  document.documentElement.style.setProperty("--data-rail-top", `${Math.round(railTop)}px`);
+  document.documentElement.style.setProperty("--scrolled-masthead-top", `${Math.round(railTop)}px`);
+
+  const introShelf = document.querySelector(".home-intro-shelf");
+  if (introShelf) {
+    introShelf.style.top = `${mastheadBottom}px`;
+    introShelf.style.left = `${mastheadLeft}px`;
+    introShelf.style.width = `${mastheadWidth}px`;
+  }
+}
+
+function trackMastheadTransition() {
+  if (mastheadTransitionFrame) {
+    window.cancelAnimationFrame(mastheadTransitionFrame);
+  }
+
+  const startedAt = performance.now();
+  const tick = () => {
+    syncMastheadMetrics();
+    if (performance.now() - startedAt < 520) {
+      mastheadTransitionFrame = window.requestAnimationFrame(tick);
+      return;
+    }
+    mastheadTransitionFrame = null;
+  };
+
+  mastheadTransitionFrame = window.requestAnimationFrame(tick);
+}
+
+function updateHeaderScrollState() {
+  const wasScrolled = document.body.classList.contains("is-scrolled");
+  document.body.classList.toggle("is-scrolled", window.scrollY > 18 || document.body.classList.contains("drum-page"));
+  const isScrolled = document.body.classList.contains("is-scrolled");
+  if (wasScrolled !== isScrolled) {
+    trackMastheadTransition();
+  }
+  const hero = document.querySelector(".project-hero");
+  if (hero) {
+    document.body.classList.toggle("is-project-title-pinned", hero.getBoundingClientRect().bottom < 120);
+  }
+  syncMastheadMetrics();
+}
+
+function syncSiteMenuPosition() {
+  syncMastheadMetrics();
 }
 
 function requestHeaderScrollUpdate() {
@@ -437,9 +505,17 @@ function getCssNumber(name, fallback) {
   return Number.isFinite(value) ? value : fallback;
 }
 
+function getElementCssNumber(element, name, fallback) {
+  if (!element) return fallback;
+  const value = Number.parseFloat(getComputedStyle(element).getPropertyValue(name));
+  return Number.isFinite(value) ? value : fallback;
+}
+
 function drawLineField({ preserveDisplacement = false } = {}) {
   if (!canvas || !context || !field) return;
   const rect = field.getBoundingClientRect();
+  const isContainedField = field.closest(".home-selected-work");
+  const topInset = isContainedField ? Math.max(0, getElementCssNumber(field, "--home-smudge-top-gap", 0)) : 0;
   const previousLines = preserveDisplacement ? lineState.lines : null;
   const previousLineStep = lineState.lineStep || 1;
   const previousSegmentStep = previousLines?.[0]?.[1]
@@ -447,16 +523,18 @@ function drawLineField({ preserveDisplacement = false } = {}) {
     : 1;
   const previousFirstX = previousLines?.[0]?.[0]?.baseX ?? previousLines?.[0]?.[0]?.x ?? 0;
   lineState.dpr = Math.min(window.devicePixelRatio || 1, 2);
-  lineState.height = Math.max(rect.height, 1);
-  lineState.width = Math.max(window.innerWidth, rect.width, 1);
+  lineState.topInset = topInset;
+  lineState.height = Math.max(rect.height - topInset, 1);
+  lineState.width = Math.max(isContainedField ? rect.width : window.innerWidth, rect.width, 1);
   lineState.lineStep = Math.max(4, getCssNumber("--line-step", 6));
   lineState.stroke = Math.max(1, getCssNumber("--stroke", 1));
   lineState.color = getCssColor("--line", "#F77F3F");
-  lineState.canvasLeft = rect.left * -1;
+  lineState.canvasLeft = isContainedField ? 0 : rect.left * -1;
 
   canvas.width = Math.round(lineState.width * lineState.dpr);
   canvas.height = Math.round(lineState.height * lineState.dpr);
   canvas.style.left = `${lineState.canvasLeft}px`;
+  canvas.style.top = `${lineState.topInset}px`;
   canvas.style.width = `${lineState.width}px`;
   canvas.style.height = `${lineState.height}px`;
   context.setTransform(lineState.dpr, 0, 0, lineState.dpr, 0, 0);
@@ -466,7 +544,7 @@ function drawLineField({ preserveDisplacement = false } = {}) {
   const rows = Math.ceil(lineState.height / segmentStep) + 1;
 
   lineState.lines = Array.from({ length: columns }, (_, column) => {
-    const x = rect.left + column * lineState.lineStep + lineState.stroke / 2;
+    const x = (isContainedField ? 0 : rect.left) + column * lineState.lineStep + lineState.stroke / 2;
     return Array.from({ length: rows }, (_, row) => ({
       baseX: x,
       x: x + getPreservedLineOffset(previousLines, previousFirstX, previousLineStep, previousSegmentStep, x, row * segmentStep),
@@ -491,9 +569,11 @@ function getPreservedLineOffset(previousLines, previousFirstX, previousLineStep,
 function drawLineFieldIfLayoutChanged() {
   if (!field) return;
   const rect = field.getBoundingClientRect();
-  const nextWidth = Math.max(window.innerWidth, rect.width, 1);
-  const nextHeight = Math.max(rect.height, 1);
-  const nextCanvasLeft = rect.left * -1;
+  const isContainedField = field.closest(".home-selected-work");
+  const nextTopInset = isContainedField ? Math.max(0, getElementCssNumber(field, "--home-smudge-top-gap", 0)) : 0;
+  const nextWidth = Math.max(isContainedField ? rect.width : window.innerWidth, rect.width, 1);
+  const nextHeight = Math.max(rect.height - nextTopInset, 1);
+  const nextCanvasLeft = isContainedField ? 0 : rect.left * -1;
   const nextDpr = Math.min(window.devicePixelRatio || 1, 2);
   const nextLineStep = Math.max(4, getCssNumber("--line-step", 6));
   const nextStroke = Math.max(1, getCssNumber("--stroke", 1));
@@ -501,6 +581,7 @@ function drawLineFieldIfLayoutChanged() {
     Math.abs(nextWidth - lineState.width) > 1 ||
     Math.abs(nextHeight - lineState.height) > 1 ||
     Math.abs(nextCanvasLeft - lineState.canvasLeft) > 1 ||
+    Math.abs(nextTopInset - lineState.topInset) > 0.01 ||
     Math.abs(nextDpr - lineState.dpr) > 0.01 ||
     Math.abs(nextLineStep - lineState.lineStep) > 0.01 ||
     Math.abs(nextStroke - lineState.stroke) > 0.01;
@@ -511,8 +592,10 @@ function drawLineFieldIfLayoutChanged() {
 function setLinePointerFromClient(clientX, clientY, activate = true) {
   if (!field) return;
   const rect = field.getBoundingClientRect();
+  const isContainedField = field.closest(".home-selected-work");
+  const topInset = isContainedField ? lineState.topInset || 0 : 0;
   const x = clientX - rect.left - lineState.canvasLeft;
-  const y = clientY - rect.top;
+  const y = clientY - rect.top - topInset;
   const velocityLimit = lineState.lineStep * 3;
 
   lineState.pointer.velocityX = Math.max(Math.min(x - lineState.pointer.x, velocityLimit), -velocityLimit);
@@ -527,8 +610,10 @@ function setLinePointerFromClient(clientX, clientY, activate = true) {
 function initializeLinePointer(clientX, clientY) {
   if (!field) return;
   const rect = field.getBoundingClientRect();
+  const isContainedField = field.closest(".home-selected-work");
+  const topInset = isContainedField ? lineState.topInset || 0 : 0;
   const x = clientX - rect.left - lineState.canvasLeft;
-  const y = clientY - rect.top;
+  const y = clientY - rect.top - topInset;
   lineState.pointer.x = x;
   lineState.pointer.y = y;
   lineState.pointer.previousX = x;
@@ -561,6 +646,15 @@ function applyLineSmudgeAt(x, y, velocityX, velocityY, multiplier = 1) {
       point.vx += dragX * centerPressure + direction * verticalBias * centerPressure;
     });
   });
+}
+
+function applyPuckLineSmudgeAt(clientX, y, velocityX, velocityY, multiplier = 1) {
+  if (!field) return;
+  const rect = field.getBoundingClientRect();
+  const isContainedField = field.closest(".home-selected-work");
+  const x = isContainedField ? clientX - rect.left : clientX;
+  const adjustedY = isContainedField ? y - (lineState.topInset || 0) : y;
+  applyLineSmudgeAt(x, adjustedY, velocityX, velocityY, multiplier);
 }
 
 function applyLineSmudge() {
@@ -729,7 +823,7 @@ function resolvePuckCollisions() {
         if (hitSpeed > 0.4) {
           const centerX = (a.x + b.x) / 2 + field.getBoundingClientRect().left;
           const centerY = (a.y + b.y) / 2;
-          applyLineSmudgeAt(centerX, centerY, normalX * hitSpeed, normalY * hitSpeed, 0.82);
+          applyPuckLineSmudgeAt(centerX, centerY, normalX * hitSpeed, normalY * hitSpeed, 0.82);
         }
       }
 
@@ -789,11 +883,17 @@ function animatePuckPhysics() {
     state.element.style.top = `${state.y}px`;
     if (!state.dragging && Math.hypot(state.vx, state.vy) > 0.12) {
       const center = getPuckCenterClient(state);
-      applyLineSmudgeAt(center.x, center.y - fieldRect.top, state.vx, state.vy, 0.58);
+      applyPuckLineSmudgeAt(center.x, center.y - fieldRect.top, state.vx, state.vy, 0.58);
     }
   });
 
   window.requestAnimationFrame(animatePuckPhysics);
+}
+
+function getIntroPushedPuckClass(isStackedMobileLayout) {
+  if (isStackedMobileLayout) return "portfolio-puck-two";
+  const hasThirdPuck = Array.from(portfolioPucks).some((puck) => puck.classList.contains("portfolio-puck-three"));
+  return hasThirdPuck ? "portfolio-puck-three" : "portfolio-puck-two";
 }
 
 function prepareIntroPuckSlide(attempt = 0) {
@@ -807,7 +907,7 @@ function prepareIntroPuckSlide(attempt = 0) {
   }
 
   const isStackedMobileLayout = window.matchMedia("(max-width: 700px)").matches;
-  const pushedTargetClass = isStackedMobileLayout ? "portfolio-puck-two" : "portfolio-puck-three";
+  const pushedTargetClass = getIntroPushedPuckClass(isStackedMobileLayout);
   const state = puckPhysicsState.pucks.find((item) => item.element.classList.contains("portfolio-puck-one"));
   const pushedState = puckPhysicsState.pucks.find((item) => item.element.classList.contains(pushedTargetClass));
   if (!state || !state.radius || !pushedState || !pushedState.radius) {
@@ -871,7 +971,7 @@ function runIntroPuckSlide(attempt = 0) {
   }
 
   const isStackedMobileLayout = window.matchMedia("(max-width: 700px)").matches;
-  const pushedTargetClass = isStackedMobileLayout ? "portfolio-puck-two" : "portfolio-puck-three";
+  const pushedTargetClass = getIntroPushedPuckClass(isStackedMobileLayout);
   const state = puckPhysicsState.pucks.find((item) => item.element.classList.contains("portfolio-puck-one"));
   const pushedState = puckPhysicsState.pucks.find((item) => item.element.classList.contains(pushedTargetClass));
   if (!state || !state.radius || !pushedState || !pushedState.radius) {
@@ -944,7 +1044,7 @@ function runIntroPuckSlide(attempt = 0) {
       contactMade = true;
       const normalX = (pushedState.x - state.x) / (centerDistance || 1);
       const normalY = (pushedState.y - state.y) / (centerDistance || 1);
-      applyLineSmudgeAt(
+      applyPuckLineSmudgeAt(
         fieldRect.left + (state.x + pushedState.x) / 2,
         (state.y + pushedState.y) / 2,
         normalX * Math.max(Math.abs(velocityX), 1.2),
@@ -993,7 +1093,7 @@ function runIntroPuckSlide(attempt = 0) {
     lastY = state.y;
     if (Math.hypot(deltaX, deltaY) > 0.05) {
       const center = getPuckCenterClient(state);
-      applyLineSmudgeAt(center.x, center.y - fieldRect.top, deltaX, deltaY, 0.58);
+      applyPuckLineSmudgeAt(center.x, center.y - fieldRect.top, deltaX, deltaY, 0.58);
     }
 
     const pushedDeltaX = pushedState.x - pushedLastX;
@@ -1002,7 +1102,7 @@ function runIntroPuckSlide(attempt = 0) {
     pushedLastY = pushedState.y;
     if (Math.hypot(pushedDeltaX, pushedDeltaY) > 0.05) {
       const center = getPuckCenterClient(pushedState);
-      applyLineSmudgeAt(center.x, center.y - fieldRect.top, pushedDeltaX, pushedDeltaY, 0.58);
+      applyPuckLineSmudgeAt(center.x, center.y - fieldRect.top, pushedDeltaX, pushedDeltaY, 0.58);
     }
 
     window.requestAnimationFrame(step);
@@ -1065,7 +1165,7 @@ function initializePuckDragging() {
     );
     if (Math.hypot(state.vx, state.vy) > 0.2) {
       const center = getPuckCenterClient(state);
-      applyLineSmudgeAt(center.x, center.y - fieldRect.top, state.vx, state.vy, 0.46);
+      applyPuckLineSmudgeAt(center.x, center.y - fieldRect.top, state.vx, state.vy, 0.46);
     }
     return true;
   };
@@ -1166,6 +1266,27 @@ function revealHomePucks() {
   });
 }
 
+function initializeHomeSmudgeModuleLink() {
+  const smudgeLinkField = document.querySelector(".home-selected-work .line-field[data-smudge-link]");
+  if (!smudgeLinkField) return;
+
+  const openSmudgeModule = () => {
+    window.location.href = smudgeLinkField.dataset.smudgeLink || "./smudge-module.html";
+  };
+
+  smudgeLinkField.addEventListener("click", (event) => {
+    if (event.target.closest(".portfolio-puck")) return;
+    openSmudgeModule();
+  });
+
+  smudgeLinkField.addEventListener("keydown", (event) => {
+    if (event.key !== "Enter" && event.key !== " ") return;
+    if (event.target.closest(".portfolio-puck")) return;
+    event.preventDefault();
+    openSmudgeModule();
+  });
+}
+
 function initializePuckVideos() {
   const videos = document.querySelectorAll(".puck-video");
   if (!videos.length) return;
@@ -1201,6 +1322,24 @@ function initializePuckVideos() {
     if (video.readyState >= 2) markReady();
     window.setTimeout(markReady, 900);
   });
+}
+
+function initializePlainPucks() {
+  if (!portfolioPucks.length) return;
+  const plainPucks = Array.from(portfolioPucks).filter(
+    (puck) => !puck.querySelector(".puck-video, [data-puck-lottie]")
+  );
+  if (!plainPucks.length) return;
+
+  plainPucks.forEach((puck) => {
+    puck.classList.add("is-puck-ready");
+  });
+
+  const firstPlainPuck = plainPucks.find((puck) => puck.classList.contains("portfolio-puck-one"));
+  if (!firstPlainPuck) return;
+  prepareIntroPuckSlide();
+  const slideDelay = window.matchMedia("(max-width: 700px)").matches ? 1780 : 860;
+  window.setTimeout(runIntroPuckSlide, slideDelay);
 }
 
 function initializePlaygroundTypeLabels() {
@@ -1317,7 +1456,14 @@ function initializeSiteMenu() {
       <span class="site-menu-title">Wheel Sequencer</span>
     </a>
   `;
-  panel.innerHTML = projectLinks + drumLink;
+  const smudgeCurrent = document.body.classList.contains("smudge-page");
+  const smudgeLink = `
+    <a href="./smudge-module.html" ${smudgeCurrent ? 'aria-current="page"' : ""}>
+      <span class="site-menu-count">${String(projectOrder.length + 2).padStart(2, "0")}</span>
+      <span class="site-menu-title">Smudge Module</span>
+    </a>
+  `;
+  panel.innerHTML = projectLinks + drumLink + smudgeLink;
   document.body.append(panel);
 
   const close = () => {
@@ -1383,70 +1529,14 @@ function setTypedHeadingData(element, text, propertyName = "--section-cursor-x")
 
 function getDropCapMarkup(text = "") {
   const trimmed = text.trim();
-  if (!trimmed) return "";
-  const first = trimmed.charAt(0);
-  return `<span class="module-drop-cap" aria-hidden="true"><span class="module-drop-cap-letter">${escapeHtml(first)}</span></span><span class="visually-hidden">${escapeHtml(first)}</span>${escapeHtml(trimmed.slice(1))}`;
+  return trimmed ? escapeHtml(trimmed) : "";
 }
 
 function clearMobileDropCapStabilizers() {
-  document.querySelectorAll(".drop-cap-line-clear").forEach((element) => {
-    const paragraph = element.closest("p");
-    element.remove();
-    paragraph?.normalize();
-    paragraph?.removeAttribute("data-drop-cap-stabilized");
-  });
 }
 
 function stabilizeMobileDropCaps() {
   clearMobileDropCapStabilizers();
-  if (!window.matchMedia("(max-width: 700px)").matches) return;
-
-  document.querySelectorAll(".module-drop-cap").forEach((dropCap) => {
-    const paragraph = dropCap.closest("p");
-    if (!paragraph) return;
-    const textNode = Array.from(paragraph.childNodes).find((node) => (
-      node.nodeType === Node.TEXT_NODE && node.textContent.trim().length > 20
-    ));
-    if (!textNode) return;
-
-    const range = document.createRange();
-    const samples = [];
-    const text = textNode.textContent;
-    for (let index = 0; index < Math.min(text.length, 220); index += 1) {
-      range.setStart(textNode, index);
-      range.setEnd(textNode, index + 1);
-      const rect = range.getBoundingClientRect();
-      if (rect.width && rect.height) {
-        samples.push({ index, top: Math.round(rect.top) });
-      }
-    }
-    range.detach?.();
-
-    const lineTops = [];
-    samples.forEach((sample) => {
-      if (!lineTops.some((top) => Math.abs(top - sample.top) <= 2)) {
-        lineTops.push(sample.top);
-      }
-    });
-    if (lineTops.length < 4) return;
-
-    const fourthLineTop = lineTops[3];
-    const fourthLineSample = samples.find((sample) => Math.abs(sample.top - fourthLineTop) <= 2);
-    if (!fourthLineSample) return;
-
-    let splitIndex = fourthLineSample.index;
-    while (splitIndex > 0 && !/\s/.test(text.charAt(splitIndex - 1))) {
-      splitIndex -= 1;
-    }
-    if (splitIndex <= 0 || splitIndex >= text.length) return;
-
-    const remainder = textNode.splitText(splitIndex);
-    const clear = document.createElement("span");
-    clear.className = "drop-cap-line-clear";
-    clear.setAttribute("aria-hidden", "true");
-    paragraph.insertBefore(clear, remainder);
-    paragraph.dataset.dropCapStabilized = "true";
-  });
 }
 
 function setVideoSource(video, source, options = {}) {
@@ -1750,17 +1840,16 @@ function hydrateProjectPage() {
   setText("[data-project-media-label]", project.mediaLabel);
   const overviewHeading = document.querySelector("[data-project-overview-heading]");
   if (overviewHeading) {
-    const overviewHeadingText = project.overviewHeading || "Overview";
-    overviewHeading.textContent = overviewHeadingText;
-    setTypedHeadingData(overviewHeading, overviewHeadingText);
+    overviewHeading.hidden = true;
+    overviewHeading.textContent = "";
   }
   const overviewCopy = document.querySelector("[data-project-overview-copy]");
   if (overviewCopy) overviewCopy.innerHTML = getDropCapMarkup(project.overviewCopy);
 
   const productHeading = document.querySelector("[data-project-product-heading]");
   if (productHeading) {
-    productHeading.textContent = project.productHeading || project.overviewHeading || "Overview";
-    productHeading.hidden = !project.productHeading && key !== "editorial-motion";
+    productHeading.hidden = true;
+    productHeading.textContent = "";
   }
   const deviceCopy = document.querySelector(".project-device-copy > p");
   if (deviceCopy) deviceCopy.innerHTML = getDropCapMarkup(project.overviewCopy);
@@ -1932,11 +2021,13 @@ function initializeProjectVideoControls(scope = document) {
 
 function hydrateSecondaryProjectPreviews() {
   const homepagePreviewSources = {
+    "skimmu-money": "./assets/videos/skimmu-money/circles/thumbnail-skimmu-color.mp4",
+    "skimm-money-newsletter": "./assets/videos/skimm-money-awareness/circles/wand.mp4",
     "brand-transitions": "./assets/videos/pucks/skimm-lab-icon.mp4",
     "event-graphics": "./assets/videos/pucks/skimm-spot-illustrations.mp4",
     "editorial-motion": "./assets/videos/pucks/pfl-icon.mp4",
   };
-  document.querySelectorAll(".secondary-project-list a[href*='project=']").forEach((link) => {
+  document.querySelectorAll(".secondary-project-list a[href*='project='], .home-selected-list-item[href*='project=']").forEach((link) => {
     const key = new URL(link.getAttribute("href"), window.location.href).searchParams.get("project");
     const source = homepagePreviewSources[key] || projectData[key]?.overviewCircleVideoSrcs?.[0] || projectData[key]?.moduleVideoSrcs?.[0];
     const media = link.querySelector(".secondary-project-preview-media");
@@ -2599,6 +2690,176 @@ function initializeShapePreviewFields() {
   });
 }
 
+function initializeHomeWheelPreview() {
+  const container = document.querySelector("[data-wheel-preview]");
+  if (!container || container.dataset.previewReady === "true") return;
+  container.dataset.previewReady = "true";
+
+  const svgNamespace = "http://www.w3.org/2000/svg";
+  const svg = document.createElementNS(svgNamespace, "svg");
+  svg.setAttribute("class", "home-wheel-preview-svg");
+  svg.setAttribute("viewBox", "50 75 600 325");
+  svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
+
+  const rotatingGroups = [];
+  const previewState = {
+    previousStep: -1,
+    angle: 0,
+  };
+
+  function createSvgElement(name, attributes = {}) {
+    const element = document.createElementNS(svgNamespace, name);
+    Object.entries(attributes).forEach(([key, value]) => element.setAttribute(key, value));
+    return element;
+  }
+
+  function polarPoint(cx, cy, radius, angleDegrees) {
+    const angle = (angleDegrees * Math.PI) / 180;
+    return {
+      x: cx + Math.cos(angle) * radius,
+      y: cy + Math.sin(angle) * radius,
+    };
+  }
+
+  function addRing(group, cx, cy, radius) {
+    group.appendChild(createSvgElement("circle", {
+      class: "home-wheel-preview-ring",
+      cx,
+      cy,
+      r: radius,
+    }));
+  }
+
+  function addNotes(group, cx, cy, radius, activeSteps, emptyRadius, activeRadius) {
+    for (let index = 0; index < 16; index += 1) {
+      const point = polarPoint(cx, cy, radius, index * 22.5);
+      const active = activeSteps.includes(index);
+      group.appendChild(createSvgElement("circle", {
+        class: "home-wheel-preview-halo",
+        cx: point.x.toFixed(3),
+        cy: point.y.toFixed(3),
+        r: (active ? activeRadius : emptyRadius) + 3,
+      }));
+      group.appendChild(createSvgElement("circle", {
+        class: `home-wheel-preview-note${active ? " is-active" : ""}`,
+        cx: point.x.toFixed(3),
+        cy: point.y.toFixed(3),
+        r: active ? activeRadius : emptyRadius,
+      }));
+    }
+  }
+
+  function describeArc(cx, cy, radius, startAngle, endAngle) {
+    const start = polarPoint(cx, cy, radius, startAngle);
+    const end = polarPoint(cx, cy, radius, endAngle);
+    const largeArcFlag = Math.abs(endAngle - startAngle) <= 180 ? "0" : "1";
+    return `M ${start.x.toFixed(3)} ${start.y.toFixed(3)} A ${radius} ${radius} 0 ${largeArcFlag} 1 ${end.x.toFixed(3)} ${end.y.toFixed(3)}`;
+  }
+
+  function addPadSegments(group, cx, cy, radius, activeSteps) {
+    for (let index = 0; index < 16; index += 1) {
+      const centerAngle = index * 22.5;
+      const path = describeArc(cx, cy, radius, centerAngle - 6.2, centerAngle + 6.2);
+      group.appendChild(createSvgElement("path", {
+        class: "home-wheel-preview-pad-halo",
+        d: path,
+      }));
+      group.appendChild(createSvgElement("path", {
+        class: `home-wheel-preview-pad${activeSteps.includes(index) ? " is-active" : ""}`,
+        d: path,
+      }));
+    }
+  }
+
+  function addCog(group, cx, cy, radius, modifierClass = "") {
+    const className = ["home-wheel-preview-cog", modifierClass].filter(Boolean).join(" ");
+    const cog = createSvgElement("g", { class: className });
+    cog.appendChild(createSvgElement("circle", { cx, cy, r: radius }));
+    for (let index = 0; index < 6; index += 1) {
+      const angle = index * 60;
+      const inner = polarPoint(cx, cy, radius, angle);
+      const outer = polarPoint(cx, cy, radius + 4, angle);
+      cog.appendChild(createSvgElement("line", {
+        x1: inner.x.toFixed(3),
+        y1: inner.y.toFixed(3),
+        x2: outer.x.toFixed(3),
+        y2: outer.y.toFixed(3),
+      }));
+    }
+    group.appendChild(cog);
+  }
+
+  function buildDrumWheel(cx, cy) {
+    const wheel = createSvgElement("g");
+    const rotating = createSvgElement("g");
+    const handleHeight = 31;
+
+    wheel.appendChild(createSvgElement("rect", {
+      class: "home-wheel-preview-handle",
+      x: cx,
+      y: cy - handleHeight / 2,
+      width: 142,
+      height: handleHeight,
+      rx: handleHeight / 2,
+      ry: handleHeight / 2,
+    }));
+
+    [
+      { radius: 48, active: [0, 4, 8, 12] },
+      { radius: 72, active: [4, 12] },
+      { radius: 96, active: [2, 6, 10, 14] },
+      { radius: 120, active: [3, 9, 13] },
+    ].forEach((ring) => {
+      addRing(rotating, cx, cy, ring.radius);
+      addNotes(rotating, cx, cy, ring.radius, ring.active, 4.8, 6.6);
+    });
+
+    addCog(rotating, cx, cy, 23, "home-wheel-preview-cog-drum");
+    wheel.appendChild(rotating);
+    rotatingGroups.push({ element: rotating, cx, cy, offset: 0 });
+    svg.appendChild(wheel);
+  }
+
+  function buildSynthWheel(cx, cy, activePad, activeLead, muted = false) {
+    const wheel = createSvgElement("g", { opacity: muted ? "0.63" : "1" });
+    const rotating = createSvgElement("g");
+
+    addRing(rotating, cx, cy, 39);
+    addRing(rotating, cx, cy, 62);
+    addNotes(rotating, cx, cy, 39, activeLead, 4.1, 5.8);
+    addPadSegments(rotating, cx, cy, 62, activePad);
+    addCog(rotating, cx, cy, 22, "home-wheel-preview-cog-synth");
+    wheel.appendChild(rotating);
+    svg.appendChild(wheel);
+    rotatingGroups.push({ element: rotating, cx, cy, offset: (activePad[0] || 0) * 22.5 });
+  }
+
+  buildDrumWheel(190, 214);
+  buildSynthWheel(438, 141, [], [1, 4, 7, 11], false);
+  buildSynthWheel(580, 141, [], [2, 5, 9, 13], true);
+  buildSynthWheel(438, 284, [], [0, 3, 6, 10], true);
+  buildSynthWheel(580, 284, [], [1, 6, 8, 12], false);
+
+  container.appendChild(svg);
+
+  function animatePreview(timestamp) {
+    previewState.angle = (timestamp * 0.04) % 360;
+    const currentStep = Math.floor(previewState.angle / 22.5) % 16;
+    previewState.previousStep = currentStep;
+
+    rotatingGroups.forEach((group, index) => {
+      group.element.setAttribute(
+        "transform",
+        `rotate(${previewState.angle + group.offset + index * 7} ${group.cx} ${group.cy})`
+      );
+    });
+
+    window.requestAnimationFrame(animatePreview);
+  }
+
+  window.requestAnimationFrame(animatePreview);
+}
+
 window.addEventListener("resize", () => {
   syncVisualViewportWidth();
   scheduleMarqueeFill();
@@ -2623,14 +2884,17 @@ initializeDataRail();
 initializePalette();
 hydrateProjectPage();
 initializeSiteMenu();
+initializeHomeSmudgeModuleLink();
 hydrateSecondaryProjectPreviews();
 initializePuckDragging();
 initializeLineField();
 initializeShapeField();
 initializeShapePreviewFields();
+initializeHomeWheelPreview();
 updateHeaderScrollState();
 revealHomePucks();
 initializePuckVideos();
+initializePlainPucks();
 initializePlaygroundTypeLabels();
 window.setInterval(updateDataRail, 1000);
 document.fonts?.ready.then(() => {
@@ -2641,6 +2905,7 @@ document.fonts?.ready.then(() => {
   stabilizeMobileDropCaps();
 });
 window.addEventListener("load", () => {
+  resetInitialScrollPosition();
   fillMarquees();
   syncPuckStateFromDom();
   drawLineFieldIfLayoutChanged();
@@ -2648,6 +2913,8 @@ window.addEventListener("load", () => {
   stabilizeMobileDropCaps();
 });
 window.addEventListener("pageshow", (event) => {
+  resetInitialScrollPosition();
+  updateHeaderScrollState();
   if (!field) return;
   if (event.persisted || window.matchMedia("(max-width: 700px)").matches) {
     window.setTimeout(resetMobilePuckLayoutFromCss, 0);

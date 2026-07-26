@@ -12,8 +12,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="./styles.css?v=circular-drum-machine-20260723bd" />
-    <script src="./script.js?v=menu-wheel-sequencer-20260723a" defer></script>
+    <link rel="stylesheet" href="./styles.css?v=home-smudge-module-link-20260726a" />
+    <script src="./script.js?v=home-smudge-module-link-20260726a" defer></script>
   </head>
   <body class="palette-enter playground-page drum-page is-scrolled">
     <main class="page playground-shell" aria-label="Ryan Pattison circular drum machine">
@@ -21,8 +21,8 @@
         <div class="masthead-copy">
           <h1>
             <a class="home-link" href="./index.html">
-              <span class="title-full">RYAN PATTISON</span>
-              <span class="title-compact" aria-hidden="true">R_P</span>
+              <span class="title-full">Ryan Pattison</span>
+              <span class="title-compact" aria-hidden="true">R___P</span>
             </a>
           </h1>
           <p>Motion Design, Graphic Design, and Visual Direction</p>
@@ -39,9 +39,6 @@
       <section class="drum-machine" aria-labelledby="drum-title">
         <div class="drum-copy">
           <h2 id="drum-title">Wheel Sequencer</h2>
-          <p>
-            Just start clicking random circles and then press play.
-          </p>
         </div>
 
         <section class="drum-stage" aria-label="Circular drum sequencer">
@@ -426,6 +423,8 @@
         let visualStepPosition = 0;
         let dragPaint = null;
         let hasScheduledAudio = false;
+        const schedulerLookahead = 0.075;
+        const schedulerTick = 16;
 
         const polarPoint = (center, radius, angle) => {
           const radians = angle * Math.PI / 180;
@@ -440,6 +439,31 @@
           const end = polarPoint(center, radius, endAngle);
           const largeArc = Math.abs(endAngle - startAngle) > 180 ? 1 : 0;
           return `M ${start.x} ${start.y} A ${radius} ${radius} 0 ${largeArc} 1 ${end.x} ${end.y}`;
+        };
+
+        const currentSecondsPerStep = () => 60 / Number(bpmInput.value) / 4;
+
+        const nextClockwiseArmCrossing = () => {
+          const position = ((visualStepPosition % 16) + 16) % 16;
+          const nextBoundary = Math.ceil(position - 0.0001);
+          const boundary = nextBoundary >= 16 ? 0 : nextBoundary;
+          const distance = nextBoundary >= 16 ? 16 - position : Math.max(nextBoundary - position, 0);
+          return {
+            step: normalizeStep(-boundary),
+            distance,
+          };
+        };
+
+        const syncSchedulerToArm = () => {
+          if (!audioContext || audioContext.state !== "running") return;
+          const crossing = nextClockwiseArmCrossing();
+          currentStep = crossing.step;
+          nextStepTime = audioContext.currentTime + crossing.distance * currentSecondsPerStep();
+        };
+
+        const resyncPlayingPattern = () => {
+          if (!isPlaying || !hasScheduledAudio) return;
+          startAudioScheduler(true);
         };
 
         const capsuleArcPath = (center, radius, startAngle, endAngle, width) => {
@@ -910,7 +934,7 @@
           if (!isPlaying) return;
           if (!visualLastTime) visualLastTime = timestamp;
           const elapsed = (timestamp - visualLastTime) / 1000;
-          const secondsPerStep = 60 / Number(bpmInput.value) / 4;
+          const secondsPerStep = currentSecondsPerStep();
           visualStepPosition = (visualStepPosition + elapsed / secondsPerStep) % 16;
           Object.values(wheels).forEach((wheel) => {
             if (wheel.orbit) wheel.orbit.style.rotate = `${visualStepPosition * 22.5}deg`;
@@ -923,7 +947,7 @@
         };
 
         const scheduleStep = (step, time) => {
-          const secondsPerStep = 60 / Number(bpmInput.value) / 4;
+          const secondsPerStep = currentSecondsPerStep();
           instruments.forEach((instrument) => {
             if (typeof instrument.bar === "number" && instrument.bar !== activeSynthBar) return;
             if (instrument.type === "arc") {
@@ -938,8 +962,8 @@
         };
 
         const scheduler = () => {
-          const secondsPerStep = 60 / Number(bpmInput.value) / 4;
-          while (nextStepTime < audioContext.currentTime + 0.12) {
+          const secondsPerStep = currentSecondsPerStep();
+          while (nextStepTime < audioContext.currentTime + schedulerLookahead) {
             scheduleStep(currentStep, nextStepTime);
             const nextStep = normalizeStep(currentStep - 1);
             if (nextStep === 0) {
@@ -950,25 +974,29 @@
             currentStep = nextStep;
             nextStepTime += secondsPerStep;
           }
-          if (isPlaying) schedulerId = window.setTimeout(scheduler, 25);
+          if (isPlaying) schedulerId = window.setTimeout(scheduler, schedulerTick);
         };
 
-        const startAudioScheduler = () => {
+        const startAudioScheduler = (alignToArm = false) => {
           if (!audioContext || audioContext.state !== "running") return;
           hasScheduledAudio = true;
           window.clearTimeout(schedulerId);
-          nextStepTime = audioContext.currentTime + 0.06;
+          if (alignToArm) {
+            syncSchedulerToArm();
+          } else {
+            nextStepTime = audioContext.currentTime + 0.03;
+          }
           scheduler();
         };
 
         const enableAudio = () => {
           ensureAudio();
           if (audioContext.state === "running") {
-            startAudioScheduler();
+            startAudioScheduler(true);
             return;
           }
           audioContext.resume().then(() => {
-            if (isPlaying) startAudioScheduler();
+            if (isPlaying) startAudioScheduler(true);
           }).catch(() => {});
         };
 
@@ -977,7 +1005,7 @@
           playButton.classList.add("is-playing");
           playButton.setAttribute("aria-label", "Pause");
           currentStep = currentStep % 16;
-          visualStepPosition = currentStep;
+          visualStepPosition = normalizeStep(-currentStep);
           visualLastTime = 0;
           if (withAudio) enableAudio();
           window.cancelAnimationFrame(visualFrameId);
@@ -1012,6 +1040,7 @@
         clearButton?.addEventListener("click", () => {
           instruments.forEach((instrument) => instrument.pattern.fill(false));
           renderPattern();
+          resyncPlayingPattern();
         });
 
         const randomChoice = (items) => items[Math.floor(Math.random() * items.length)];
@@ -1046,6 +1075,7 @@
             });
           });
           renderPattern();
+          resyncPlayingPattern();
         };
 
         randomButton?.addEventListener("click", randomizePattern);
@@ -1062,7 +1092,10 @@
 
         updateTempoControl();
 
-        bpmInput.addEventListener("input", updateTempoControl);
+        bpmInput.addEventListener("input", () => {
+          updateTempoControl();
+          resyncPlayingPattern();
+        });
 
         tempoControl?.addEventListener("click", () => {
           tempoControl.classList.add("is-open");

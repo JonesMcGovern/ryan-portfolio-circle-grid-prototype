@@ -7199,7 +7199,7 @@ body[data-project="skimm-money-newsletter"] .additional-creative {
     width: min(calc(var(--visual-width, 100vw) - (var(--page-x) * 2)), 390px);
     min-width: 0;
     padding-top: 0;
-    margin-top: 32px;
+    margin-top: 48px;
     transform: none;
   }
 
@@ -7210,7 +7210,7 @@ body[data-project="skimm-money-newsletter"] .additional-creative {
     grid-column: 1;
     grid-row: auto;
     order: 1;
-    transform: none;
+    transform: translateX(-42px);
   }
 
   .drum-dial-synth {
@@ -7226,7 +7226,7 @@ body[data-project="skimm-money-newsletter"] .additional-creative {
     grid-template-columns: repeat(2, auto);
     gap: 14px;
     width: auto;
-    transform: none;
+    transform: translateX(-42px);
     justify-items: center;
   }
 
@@ -7275,21 +7275,23 @@ body[data-project="skimm-money-newsletter"] .additional-creative {
   }
 
   .drum-controls {
-    grid-column: 1;
+    grid-column: auto;
     grid-row: auto;
-    order: 3;
-    position: static;
+    order: initial;
+    position: absolute;
+    right: 0;
+    top: 54%;
     display: grid;
     --drum-toolbar-width: 34px;
     --drum-play-size: 51px;
-    grid-template-columns: var(--drum-play-size) var(--drum-toolbar-width) var(--drum-toolbar-width) minmax(0, 1fr);
-    grid-template-rows: var(--drum-play-size);
+    grid-template-columns: 1fr;
+    grid-template-rows: var(--drum-play-size) repeat(2, var(--drum-toolbar-width)) clamp(132px, 22svh, 176px);
     gap: 6px;
-    width: min(100%, calc((min(27vw, 106px) * 2) + 14px));
+    width: var(--drum-play-size);
     height: auto;
-    margin-top: 10px;
-    justify-self: center;
-    transform: none;
+    margin-top: 0;
+    justify-self: auto;
+    transform: translateY(-50%);
   }
 
   .drum-readout {
@@ -7306,44 +7308,47 @@ body[data-project="skimm-money-newsletter"] .additional-creative {
   }
 
   .drum-clear {
-    grid-column: 3;
-    grid-row: 1;
+    grid-column: 1;
+    grid-row: 3;
     order: initial;
     align-self: center;
+    justify-self: center;
   }
 
   .drum-random {
-    grid-column: 2;
-    grid-row: 1;
+    grid-column: 1;
+    grid-row: 2;
     order: initial;
     align-self: center;
+    justify-self: center;
   }
 
   .drum-range {
-    grid-column: 4;
-    grid-row: 1;
-    flex-direction: row;
+    --drum-meter-size: clamp(74px, 13svh, 100px);
+    grid-column: 1;
+    grid-row: 4;
+    flex-direction: column;
     align-items: center;
-    width: 100%;
-    min-height: 34px;
-    padding: 5px 12px;
+    width: var(--drum-toolbar-width);
+    min-height: 0;
+    padding: 12px 5px 13px;
     font-size: clamp(0.476rem, 1.855vw, 0.574rem);
     order: initial;
-    justify-content: flex-start;
-    transform: translateY(2px);
+    justify-content: center;
+    transform: none;
   }
 
   .drum-range input {
-    order: initial;
+    order: -1;
     min-width: 0;
-    left: 54px;
-    right: 12px;
-    top: 50%;
-    width: auto;
-    height: 28px;
-    writing-mode: horizontal-tb;
-    direction: ltr;
-    transform: translateY(-50%);
+    left: 50%;
+    right: auto;
+    top: 12px;
+    width: 28px;
+    height: var(--drum-meter-size);
+    writing-mode: vertical-lr;
+    direction: rtl;
+    transform: translateX(-50%);
   }
 
   .drum-range input::-webkit-slider-runnable-track {
@@ -7360,38 +7365,38 @@ body[data-project="skimm-money-newsletter"] .additional-creative {
 
   .drum-range.is-open input,
   .drum-range:focus-within input {
-    transform: translateY(-50%);
+    transform: translateX(-50%);
   }
 
   .drum-range-meter {
-    order: initial;
-    position: absolute;
-    left: 54px;
-    right: 12px;
-    top: 50%;
-    width: auto;
-    height: 10px;
-    margin: 0;
-    transform: translateY(-50%);
+    order: -1;
+    position: relative;
+    left: auto;
+    right: auto;
+    top: auto;
+    width: 10px;
+    height: var(--drum-meter-size);
+    margin: 0 0 8px;
+    transform: none;
   }
 
   .drum-range-fill {
-    top: 0;
-    right: auto;
-    width: var(--drum-bpm-progress, 52.63%);
-    height: auto;
+    top: auto;
+    right: 0;
+    width: auto;
+    height: var(--drum-bpm-progress, 52.63%);
   }
 
   .drum-range-thumb {
-    left: var(--drum-bpm-progress, 52.63%);
-    bottom: 50%;
+    left: 50%;
+    bottom: var(--drum-bpm-progress, 52.63%);
     transform: translate(-50%, 50%);
   }
 
   .drum-range > span {
-    flex-direction: row;
-    gap: 0.28em;
-    white-space: nowrap;
+    flex-direction: column;
+    gap: 0.18em;
+    white-space: normal;
   }
 
   .secondary-projects {
@@ -7753,7 +7758,7 @@ body[data-project="skimm-money-newsletter"] .additional-creative {
     gap: clamp(34px, 4.4vw, 48px);
     width: min(calc(var(--visual-width, 100vw) - (var(--page-x) * 2)), 720px);
     min-width: 0;
-    margin-top: clamp(34px, 7svh, 76px);
+    margin-top: clamp(48px, 8svh, 88px);
     transform: none;
   }
 
@@ -7764,7 +7769,7 @@ body[data-project="skimm-money-newsletter"] .additional-creative {
     order: 1;
     width: min(50vw, 330px);
     min-width: 0;
-    transform: none;
+    transform: translateX(clamp(-74px, -7vw, -42px));
   }
 
   .drum-synth-stack {
@@ -7775,7 +7780,7 @@ body[data-project="skimm-money-newsletter"] .additional-creative {
     gap: clamp(24px, 4vw, 38px);
     width: auto;
     justify-self: center;
-    transform: none;
+    transform: translateX(clamp(-74px, -7vw, -42px));
   }
 
   .drum-dial-synth {
@@ -7809,31 +7814,35 @@ body[data-project="skimm-money-newsletter"] .additional-creative {
   }
 
   .drum-controls {
-    grid-column: 1;
+    grid-column: auto;
     grid-row: auto;
-    order: 3;
-    position: static;
+    order: initial;
+    position: absolute;
+    right: clamp(4px, 1.4vw, 14px);
+    top: 54%;
     display: grid;
     --drum-toolbar-width: 48px;
     --drum-play-size: 72px;
-    grid-template-columns: var(--drum-play-size) var(--drum-toolbar-width) var(--drum-toolbar-width) minmax(0, 1fr);
-    grid-template-rows: var(--drum-play-size);
+    grid-template-columns: 1fr;
+    grid-template-rows: var(--drum-play-size) repeat(2, var(--drum-toolbar-width)) clamp(170px, 22svh, 218px);
     gap: 10px;
-    width: min(100%, calc((min(27vw, 216px) * 2) + clamp(24px, 4vw, 38px)));
+    width: var(--drum-play-size);
     height: auto;
-    justify-self: center;
+    justify-self: auto;
     margin-top: 0;
-    transform: none;
+    transform: translateY(-50%);
   }
 
   .drum-clear {
-    grid-column: 3;
-    grid-row: 1;
+    grid-column: 1;
+    grid-row: 3;
+    justify-self: center;
   }
 
   .drum-random {
-    grid-column: 2;
-    grid-row: 1;
+    grid-column: 1;
+    grid-row: 2;
+    justify-self: center;
   }
 
   .drum-transport {
@@ -7842,64 +7851,65 @@ body[data-project="skimm-money-newsletter"] .additional-creative {
   }
 
   .drum-range {
-    grid-column: 4;
-    grid-row: 1;
-    flex-direction: row;
+    --drum-meter-size: clamp(112px, 16svh, 142px);
+    grid-column: 1;
+    grid-row: 4;
+    flex-direction: column;
     align-items: center;
     align-self: center;
-    width: 100%;
-    min-height: 48px;
-    padding: 6px 18px;
+    width: var(--drum-toolbar-width);
+    min-height: 0;
+    padding: 14px 6px 15px;
     font-size: clamp(0.63rem, 1.4vw, 0.756rem);
-    justify-content: flex-start;
+    justify-content: center;
     transform: none;
   }
 
   .drum-range input {
-    left: 76px;
-    right: 18px;
-    top: 50%;
-    width: auto;
-    height: 30px;
-    writing-mode: horizontal-tb;
-    direction: ltr;
-    transform: translateY(-50%);
+    left: 50%;
+    right: auto;
+    top: 14px;
+    width: 28px;
+    height: var(--drum-meter-size);
+    writing-mode: vertical-lr;
+    direction: rtl;
+    transform: translateX(-50%);
   }
 
   .drum-range.is-open input,
   .drum-range:focus-within input {
-    transform: translateY(-50%);
+    transform: translateX(-50%);
   }
 
   .drum-range-meter {
-    order: initial;
-    position: absolute;
-    left: 76px;
-    right: 18px;
-    top: 50%;
-    width: auto;
-    height: 10px;
-    margin: 0;
-    transform: translateY(-50%);
+    order: -1;
+    position: relative;
+    left: auto;
+    right: auto;
+    top: auto;
+    width: 10px;
+    height: var(--drum-meter-size);
+    margin: 0 0 8px;
+    transform: none;
   }
 
   .drum-range-fill {
-    top: 0;
-    right: auto;
-    width: var(--drum-bpm-progress, 52.63%);
-    height: auto;
+    top: auto;
+    right: 0;
+    width: auto;
+    height: var(--drum-bpm-progress, 52.63%);
   }
 
   .drum-range-thumb {
-    left: var(--drum-bpm-progress, 52.63%);
-    bottom: 50%;
+    left: 50%;
+    bottom: var(--drum-bpm-progress, 52.63%);
     transform: translate(-50%, 50%);
   }
 
   .drum-range > span {
-    flex-direction: row;
-    gap: 0.28em;
-    white-space: nowrap;
+    flex-direction: column;
+    gap: 0.18em;
+    white-space: normal;
   }
 }
 
@@ -8305,7 +8315,7 @@ body.drum-page .masthead + .drum-machine,
 body.smudge-page .masthead + .smudge-detail {
   margin-top: max(
     0px,
-    calc(var(--masthead-bottom, calc(var(--masthead-top) + 98px)) - var(--page-top) + clamp(18px, 2vw, 30px))
+    calc(var(--masthead-bottom, calc(var(--masthead-top) + 98px)) - var(--page-top) + clamp(8px, 1vw, 16px))
   );
 }
 
@@ -8316,7 +8326,7 @@ body.smudge-page .masthead + .smudge-detail {
   body.smudge-page .masthead + .smudge-detail {
     margin-top: max(
       0px,
-      calc(var(--masthead-bottom, calc(var(--masthead-top) + 92px)) - var(--page-top) + clamp(22px, 6vw, 34px))
+      calc(var(--masthead-bottom, calc(var(--masthead-top) + 92px)) - var(--page-top) + clamp(12px, 3vw, 20px))
     );
   }
 }

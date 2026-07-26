@@ -119,7 +119,7 @@ const projectData = {
   },
   "interface-studies": {
     title: "\"Is Gay Marriage Next?\" Intro",
-    heroTitleHtml: "<span class=\"title-line\">&ldquo;Is Gay Marriage</span><span class=\"title-line\">Next?&rdquo; <span class=\"title-mobile-break\">Intro</span></span>",
+    heroTitleHtml: "<span class=\"title-line\">&ldquo;Is Gay Marriage</span><span class=\"title-line\">Next?&rdquo; Intro</span>",
     type: "Editorial Motion",
     summary: "Editorial intro animation for a video segment examining the political future of marriage equality.",
     role: "Motion Designer",

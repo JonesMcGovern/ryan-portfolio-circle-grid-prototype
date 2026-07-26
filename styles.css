@@ -8078,7 +8078,7 @@ body.playground-page.is-scrolled .masthead {
   }
 
   body:not(.project-page):not(.playground-page):not(.is-scrolled) {
-    --masthead-spacer: clamp(138px, 34vw, 176px);
+    --masthead-spacer: clamp(152px, 38vw, 196px);
   }
 
   body:not(.project-page):not(.playground-page):not(.is-scrolled) .masthead {
@@ -8109,18 +8109,18 @@ body.playground-page.is-scrolled .masthead {
     grid-column: 1 / -1;
     grid-row: 2;
     display: flex;
-    flex-wrap: wrap;
-    gap: 0.1em 0.45em;
+    flex-wrap: nowrap;
+    gap: 0.38em;
     width: 100%;
     max-width: none;
     margin-top: clamp(9px, 2.6vw, 13px);
-    padding: clamp(9px, 2.6vw, 13px) 0 clamp(10px, 2.8vw, 14px);
+    padding: clamp(8px, 2.2vw, 11px) 0 clamp(9px, 2.4vw, 12px);
     border-top: var(--stroke) solid var(--line);
-    overflow: visible;
-    font-size: clamp(0.98rem, 4.4vw, 1.22rem);
+    overflow: hidden;
+    font-size: clamp(0.72rem, 3.25vw, 0.92rem);
     line-height: 1.05;
     text-overflow: clip;
-    white-space: normal;
+    white-space: nowrap;
     opacity: 1;
     transform: none;
   }

@@ -1287,6 +1287,66 @@ function initializeHomeSmudgeModuleLink() {
   });
 }
 
+function initializeHomeIntroToggle() {
+  const intro = document.querySelector(".home-intro");
+  const copy = document.querySelector("#home-intro-copy");
+  const toggles = Array.from(document.querySelectorAll(".home-intro-toggle[aria-controls='home-intro-copy']"));
+  if (!intro || !copy || !toggles.length) return;
+  let collapseTimer = null;
+
+  const syncToggles = (expanded) => {
+    toggles.forEach((toggle) => {
+      toggle.setAttribute("aria-expanded", String(expanded));
+      toggle.querySelector(".visually-hidden").textContent = expanded ? "Read less" : "Read more";
+    });
+  };
+
+  const getExpandedHeight = () => {
+    const previousMaxHeight = copy.style.maxHeight;
+    copy.style.maxHeight = "none";
+    const height = copy.scrollHeight;
+    copy.style.maxHeight = previousMaxHeight;
+    return height;
+  };
+
+  toggles.forEach((toggle) => toggle.addEventListener("click", () => {
+    syncMastheadMetrics();
+    const expanded = !intro.classList.contains("is-expanded");
+    if (collapseTimer) {
+      window.clearTimeout(collapseTimer);
+      collapseTimer = null;
+    }
+
+    if (expanded) {
+      intro.classList.add("is-expanded");
+      document.body.classList.add("is-home-intro-expanded");
+      syncToggles(true);
+      copy.style.maxHeight = "0px";
+      requestAnimationFrame(() => {
+        copy.style.maxHeight = `${getExpandedHeight()}px`;
+        syncMastheadMetrics();
+      });
+      return;
+    }
+
+    copy.style.maxHeight = `${getExpandedHeight()}px`;
+    requestAnimationFrame(() => {
+      copy.style.maxHeight = "0px";
+      syncToggles(false);
+      collapseTimer = window.setTimeout(() => {
+        intro.classList.remove("is-expanded");
+        document.body.classList.remove("is-home-intro-expanded");
+        syncMastheadMetrics();
+        collapseTimer = null;
+      }, 260);
+    });
+  }));
+
+  window.addEventListener("resize", () => {
+    if (intro.classList.contains("is-expanded")) copy.style.maxHeight = `${getExpandedHeight()}px`;
+  }, { passive: true });
+}
+
 function initializePuckVideos() {
   const videos = document.querySelectorAll(".puck-video");
   if (!videos.length) return;
@@ -2885,6 +2945,7 @@ initializePalette();
 hydrateProjectPage();
 initializeSiteMenu();
 initializeHomeSmudgeModuleLink();
+initializeHomeIntroToggle();
 hydrateSecondaryProjectPreviews();
 initializePuckDragging();
 initializeLineField();

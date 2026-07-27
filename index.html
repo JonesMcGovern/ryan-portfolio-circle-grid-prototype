@@ -23,7 +23,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="./styles.css?v=mobile-bio-justify-20260726a" />
+    <link rel="stylesheet" href="./styles.css?v=mobile-frame-divider-flush-20260726a" />
     <script>
       (() => {
         const reveal = () => document.documentElement.classList.remove("fonts-loading");
@@ -37,7 +37,7 @@
         ]).then(reveal, reveal);
       })();
     </script>
-    <script src="./script.js?v=mobile-bio-justify-20260726a" defer></script>
+    <script src="./script.js?v=mobile-frame-divider-flush-20260726a" defer></script>
     <script src="./cylinder-stage.bundle.js?v=restored-wireframe-bundle-20260714j" defer></script>
   </head>
   <body class="palette-enter">
@@ -56,6 +56,11 @@
             <span>Graphic Design</span>
             <span>Visual Direction</span>
           </p>
+          <button class="home-intro-toggle home-intro-toggle-inline" type="button" aria-expanded="false" aria-controls="home-intro-copy">
+            <span class="home-intro-toggle-label">Bio</span>
+            <span aria-hidden="true"></span>
+            <span class="visually-hidden">Read more</span>
+          </button>
         </div>
         <nav class="site-nav" aria-label="Site controls">
           <div class="palette-switcher" aria-label="Color schemes">
@@ -132,13 +137,17 @@
       </header>
 
       <section class="home-intro" aria-label="Ryan Pattison bio">
-        <p>
+        <p id="home-intro-copy">
           Senior motion and graphic designer with 10+ years of experience creating scalable motion systems,
           brand-driven animation, and high-performing digital assets. Skilled in web-optimized animation, storytelling,
           AI workflows, and rapid iteration. I’ve used Codex to accelerate concepting, expand experimentation, and bridge
           design with development. This portfolio was built with AI, extending what I could create and ship. Curious mind,
           empty stomach.
         </p>
+        <button class="home-intro-toggle home-intro-toggle-bottom" type="button" aria-expanded="false" aria-controls="home-intro-copy">
+          <span aria-hidden="true"></span>
+          <span class="visually-hidden">Read more</span>
+        </button>
       </section>
 
       <section class="home-intro-shelf" aria-hidden="true">

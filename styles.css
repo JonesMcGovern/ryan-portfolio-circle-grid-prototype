@@ -630,6 +630,7 @@ body:not(.project-page):not(.playground-page):not(.is-scrolled) .site-nav {
 .home-wheel-preview-note,
 .home-wheel-preview-pad-halo,
 .home-wheel-preview-pad,
+.home-wheel-preview-background,
 .home-wheel-preview-cog circle,
 .home-wheel-preview-cog line,
 .home-wheel-preview-handle {
@@ -645,8 +646,17 @@ body:not(.project-page):not(.playground-page):not(.is-scrolled) .site-nav {
   fill: none;
 }
 
+.home-wheel-preview-background {
+  fill: var(--drum-clickable-fill, #463027);
+  stroke: none;
+}
+
 .home-wheel-preview-cog circle {
   fill: var(--bg);
+}
+
+.home-wheel-preview-cog-drum circle {
+  fill: var(--drum-clickable-fill, #463027);
 }
 
 .home-wheel-preview-cog-synth circle {
@@ -688,7 +698,7 @@ body:not(.project-page):not(.playground-page):not(.is-scrolled) .site-nav {
 }
 
 .home-wheel-preview-handle {
-  fill: var(--bg);
+  fill: var(--drum-clickable-fill, #463027);
 }
 
 .home-wheel-preview-cog {
@@ -875,6 +885,7 @@ body:not(.project-page):not(.playground-page):not(.is-scrolled) .site-nav {
   }
 
   .home-intro {
+    --home-intro-expanded-height: 18rem;
     position: fixed;
     top: var(--masthead-bottom, calc(var(--masthead-top) + 112px));
     left: var(--masthead-left, var(--page-x));
@@ -886,7 +897,8 @@ body:not(.project-page):not(.playground-page):not(.is-scrolled) .site-nav {
     pointer-events: none;
   }
 
-  .home-intro.is-expanded {
+  .home-intro.is-expanded,
+  .home-intro.is-collapsing {
     margin-bottom: 0;
     padding: clamp(8px, 2.2vw, 12px) var(--mobile-masthead-frame-inset) clamp(12px, 2.8vw, 16px);
     border-right: var(--stroke) solid var(--line);
@@ -923,6 +935,12 @@ body:not(.project-page):not(.playground-page):not(.is-scrolled) .site-nav {
   }
 
   .home-intro.is-expanded p {
+    max-height: var(--home-intro-expanded-height);
+    overflow: hidden;
+  }
+
+  .home-intro.is-collapsing p {
+    max-height: 0;
     overflow: hidden;
   }
 
@@ -1006,6 +1024,7 @@ body:not(.project-page):not(.playground-page):not(.is-scrolled) .site-nav {
 
   .home-wheel-module {
     order: 2;
+    margin-top: 10px;
   }
 
   .home-additional-list {
@@ -8592,13 +8611,19 @@ body.smudge-page .masthead + .smudge-detail {
 }
 
 @media (max-width: 700px) {
-  body.project-page .masthead + .project-compact-title,
   body.playground-page .masthead + .playground-detail,
   body.drum-page .masthead + .drum-machine,
   body.smudge-page .masthead + .smudge-detail {
     margin-top: max(
       0px,
       calc(var(--masthead-bottom, calc(var(--masthead-top) + 92px)) - var(--page-top) + clamp(12px, 3vw, 20px))
+    );
+  }
+
+  body.project-page .masthead + .project-compact-title {
+    margin-top: max(
+      0px,
+      calc(var(--masthead-bottom, calc(var(--masthead-top) + 92px)) - var(--page-top) + clamp(12px, 3vw, 20px) - 30px)
     );
   }
 }

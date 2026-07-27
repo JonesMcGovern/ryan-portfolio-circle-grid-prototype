@@ -1303,10 +1303,17 @@ function initializeHomeIntroToggle() {
 
   const getExpandedHeight = () => {
     const previousMaxHeight = copy.style.maxHeight;
+    const previousOverflow = copy.style.overflow;
     copy.style.maxHeight = "none";
-    const height = copy.scrollHeight;
+    copy.style.overflow = "visible";
+    const height = Math.max(copy.scrollHeight, copy.offsetHeight, 1);
     copy.style.maxHeight = previousMaxHeight;
+    copy.style.overflow = previousOverflow;
     return height;
+  };
+
+  const setExpandedHeight = () => {
+    copy.style.setProperty("--home-intro-expanded-height", `${getExpandedHeight()}px`);
   };
 
   toggles.forEach((toggle) => toggle.addEventListener("click", () => {
@@ -1318,24 +1325,26 @@ function initializeHomeIntroToggle() {
     }
 
     if (expanded) {
+      setExpandedHeight();
+      intro.classList.remove("is-collapsing");
       intro.classList.add("is-expanded");
       document.body.classList.add("is-home-intro-expanded");
       syncToggles(true);
-      copy.style.maxHeight = "0px";
       requestAnimationFrame(() => {
-        copy.style.maxHeight = `${getExpandedHeight()}px`;
+        setExpandedHeight();
         syncMastheadMetrics();
       });
       return;
     }
 
-    copy.style.maxHeight = `${getExpandedHeight()}px`;
+    setExpandedHeight();
+    intro.classList.add("is-collapsing");
+    intro.classList.remove("is-expanded");
+    document.body.classList.remove("is-home-intro-expanded");
+    syncToggles(false);
     requestAnimationFrame(() => {
-      copy.style.maxHeight = "0px";
-      syncToggles(false);
       collapseTimer = window.setTimeout(() => {
-        intro.classList.remove("is-expanded");
-        document.body.classList.remove("is-home-intro-expanded");
+        intro.classList.remove("is-collapsing");
         syncMastheadMetrics();
         collapseTimer = null;
       }, 260);
@@ -1343,7 +1352,7 @@ function initializeHomeIntroToggle() {
   }));
 
   window.addEventListener("resize", () => {
-    if (intro.classList.contains("is-expanded")) copy.style.maxHeight = `${getExpandedHeight()}px`;
+    if (intro.classList.contains("is-expanded")) setExpandedHeight();
   }, { passive: true });
 }
 
@@ -2790,6 +2799,15 @@ function initializeHomeWheelPreview() {
     }));
   }
 
+  function addWheelBackground(group, cx, cy, radius) {
+    group.appendChild(createSvgElement("circle", {
+      class: "home-wheel-preview-background",
+      cx,
+      cy,
+      r: radius,
+    }));
+  }
+
   function addNotes(group, cx, cy, radius, activeSteps, emptyRadius, activeRadius) {
     for (let index = 0; index < 16; index += 1) {
       const point = polarPoint(cx, cy, radius, index * 22.5);
@@ -2854,6 +2872,8 @@ function initializeHomeWheelPreview() {
     const rotating = createSvgElement("g");
     const handleHeight = 31;
 
+    addWheelBackground(wheel, cx, cy, 120);
+
     wheel.appendChild(createSvgElement("rect", {
       class: "home-wheel-preview-handle",
       x: cx,
@@ -2883,6 +2903,8 @@ function initializeHomeWheelPreview() {
   function buildSynthWheel(cx, cy, activePad, activeLead, muted = false) {
     const wheel = createSvgElement("g", { opacity: muted ? "0.63" : "1" });
     const rotating = createSvgElement("g");
+
+    addWheelBackground(wheel, cx, cy, 62);
 
     addRing(rotating, cx, cy, 39);
     addRing(rotating, cx, cy, 62);

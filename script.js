@@ -1301,21 +1301,6 @@ function initializeHomeIntroToggle() {
     });
   };
 
-  const getExpandedHeight = () => {
-    const previousMaxHeight = copy.style.maxHeight;
-    const previousOverflow = copy.style.overflow;
-    copy.style.maxHeight = "none";
-    copy.style.overflow = "visible";
-    const height = Math.max(copy.scrollHeight, copy.offsetHeight, 1);
-    copy.style.maxHeight = previousMaxHeight;
-    copy.style.overflow = previousOverflow;
-    return height;
-  };
-
-  const setExpandedHeight = () => {
-    copy.style.setProperty("--home-intro-expanded-height", `${getExpandedHeight()}px`);
-  };
-
   toggles.forEach((toggle) => toggle.addEventListener("click", () => {
     syncMastheadMetrics();
     const expanded = !intro.classList.contains("is-expanded");
@@ -1325,7 +1310,6 @@ function initializeHomeIntroToggle() {
     }
 
     if (expanded) {
-      setExpandedHeight();
       intro.classList.remove("is-collapsing");
       intro.classList.add("is-expanded");
       document.body.classList.add("is-home-intro-expanded");
@@ -1337,7 +1321,6 @@ function initializeHomeIntroToggle() {
       return;
     }
 
-    setExpandedHeight();
     intro.classList.add("is-collapsing");
     intro.classList.remove("is-expanded");
     document.body.classList.remove("is-home-intro-expanded");
@@ -1350,10 +1333,6 @@ function initializeHomeIntroToggle() {
       }, 260);
     });
   }));
-
-  window.addEventListener("resize", () => {
-    if (intro.classList.contains("is-expanded")) setExpandedHeight();
-  }, { passive: true });
 }
 
 function initializePuckVideos() {

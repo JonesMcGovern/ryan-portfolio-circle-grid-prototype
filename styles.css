@@ -885,7 +885,6 @@ body:not(.project-page):not(.playground-page):not(.is-scrolled) .site-nav {
   }
 
   .home-intro {
-    --home-intro-expanded-height: 18rem;
     position: fixed;
     top: var(--masthead-bottom, calc(var(--masthead-top) + 112px));
     left: var(--masthead-left, var(--page-x));
@@ -908,6 +907,8 @@ body:not(.project-page):not(.playground-page):not(.is-scrolled) .site-nav {
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
     pointer-events: auto;
+    max-height: calc(100dvh - var(--masthead-bottom, calc(var(--masthead-top) + 112px)) - 18px);
+    overflow-y: auto;
   }
 
   .home-intro p {
@@ -921,7 +922,9 @@ body:not(.project-page):not(.playground-page):not(.is-scrolled) .site-nav {
     text-justify: inter-word;
     max-height: 0;
     overflow: hidden;
-    transition: max-height 240ms cubic-bezier(0.76, 0, 0.24, 1);
+    transition: opacity 180ms ease, transform 220ms cubic-bezier(0.76, 0, 0.24, 1);
+    opacity: 0;
+    transform: translateY(-6px);
   }
 
   .home-intro:not(.is-expanded) p {
@@ -935,13 +938,17 @@ body:not(.project-page):not(.playground-page):not(.is-scrolled) .site-nav {
   }
 
   .home-intro.is-expanded p {
-    max-height: var(--home-intro-expanded-height);
-    overflow: hidden;
+    max-height: none;
+    overflow: visible;
+    opacity: 1;
+    transform: translateY(0);
   }
 
   .home-intro.is-collapsing p {
     max-height: 0;
     overflow: hidden;
+    opacity: 0;
+    transform: translateY(-6px);
   }
 
   .home-intro-toggle {

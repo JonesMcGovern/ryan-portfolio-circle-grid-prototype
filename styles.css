@@ -8942,7 +8942,7 @@ body:not([data-project="skimm-money-newsletter"]) .project-video:fullscreen {
     );
     --safari-mobile-home-masthead-open-height: clamp(152px, 38vw, 206px);
     --safari-mobile-row-lift-load: clamp(-16px, -3.8vw, -10px);
-    --safari-mobile-row-lift-scrolled: clamp(-10px, -2.4vw, -6px);
+    --safari-mobile-row-lift-scrolled: clamp(-6px, -1.4vw, -3px);
   }
 
   html.is-safari body:not(.project-page):not(.playground-page) {

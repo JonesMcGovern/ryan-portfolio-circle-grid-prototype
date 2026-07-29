@@ -8936,18 +8936,18 @@ body:not([data-project="skimm-money-newsletter"]) .project-video:fullscreen {
   }
 
   html.is-safari {
+    --safari-mobile-row-height: clamp(62px, 13vw, 74px);
     --safari-mobile-home-masthead-height: calc(
-      clamp(42px, 3.7vw, 48px) + var(--stroke) + clamp(56px, 12vw, 68px) + clamp(12px, 3.2vw, 18px)
+      clamp(42px, 3.7vw, 48px) + var(--stroke) + var(--safari-mobile-row-height) + clamp(12px, 3.2vw, 18px)
     );
-    --safari-mobile-home-masthead-open-height: clamp(146px, 36vw, 196px);
-    --safari-mobile-role-lift-load: 0px;
-    --safari-mobile-role-lift-scrolled: 0px;
-    --safari-mobile-bio-lift: 0px;
+    --safari-mobile-home-masthead-open-height: clamp(152px, 38vw, 206px);
+    --safari-mobile-row-lift-load: clamp(-16px, -3.8vw, -10px);
+    --safari-mobile-row-lift-scrolled: clamp(-10px, -2.4vw, -6px);
   }
 
   html.is-safari body:not(.project-page):not(.playground-page) {
     --masthead-spacer: clamp(126px, 31vw, 172px);
-    --mobile-role-row-height: clamp(56px, 12vw, 68px);
+    --mobile-role-row-height: var(--safari-mobile-row-height);
   }
 
   html.is-safari body:not(.project-page):not(.playground-page) .masthead {
@@ -8974,14 +8974,14 @@ body:not([data-project="skimm-money-newsletter"]) .project-video:fullscreen {
     opacity: 1;
     visibility: visible;
     align-self: center;
-    transform: translateY(var(--safari-mobile-role-lift-load));
+    transform: translateY(var(--safari-mobile-row-lift-load));
     transition:
       opacity 180ms ease,
       transform 240ms cubic-bezier(0.76, 0, 0.24, 1);
   }
 
   html.is-safari body:not(.project-page):not(.playground-page).is-scrolled .masthead {
-    --mobile-role-row-height: clamp(56px, 12vw, 68px);
+    --mobile-role-row-height: var(--safari-mobile-row-height);
     height: var(--safari-mobile-home-masthead-height) !important;
     min-height: var(--safari-mobile-home-masthead-height) !important;
     max-height: var(--safari-mobile-home-masthead-height) !important;
@@ -8989,19 +8989,23 @@ body:not([data-project="skimm-money-newsletter"]) .project-video:fullscreen {
   }
 
   html.is-safari body:not(.project-page):not(.playground-page).is-scrolled .masthead-copy p {
-    transform: translateY(var(--safari-mobile-role-lift-scrolled));
+    transform: translateY(var(--safari-mobile-row-lift-scrolled));
   }
 
   html.is-safari body:not(.project-page):not(.playground-page) .home-intro-toggle-inline {
     opacity: 1;
     visibility: visible;
     align-self: center;
-    transform: translateY(var(--safari-mobile-bio-lift)) !important;
+    transform: translateY(var(--safari-mobile-row-lift-load)) !important;
     transition:
       opacity 180ms ease,
       transform 240ms cubic-bezier(0.76, 0, 0.24, 1),
       background-color 180ms ease,
       border-color 180ms ease;
+  }
+
+  html.is-safari body:not(.project-page):not(.playground-page).is-scrolled .home-intro-toggle-inline {
+    transform: translateY(var(--safari-mobile-row-lift-scrolled)) !important;
   }
 
   html.is-safari body:not(.project-page):not(.playground-page).is-scrolled .home-intro {

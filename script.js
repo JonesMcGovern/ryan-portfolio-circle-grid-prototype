@@ -10,12 +10,20 @@ const siteNav = document.querySelector(".site-nav");
 const marqueeHeadings = document.querySelectorAll(
   ".selected-work-heading h2, .secondary-projects-heading h2, .playground-heading h2"
 );
+const userAgent = navigator.userAgent || "";
+const isSafariBrowser =
+  /^Apple/.test(navigator.vendor || "") &&
+  /Safari/.test(userAgent) &&
+  !/Chrome|Chromium|CriOS|FxiOS|EdgiOS|OPR|Android/.test(userAgent);
+document.documentElement.classList.toggle("is-safari", isSafariBrowser);
 const siteStartTime = performance.now();
 let dataRail = null;
 let marqueeResizeTimer = null;
 let scrollTicking = false;
 let mastheadTransitionFrame = null;
+let safariHomeRestoreTimer = null;
 let mastheadRestingRailTop = null;
+let mastheadMetricsSignature = "";
 let shapeAnimationStarted = false;
 let lineAnimationStarted = false;
 let projectAmbientVideoObserver = null;
@@ -384,10 +392,6 @@ function syncMastheadMetrics() {
   const mastheadLeft = mastheadRect.left.toFixed(3);
   const mastheadRight = (layoutWidth - mastheadRect.right).toFixed(3);
   const mastheadWidth = mastheadRect.width.toFixed(3);
-  document.documentElement.style.setProperty("--masthead-bottom", `${Math.round(mastheadRect.bottom)}px`);
-  document.documentElement.style.setProperty("--masthead-left", `${mastheadLeft}px`);
-  document.documentElement.style.setProperty("--masthead-right", `${mastheadRight}px`);
-  document.documentElement.style.setProperty("--masthead-width", `${mastheadWidth}px`);
   const mastheadTitle = masthead.querySelector("h1");
   const isScrolled = document.body.classList.contains("is-scrolled");
   const isNonHomePage =
@@ -399,8 +403,21 @@ function syncMastheadMetrics() {
     mastheadRestingRailTop = titleRailTop;
   }
   const railTop = isNonHomePage ? mastheadRect.top : isScrolled ? mastheadRestingRailTop : titleRailTop;
+  const nextSignature = [
+    Math.round(mastheadRect.bottom),
+    mastheadLeft,
+    mastheadRight,
+    mastheadWidth,
+    Math.round(railTop),
+  ].join("|");
+  if (nextSignature === mastheadMetricsSignature) return;
+  mastheadMetricsSignature = nextSignature;
+
+  document.documentElement.style.setProperty("--masthead-bottom", `${Math.round(mastheadRect.bottom)}px`);
+  document.documentElement.style.setProperty("--masthead-left", `${mastheadLeft}px`);
+  document.documentElement.style.setProperty("--masthead-right", `${mastheadRight}px`);
+  document.documentElement.style.setProperty("--masthead-width", `${mastheadWidth}px`);
   document.documentElement.style.setProperty("--data-rail-top", `${Math.round(railTop)}px`);
-  document.documentElement.style.setProperty("--scrolled-masthead-top", `${Math.round(railTop)}px`);
 
   const introShelf = document.querySelector(".home-intro-shelf");
   if (introShelf) {
@@ -413,12 +430,22 @@ function syncMastheadMetrics() {
 function trackMastheadTransition() {
   if (mastheadTransitionFrame) {
     window.cancelAnimationFrame(mastheadTransitionFrame);
+    window.clearTimeout(mastheadTransitionFrame);
+  }
+
+  if (isSafariBrowser) {
+    syncMastheadMetrics();
+    mastheadTransitionFrame = window.setTimeout(() => {
+      syncMastheadMetrics();
+      mastheadTransitionFrame = null;
+    }, 300);
+    return;
   }
 
   const startedAt = performance.now();
   const tick = () => {
     syncMastheadMetrics();
-    if (performance.now() - startedAt < 520) {
+    if (performance.now() - startedAt < 420) {
       mastheadTransitionFrame = window.requestAnimationFrame(tick);
       return;
     }
@@ -433,13 +460,29 @@ function updateHeaderScrollState() {
   document.body.classList.toggle("is-scrolled", window.scrollY > 18 || document.body.classList.contains("drum-page"));
   const isScrolled = document.body.classList.contains("is-scrolled");
   if (wasScrolled !== isScrolled) {
+    if (
+      isSafariBrowser &&
+      wasScrolled &&
+      !isScrolled &&
+      !document.body.classList.contains("project-page") &&
+      !document.body.classList.contains("playground-page") &&
+      !document.body.classList.contains("drum-page")
+    ) {
+      document.body.classList.add("is-safari-restoring-home");
+      if (safariHomeRestoreTimer) window.clearTimeout(safariHomeRestoreTimer);
+      safariHomeRestoreTimer = window.setTimeout(() => {
+        document.body.classList.remove("is-safari-restoring-home");
+        safariHomeRestoreTimer = null;
+        syncMastheadMetrics();
+      }, 340);
+    }
+    syncMastheadMetrics();
     trackMastheadTransition();
   }
   const hero = document.querySelector(".project-hero");
   if (hero) {
     document.body.classList.toggle("is-project-title-pinned", hero.getBoundingClientRect().bottom < 120);
   }
-  syncMastheadMetrics();
 }
 
 function syncSiteMenuPosition() {
@@ -1315,7 +1358,6 @@ function initializeHomeIntroToggle() {
       document.body.classList.add("is-home-intro-expanded");
       syncToggles(true);
       requestAnimationFrame(() => {
-        setExpandedHeight();
         syncMastheadMetrics();
       });
       return;
@@ -2933,9 +2975,8 @@ window.addEventListener("resize", () => {
 window.visualViewport?.addEventListener("resize", () => {
   syncVisualViewportWidth();
   scheduleMarqueeFill();
-  updateHeaderScrollState();
+  requestHeaderScrollUpdate();
 });
-window.visualViewport?.addEventListener("scroll", updateHeaderScrollState, { passive: true });
 window.addEventListener("scroll", requestHeaderScrollUpdate, { passive: true });
 
 resetInitialScrollPosition();

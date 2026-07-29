@@ -8940,9 +8940,9 @@ body:not([data-project="skimm-money-newsletter"]) .project-video:fullscreen {
       clamp(42px, 3.7vw, 48px) + var(--stroke) + clamp(56px, 12vw, 68px) + clamp(12px, 3.2vw, 18px)
     );
     --safari-mobile-home-masthead-open-height: clamp(146px, 36vw, 196px);
-    --safari-mobile-role-lift-load: clamp(-10px, -2vw, -6px);
+    --safari-mobile-role-lift-load: 0px;
     --safari-mobile-role-lift-scrolled: 0px;
-    --safari-mobile-bio-lift: clamp(-14px, -3vw, -8px);
+    --safari-mobile-bio-lift: 0px;
   }
 
   html.is-safari body:not(.project-page):not(.playground-page) {
@@ -8968,10 +8968,12 @@ body:not([data-project="skimm-money-newsletter"]) .project-video:fullscreen {
 
   html.is-safari body:not(.project-page):not(.playground-page) .masthead-copy p {
     overflow: visible;
+    height: auto;
     font-size: clamp(0.675rem, 3.03vw, 0.874rem);
-    line-height: 1.05;
+    line-height: 1;
     opacity: 1;
     visibility: visible;
+    align-self: center;
     transform: translateY(var(--safari-mobile-role-lift-load));
     transition:
       opacity 180ms ease,
@@ -8993,6 +8995,7 @@ body:not([data-project="skimm-money-newsletter"]) .project-video:fullscreen {
   html.is-safari body:not(.project-page):not(.playground-page) .home-intro-toggle-inline {
     opacity: 1;
     visibility: visible;
+    align-self: center;
     transform: translateY(var(--safari-mobile-bio-lift)) !important;
     transition:
       opacity 180ms ease,

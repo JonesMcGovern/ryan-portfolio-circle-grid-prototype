@@ -8943,18 +8943,29 @@ body:not([data-project="skimm-money-newsletter"]) .project-video:fullscreen {
   }
 
   html.is-safari body:not(.project-page):not(.playground-page) {
-    --mobile-role-row-height: clamp(32px, 7.6vw, 40px);
+    --mobile-role-row-height: clamp(34px, 8vw, 42px);
   }
 
   html.is-safari body:not(.project-page):not(.playground-page) .masthead-copy p {
+    overflow: visible;
     line-height: 1.05;
+    opacity: 1;
+    visibility: visible;
+    transition: none;
   }
 
   html.is-safari body:not(.project-page):not(.playground-page).is-scrolled .masthead {
+    --mobile-role-row-height: clamp(34px, 8vw, 42px);
     height: var(--safari-mobile-home-masthead-height) !important;
     min-height: var(--safari-mobile-home-masthead-height) !important;
     max-height: var(--safari-mobile-home-masthead-height) !important;
     overflow: hidden;
+  }
+
+  html.is-safari body:not(.project-page):not(.playground-page) .home-intro-toggle-inline {
+    opacity: 1;
+    visibility: visible;
+    transition: none;
   }
 
   html.is-safari body:not(.project-page):not(.playground-page).is-scrolled .home-intro {

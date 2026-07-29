@@ -8400,7 +8400,7 @@ body.playground-page.is-scrolled .masthead {
     border-top: 0;
     overflow: hidden;
     height: 100%;
-    font-size: clamp(0.748rem, 3.36vw, 0.968rem);
+    font-size: clamp(0.711rem, 3.19vw, 0.92rem);
     line-height: 1;
     text-overflow: clip;
     white-space: nowrap;
@@ -8458,7 +8458,7 @@ body.playground-page.is-scrolled .masthead {
     box-sizing: border-box;
     overflow: hidden;
     height: 100%;
-    font-size: clamp(0.748rem, 3.36vw, 0.968rem);
+    font-size: clamp(0.711rem, 3.19vw, 0.92rem);
     line-height: 1;
     white-space: nowrap;
     opacity: 1;
@@ -8937,9 +8937,17 @@ body:not([data-project="skimm-money-newsletter"]) .project-video:fullscreen {
 
   html.is-safari {
     --safari-mobile-home-masthead-height: calc(
-      clamp(42px, 3.7vw, 48px) + var(--stroke) + clamp(28px, 6.8vw, 36px) + clamp(12px, 3.2vw, 18px)
+      clamp(42px, 3.7vw, 48px) + var(--stroke) + clamp(32px, 7.6vw, 40px) + clamp(12px, 3.2vw, 18px)
     );
     --safari-mobile-home-masthead-open-height: clamp(112px, 29vw, 158px);
+  }
+
+  html.is-safari body:not(.project-page):not(.playground-page) {
+    --mobile-role-row-height: clamp(32px, 7.6vw, 40px);
+  }
+
+  html.is-safari body:not(.project-page):not(.playground-page) .masthead-copy p {
+    line-height: 1.05;
   }
 
   html.is-safari body:not(.project-page):not(.playground-page).is-scrolled .masthead {

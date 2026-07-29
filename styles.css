@@ -8937,25 +8937,46 @@ body:not([data-project="skimm-money-newsletter"]) .project-video:fullscreen {
 
   html.is-safari {
     --safari-mobile-home-masthead-height: calc(
-      clamp(42px, 3.7vw, 48px) + var(--stroke) + clamp(32px, 7.6vw, 40px) + clamp(12px, 3.2vw, 18px)
+      clamp(42px, 3.7vw, 48px) + var(--stroke) + clamp(56px, 12vw, 68px) + clamp(12px, 3.2vw, 18px)
     );
-    --safari-mobile-home-masthead-open-height: clamp(112px, 29vw, 158px);
+    --safari-mobile-home-masthead-open-height: clamp(146px, 36vw, 196px);
   }
 
   html.is-safari body:not(.project-page):not(.playground-page) {
-    --mobile-role-row-height: clamp(34px, 8vw, 42px);
+    --masthead-spacer: clamp(146px, 36vw, 196px);
+    --mobile-role-row-height: clamp(56px, 12vw, 68px);
+  }
+
+  html.is-safari body:not(.project-page):not(.playground-page) .masthead {
+    transition:
+      height 320ms cubic-bezier(0.76, 0, 0.24, 1),
+      min-height 320ms cubic-bezier(0.76, 0, 0.24, 1),
+      max-height 320ms cubic-bezier(0.76, 0, 0.24, 1),
+      background-color 220ms ease,
+      border-color 220ms ease;
+  }
+
+  html.is-safari body:not(.project-page):not(.playground-page):not(.is-scrolled) .masthead {
+    height: var(--safari-mobile-home-masthead-open-height) !important;
+    min-height: var(--safari-mobile-home-masthead-open-height) !important;
+    max-height: var(--safari-mobile-home-masthead-open-height) !important;
+    overflow: hidden;
   }
 
   html.is-safari body:not(.project-page):not(.playground-page) .masthead-copy p {
     overflow: visible;
+    font-size: clamp(0.675rem, 3.03vw, 0.874rem);
     line-height: 1.05;
     opacity: 1;
     visibility: visible;
-    transition: none;
+    transform: translateY(0);
+    transition:
+      opacity 180ms ease,
+      transform 240ms cubic-bezier(0.76, 0, 0.24, 1);
   }
 
   html.is-safari body:not(.project-page):not(.playground-page).is-scrolled .masthead {
-    --mobile-role-row-height: clamp(34px, 8vw, 42px);
+    --mobile-role-row-height: clamp(56px, 12vw, 68px);
     height: var(--safari-mobile-home-masthead-height) !important;
     min-height: var(--safari-mobile-home-masthead-height) !important;
     max-height: var(--safari-mobile-home-masthead-height) !important;
@@ -8965,7 +8986,11 @@ body:not([data-project="skimm-money-newsletter"]) .project-video:fullscreen {
   html.is-safari body:not(.project-page):not(.playground-page) .home-intro-toggle-inline {
     opacity: 1;
     visibility: visible;
-    transition: none;
+    transition:
+      opacity 180ms ease,
+      transform 240ms cubic-bezier(0.76, 0, 0.24, 1),
+      background-color 180ms ease,
+      border-color 180ms ease;
   }
 
   html.is-safari body:not(.project-page):not(.playground-page).is-scrolled .home-intro {
@@ -8974,6 +8999,7 @@ body:not([data-project="skimm-money-newsletter"]) .project-video:fullscreen {
 
   html.is-safari body.is-safari-restoring-home:not(.project-page):not(.playground-page) .masthead {
     height: var(--safari-mobile-home-masthead-open-height, auto) !important;
+    min-height: var(--safari-mobile-home-masthead-open-height, auto) !important;
     max-height: var(--safari-mobile-home-masthead-open-height, none) !important;
     overflow: hidden;
   }

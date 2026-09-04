@@ -15,6 +15,9 @@ const isSafariBrowser =
   /^Apple/.test(navigator.vendor || "") &&
   /Safari/.test(userAgent) &&
   !/Chrome|Chromium|CriOS|FxiOS|EdgiOS|OPR|Android/.test(userAgent);
+if (history.scrollRestoration) {
+  history.scrollRestoration = "manual";
+}
 document.documentElement.classList.toggle("is-safari", isSafariBrowser);
 const siteStartTime = performance.now();
 let dataRail = null;
@@ -22,6 +25,8 @@ let marqueeResizeTimer = null;
 let scrollTicking = false;
 let mastheadTransitionFrame = null;
 let safariHomeRestoreTimer = null;
+let initialHomeScrollCancelled = false;
+let initialHomeScrollTimers = [];
 let mastheadRestingRailTop = null;
 let mastheadMetricsSignature = "";
 let shapeAnimationStarted = false;
@@ -363,19 +368,44 @@ function scheduleMarqueeFill() {
   marqueeResizeTimer = window.setTimeout(() => window.requestAnimationFrame(fillMarquees), 80);
 }
 
+function isHomeScrollResetTarget() {
+  return (
+    !window.location.hash &&
+    !document.body.classList.contains("project-page") &&
+    !document.body.classList.contains("playground-page") &&
+    !document.body.classList.contains("drum-page")
+  );
+}
+
 function resetInitialScrollPosition() {
   if (history.scrollRestoration) {
     history.scrollRestoration = "manual";
   }
 
-  const shouldResetHomeScroll =
-    !document.body.classList.contains("project-page") &&
-    !document.body.classList.contains("playground-page") &&
-    !document.body.classList.contains("drum-page");
-
-  if (!window.location.hash && shouldResetHomeScroll) {
+  if (isHomeScrollResetTarget()) {
     window.scrollTo(0, 0);
   }
+}
+
+function cancelInitialHomeScrollReset() {
+  initialHomeScrollCancelled = true;
+  initialHomeScrollTimers.forEach((timer) => window.clearTimeout(timer));
+  initialHomeScrollTimers = [];
+}
+
+function syncInitialHomeScrollPosition() {
+  if (initialHomeScrollCancelled || !isHomeScrollResetTarget()) return;
+  resetInitialScrollPosition();
+  updateHeaderScrollState();
+  syncMastheadMetrics();
+}
+
+function scheduleInitialHomeScrollReset() {
+  if (!isHomeScrollResetTarget()) return;
+  initialHomeScrollTimers.forEach((timer) => window.clearTimeout(timer));
+  initialHomeScrollTimers = [0, 60, 180, 360, 720].map((delay) =>
+    window.setTimeout(syncInitialHomeScrollPosition, delay)
+  );
 }
 
 function syncVisualViewportWidth() {
@@ -2978,8 +3008,12 @@ window.visualViewport?.addEventListener("resize", () => {
   requestHeaderScrollUpdate();
 });
 window.addEventListener("scroll", requestHeaderScrollUpdate, { passive: true });
+["pointerdown", "touchstart", "wheel", "keydown"].forEach((eventName) => {
+  window.addEventListener(eventName, cancelInitialHomeScrollReset, { passive: true, once: true });
+});
 
 resetInitialScrollPosition();
+scheduleInitialHomeScrollReset();
 syncVisualViewportWidth();
 fillMarquees();
 initializeDataRail();
@@ -3009,6 +3043,7 @@ document.fonts?.ready.then(() => {
 });
 window.addEventListener("load", () => {
   resetInitialScrollPosition();
+  scheduleInitialHomeScrollReset();
   fillMarquees();
   syncPuckStateFromDom();
   drawLineFieldIfLayoutChanged();
@@ -3017,6 +3052,7 @@ window.addEventListener("load", () => {
 });
 window.addEventListener("pageshow", (event) => {
   resetInitialScrollPosition();
+  scheduleInitialHomeScrollReset();
   updateHeaderScrollState();
   if (!field) return;
   if (event.persisted || window.matchMedia("(max-width: 700px)").matches) {

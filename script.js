@@ -1,3 +1,12 @@
+const LOCAL_ONLY_PROJECT = "mdlinx-rebrand-marketing-material-development";
+const requestedProject = new URLSearchParams(window.location.search).get("project");
+const isLocalPreview = ["localhost", "127.0.0.1", "::1"].includes(window.location.hostname);
+
+if (requestedProject === LOCAL_ONLY_PROJECT && !isLocalPreview) {
+  document.documentElement.hidden = true;
+  window.location.replace("./index.html");
+}
+
 const field = document.querySelector(".line-field");
 const canvas = document.querySelector(".smudge-canvas");
 const context = canvas?.getContext("2d");
@@ -20,7 +29,6 @@ if (history.scrollRestoration) {
 }
 document.documentElement.classList.toggle("is-safari", isSafariBrowser);
 const siteStartTime = performance.now();
-let dataRail = null;
 let marqueeResizeTimer = null;
 let scrollTicking = false;
 let mastheadTransitionFrame = null;
@@ -128,6 +136,37 @@ const projectData = {
       "./assets/videos/skimm-money-awareness/circles/dollar-sign-pattern.mp4",
       "./assets/videos/skimm-money-awareness/circles/shoe-money.mp4",
       "./assets/videos/skimm-money-awareness/circles/wand.mp4",
+    ],
+  },
+  "mdlinx-rebrand-marketing-material-development": {
+    title: "MDLinx Marketing Creative Refresh",
+    heroTitleHtml: "<span class=\"title-line\">MDLinx Marketing</span><span class=\"title-line\">Creative Refresh</span>",
+    type: "Brand System",
+    summary: "",
+    introColumns: [
+      "In April 2025, MDLinx began working with the branding agency Broth while preparing to launch Flashpoint, a new product that brought several existing offerings together under one platform. The initial identity was introduced through the Flashpoint explainer video and established a focused set of foundational brand elements. The handoff was intentionally minimal, but I saw that openness as an opportunity.",
+      "Beginning in July 2025, I started turning that small visual toolkit into a more flexible and ownable marketing system. I built on, reconfigured, and expanded the original elements through practical use across MDLinx marketing materials. Over the following six months, the visual language gradually became more expressive while remaining connected to its foundation. This page documents that progression.",
+    ],
+    metaAfterMedia: true,
+    hideMeta: true,
+    evolutionStages: [
+      { date: "July 2025", title: "", imageSrc: "./assets/images/mdlinx-creative-refresh/broth-paid-social.png" },
+      { date: "", title: "", imageSrc: "./assets/images/mdlinx-creative-refresh/merck-keytruda-meta.png" },
+      { date: "January 2026", title: "", imageSrc: "./assets/images/mdlinx-creative-refresh/acquisition-6-1.jpg" },
+    ],
+    role: "Lead Graphic Designer",
+    format: "Paid Ads",
+    year: "2025–2026",
+    mediaLabel: "CONTENT PLACEHOLDER",
+    overviewHeading: "Overview",
+    overviewCopy: "",
+    moduleHeading: "Original Assets",
+    moduleCopy: "The initial creative established a compact visual toolkit: a restrained palette, clean typography, and the pink stethoscope graphic introduced through the Flashpoint launch. These assets provided a recognizable foundation while leaving room for the marketing system to grow.",
+    modulePhoneCount: 2,
+    moduleAssetPlaceholder: true,
+    followupModules: [
+      { heading: "Iterating", copy: "" },
+      { heading: "Final Creative", copy: "" },
     ],
   },
   "interface-studies": {
@@ -525,32 +564,8 @@ function requestHeaderScrollUpdate() {
   window.requestAnimationFrame(() => {
     updateHeaderScrollState();
     if (document.body.classList.contains("site-menu-open")) syncSiteMenuPosition();
-    updateDataRail();
     scrollTicking = false;
   });
-}
-
-function initializeDataRail() {
-  if (dataRail) return;
-  dataRail = document.createElement("aside");
-  dataRail.className = "data-rail";
-  dataRail.setAttribute("aria-hidden", "true");
-  dataRail.innerHTML = "<span data-rail-depth>000%</span><span data-rail-time>00:00</span><span>XY 0019, 0839</span><span data-rail-date></span>";
-  document.body.append(dataRail);
-  updateDataRail();
-}
-
-function updateDataRail() {
-  if (!dataRail) return;
-  const maxScroll = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
-  const percent = Math.round((window.scrollY / maxScroll) * 100);
-  const elapsed = Math.floor((performance.now() - siteStartTime) / 1000);
-  const minutes = String(Math.floor(elapsed / 60)).padStart(2, "0");
-  const seconds = String(elapsed % 60).padStart(2, "0");
-  const date = new Date();
-  dataRail.querySelector("[data-rail-depth]").textContent = `${String(percent).padStart(3, "0")}%`;
-  dataRail.querySelector("[data-rail-time]").textContent = `${minutes}:${seconds}`;
-  dataRail.querySelector("[data-rail-date]").textContent = `${String(date.getMonth() + 1).padStart(2, "0")}.${String(date.getDate()).padStart(2, "0")}.${date.getFullYear()}`;
 }
 
 function applyPalette(swatch) {
@@ -1842,6 +1857,41 @@ function revealProjectContentWhenReady() {
   });
 }
 
+
+function getStoryPhoneMarkup() {
+  const phoneTime = new Intl.DateTimeFormat([], { hour: "numeric", minute: "2-digit" }).format(new Date());
+  return `
+    <span class="project-evolution-island" aria-hidden="true"></span>
+    <span class="project-evolution-button project-evolution-volume-up" aria-hidden="true"></span>
+    <span class="project-evolution-button project-evolution-volume-down" aria-hidden="true"></span>
+    <span class="project-evolution-button project-evolution-power" aria-hidden="true"></span>
+    <div class="project-evolution-screen">
+      <div class="story-status" aria-hidden="true">
+        <span class="story-time">${phoneTime}</span>
+        <span class="story-status-icons">
+          <span class="story-signal"><i></i><i></i><i></i><i></i></span>
+          <span class="story-wifi"></span>
+          <span class="story-battery"><i></i></span>
+        </span>
+      </div>
+      <div class="story-progress" aria-hidden="true"><i></i></div>
+      <div class="story-account" aria-hidden="true">
+        <span class="story-avatar"></span>
+        <strong>mdlinx</strong>
+        <small>2h</small>
+        <span class="story-close"></span>
+      </div>
+      <div class="story-actions" aria-hidden="true">
+        <span class="story-message">Send message...</span>
+        <span class="story-action story-heart"></span>
+        <span class="story-action story-comment"></span>
+        <span class="story-action story-send"></span>
+        <span class="story-action story-options"><i></i><i></i></span>
+      </div>
+    </div>
+  `;
+}
+
 function hydrateModule(project) {
   const module = document.querySelector(".module-one");
   if (!module) return;
@@ -1860,6 +1910,68 @@ function hydrateModule(project) {
       circle?.classList.remove("has-video");
       video.removeAttribute("src");
     }
+  });
+
+  if (project.modulePhoneCount) {
+    const mediaRow = module.querySelector(".module-one-image-row");
+    if (mediaRow) {
+      mediaRow.classList.add("module-phone-row");
+      const phones = Array.from({ length: project.modulePhoneCount }, () => {
+        const phone = document.createElement("div");
+        phone.className = "project-evolution-phone module-wireframe-phone";
+        phone.innerHTML = getStoryPhoneMarkup();
+        return phone;
+      });
+      mediaRow.replaceChildren(...phones);
+      mediaRow.setAttribute("aria-label", `${project.moduleHeading} phone screen placeholders`);
+    }
+  }
+
+  module.querySelector(".module-assets-image-placeholder")?.remove();
+  if (project.moduleAssetPlaceholder) {
+    const imagePlaceholder = document.createElement("div");
+    imagePlaceholder.className = "module-assets-image-placeholder";
+    imagePlaceholder.setAttribute("role", "img");
+    imagePlaceholder.setAttribute("aria-label", "Original brand elements image placeholder");
+    imagePlaceholder.innerHTML = "<span>Image Placeholder</span>";
+    module.append(imagePlaceholder);
+  }
+
+  document.querySelectorAll(".mdlinx-story-module").forEach((section) => section.remove());
+  let insertionPoint = module;
+  project.followupModules?.forEach((item) => {
+    const section = document.createElement("section");
+    section.className = "module-one mdlinx-story-module";
+
+    const sectionHeading = document.createElement("h3");
+    sectionHeading.className = "module-one-process-title";
+    sectionHeading.textContent = item.heading;
+
+    const copyWrap = document.createElement("div");
+    copyWrap.className = "module-one-copy";
+    const paragraph = document.createElement("p");
+    paragraph.textContent = item.copy || "";
+    copyWrap.append(paragraph);
+
+    const phoneRow = document.createElement("div");
+    phoneRow.className = "module-one-image-row module-phone-row";
+    phoneRow.setAttribute("aria-label", item.heading + " phone screen placeholders");
+    for (let index = 0; index < 2; index += 1) {
+      const phone = document.createElement("div");
+      phone.className = "project-evolution-phone module-wireframe-phone";
+      phone.innerHTML = getStoryPhoneMarkup();
+      phoneRow.append(phone);
+    }
+
+    const imagePlaceholder = document.createElement("div");
+    imagePlaceholder.className = "module-assets-image-placeholder";
+    imagePlaceholder.setAttribute("role", "img");
+    imagePlaceholder.setAttribute("aria-label", item.heading + " image placeholder");
+    imagePlaceholder.innerHTML = "<span>Image Placeholder</span>";
+
+    section.append(sectionHeading, copyWrap, phoneRow, imagePlaceholder);
+    insertionPoint.insertAdjacentElement("afterend", section);
+    insertionPoint = section;
   });
 
   document.body.classList.toggle("has-module-meta", Boolean(project.moveMetaToModule));
@@ -1939,6 +2051,46 @@ function hydrateAdditionalCreativeVideos(key) {
   });
 }
 
+function hydrateEvolutionStages(project) {
+  if (!project.evolutionStages?.length) return;
+  const frame = document.querySelector(".project-media-frame");
+  if (!frame) return;
+  frame.classList.add("project-evolution-frame");
+  const overview = document.createElement("div");
+  overview.className = "project-evolution-grid";
+  project.evolutionStages.forEach((stage) => {
+    const item = document.createElement("article");
+    item.className = "project-evolution-item";
+
+    const heading = document.createElement("header");
+    heading.className = "project-evolution-heading";
+    if (!stage.date && !stage.title) heading.classList.add("is-empty");
+    const date = document.createElement("span");
+    date.className = "project-evolution-date";
+    date.textContent = stage.date;
+    const title = document.createElement("h3");
+    title.textContent = stage.title;
+    heading.append(date, title);
+
+    const phone = document.createElement("div");
+    phone.className = "project-evolution-phone";
+    phone.innerHTML = getStoryPhoneMarkup();
+    if (stage.imageSrc) {
+      const image = document.createElement("img");
+      image.className = "project-evolution-media";
+      image.src = stage.imageSrc;
+      image.alt = "";
+      image.loading = "lazy";
+      image.decoding = "async";
+      phone.querySelector(".project-evolution-screen")?.prepend(image);
+    }
+
+    item.append(heading, phone);
+    overview.append(item);
+  });
+  frame.replaceChildren(overview);
+}
+
 function hydrateProjectPage() {
   if (!document.body.classList.contains("project-page")) return;
   const key = getProjectKey();
@@ -1953,7 +2105,16 @@ function hydrateProjectPage() {
     title.dataset.typeTitle = project.title;
     title.style.setProperty("--title-cursor-x", `${project.title.length + 0.25}ch`);
   }
-  setText("[data-project-summary]", project.summary);
+  const summary = document.querySelector("[data-project-summary]");
+  if (summary) {
+    if (project.introColumns?.length) {
+      summary.classList.add("project-intro-columns");
+      summary.textContent = project.introColumns.join(" ");
+    } else {
+      summary.classList.remove("project-intro-columns");
+      summary.textContent = project.summary || "";
+    }
+  }
   setText("[data-project-role]", project.role);
   setText("[data-project-format]", project.format);
   setText("[data-project-year]", project.year);
@@ -1987,7 +2148,21 @@ function hydrateProjectPage() {
     ? { muted: true, loop: true, autoplay: true, preload: "auto" }
     : { poster: project.posterSrc, muted: false, loop: Boolean(project.loopVideo) };
   setVideoSource(mainVideo, project.videoSrc, mainVideoOptions);
-  document.querySelector(".project-media-frame")?.classList.toggle("has-video", Boolean(project.videoSrc));
+  const mediaFrame = document.querySelector(".project-media-frame");
+  mediaFrame?.classList.toggle("has-video", Boolean(project.videoSrc));
+  hydrateEvolutionStages(project);
+  if (project.metaAfterMedia && mediaFrame) {
+    const meta = document.querySelector(".project-meta");
+    const contentGrid = document.querySelector(".project-content-grid");
+    if (project.hideMeta && meta) {
+      meta.hidden = true;
+    }
+    if (meta && !project.hideMeta) {
+      meta.classList.add("project-meta-after-media");
+      mediaFrame.after(meta);
+    }
+    if (contentGrid) contentGrid.hidden = true;
+  }
   setVideoSource(document.querySelector("[data-project-secondary-video]"), project.secondaryVideoSrc, { muted: true, loop: true, autoplay: true });
 
   const overviewSources = project.overviewCircleVideoSrcs || (project.promoteModuleVideosToOverview ? project.moduleVideoSrcs : null);
@@ -3016,7 +3191,6 @@ resetInitialScrollPosition();
 scheduleInitialHomeScrollReset();
 syncVisualViewportWidth();
 fillMarquees();
-initializeDataRail();
 initializePalette();
 hydrateProjectPage();
 initializeSiteMenu();
@@ -3033,7 +3207,6 @@ revealHomePucks();
 initializePuckVideos();
 initializePlainPucks();
 initializePlaygroundTypeLabels();
-window.setInterval(updateDataRail, 1000);
 document.fonts?.ready.then(() => {
   fillMarquees();
   updateHeaderScrollState();

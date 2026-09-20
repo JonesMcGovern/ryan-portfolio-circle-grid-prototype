@@ -150,9 +150,8 @@ const projectData = {
     metaAfterMedia: true,
     hideMeta: true,
     evolutionStages: [
-      { date: "July 2025", title: "", imageSrc: "./assets/images/mdlinx-creative-refresh/broth-paid-social.png" },
-      { date: "", title: "", imageSrc: "./assets/images/mdlinx-creative-refresh/merck-keytruda-meta.png" },
-      { date: "January 2026", title: "", imageSrc: "./assets/images/mdlinx-creative-refresh/acquisition-6-1.jpg" },
+      { date: "Agency Handoff", title: "", layout: "feed", imageSrc: "./assets/images/mdlinx-creative-refresh/broth-paid-social-square.png" },
+      { date: "Final Iteration", title: "", imageSrc: "./assets/images/mdlinx-creative-refresh/acquisition-6-1.jpg" },
     ],
     role: "Lead Graphic Designer",
     format: "Paid Ads",
@@ -160,13 +159,19 @@ const projectData = {
     mediaLabel: "CONTENT PLACEHOLDER",
     overviewHeading: "Overview",
     overviewCopy: "",
-    moduleHeading: "Original Assets",
-    moduleCopy: "The initial creative established a compact visual toolkit: a restrained palette, clean typography, and the pink stethoscope graphic introduced through the Flashpoint launch. These assets provided a recognizable foundation while leaving room for the marketing system to grow.",
+    moduleHeading: "Broth Handoff",
+    moduleCopy: "The initial handoff established a compact look and feel: a restrained palette, clean typography, and the pink stethoscope graphic introduced through the Flashpoint launch. These assets provided a recognizable foundation while leaving room for the marketing system to grow.",
     modulePhoneCount: 2,
+    modulePhoneLayout: "feed",
+    modulePhoneImages: [
+      "./assets/images/mdlinx-creative-refresh/broth-handoff-post-1.png",
+      "./assets/images/mdlinx-creative-refresh/broth-handoff-post-2.png",
+    ],
     moduleAssetPlaceholder: true,
     followupModules: [
-      { heading: "Iterating", copy: "" },
-      { heading: "Final Creative", copy: "" },
+      { heading: "Early Designs", copy: "My first instinct was to identify which elements from Broth’s handoff had the most potential to evolve into a flexible, long-term visual system. The strongest was the stethoscope frame, an element adapted from an earlier design of mine. To me, it seemed malleable and reconfigurable across formats while maintaining its branded feel. Its simple structure gave me room to experiment while creating a recognizable connection between different pieces of creative. Before expanding its use, I softened its sharp corners, which felt slightly retro, to give the shape a more contemporary and adaptable form." },
+      { heading: "Iterating", copy: "Once the new elements had time to become familiar to the audience, I began evolving the system without changing it too dramatically. I took a deliberately conservative approach, having seen less-established brands iterate so frequently that their creative never had time to build recognizable equity. The next step was to close the stethoscope frame and allow the subject of the photography to break through it, creating a stronger sense of depth and dimensionality. I also began expanding the palette, introducing light purple against lavender in place of the pink used in earlier designs while preserving the structure and visual language we had already established." },
+      { heading: "Final Creative", copy: "The final versions of this creative represented what I had envisioned from the beginning as the natural conclusion of these elements. The stethoscope became an active part of the composition, contributing shape and texture throughout the work. Its ends were enlarged and treated with grain and gradients to create depth, while cutout photography was positioned between layers to strengthen the dimensional effect. I also introduced UI-inspired topic tags that immediately communicated the subject of each post. Their interface-like appearance was intentional, as I hoped to eventually incorporate similar tags across articles and other MDLinx products. The accompanying email templates extended these elements and layering techniques into another format while maintaining a consistent visual system." },
     ],
   },
   "interface-studies": {
@@ -1882,12 +1887,49 @@ function getStoryPhoneMarkup() {
         <span class="story-close"></span>
       </div>
       <div class="story-actions" aria-hidden="true">
-        <span class="story-message">Send message...</span>
-        <span class="story-action story-heart"></span>
-        <span class="story-action story-comment"></span>
-        <span class="story-action story-send"></span>
+        <span class="story-message"></span>
+        <span class="story-action story-heart"><svg viewBox="0 1 24 22" aria-hidden="true"><path d="M12 21.5 L4.1 13.8 C0.7 10.5 1.2 4.8 5.1 3.2 C7.8 2.1 10.4 3.5 12 5.8 C13.6 3.5 16.2 2.1 18.9 3.2 C22.8 4.8 23.3 10.5 19.9 13.8 Z"></path></svg></span>
+        <span class="story-action story-send"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="story-send-outline" d="M2 3 L22 3 L12 20.32 Z"></path><path class="story-send-fold" d="M7 11.66 L13.7 7.79"></path></svg></span>
         <span class="story-action story-options"><i></i><i></i></span>
       </div>
+    </div>
+  `;
+}
+
+
+function getFeedPhoneMarkup() {
+  const phoneTime = new Intl.DateTimeFormat([], { hour: "numeric", minute: "2-digit" }).format(new Date());
+  return `
+    <span class="project-evolution-island" aria-hidden="true"></span>
+    <span class="project-evolution-button project-evolution-volume-up" aria-hidden="true"></span>
+    <span class="project-evolution-button project-evolution-volume-down" aria-hidden="true"></span>
+    <span class="project-evolution-button project-evolution-power" aria-hidden="true"></span>
+    <div class="project-evolution-screen">
+      <div class="story-status" aria-hidden="true">
+        <span class="story-time">${phoneTime}</span>
+        <span class="story-status-icons">
+          <span class="story-signal"><i></i><i></i><i></i><i></i></span>
+          <span class="story-wifi"></span>
+          <span class="story-battery"><i></i></span>
+        </span>
+      </div>
+      <div class="feed-account" aria-hidden="true">
+        <span class="story-avatar"></span>
+        <strong>mdlinx</strong>
+        <span class="feed-more"><i></i><i></i><i></i></span>
+      </div>
+      <div class="feed-actions" aria-hidden="true">
+        <span class="feed-icon"><svg viewBox="0 1 24 22"><path d="M12 21.5 L4.1 13.8 C0.7 10.5 1.2 4.8 5.1 3.2 C7.8 2.1 10.4 3.5 12 5.8 C13.6 3.5 16.2 2.1 18.9 3.2 C22.8 4.8 23.3 10.5 19.9 13.8 Z"></path></svg></span>
+        <span class="feed-icon feed-comment"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8.5"></circle><path d="M16.8 17.2 L21.5 21.5 L19.4 15.8"></path></svg></span>
+        <span class="feed-icon feed-repost"><svg viewBox="0 0 24 24"><path d="M4 10 V5 H19"></path><path d="M16 2 L19 5 L16 8"></path><path d="M20 14 V19 H5"></path><path d="M8 16 L5 19 L8 22"></path></svg></span>
+        <span class="feed-icon"><svg viewBox="0 0 24 24"><path d="M2 3 L22 3 L12 20.32 Z"></path><path d="M7 11.66 L13.7 7.79"></path></svg></span>
+        <span class="feed-icon feed-bookmark"><svg viewBox="0 0 24 24"><path d="M2 2 H22 V22 L12 16 L2 22 Z"></path></svg></span>
+      </div>
+      <div class="feed-caption" aria-hidden="true">
+        <span class="feed-caption-line"></span>
+        <span class="feed-caption-line is-short"></span>
+      </div>
+      <div class="feed-next-edge" aria-hidden="true"></div>
     </div>
   `;
 }
@@ -1916,14 +1958,25 @@ function hydrateModule(project) {
     const mediaRow = module.querySelector(".module-one-image-row");
     if (mediaRow) {
       mediaRow.classList.add("module-phone-row");
-      const phones = Array.from({ length: project.modulePhoneCount }, () => {
+      const phones = Array.from({ length: project.modulePhoneCount }, (_, index) => {
         const phone = document.createElement("div");
         phone.className = "project-evolution-phone module-wireframe-phone";
-        phone.innerHTML = getStoryPhoneMarkup();
+        if (project.modulePhoneLayout === "feed") phone.classList.add("is-feed-phone");
+        phone.innerHTML = project.modulePhoneLayout === "feed" ? getFeedPhoneMarkup() : getStoryPhoneMarkup();
+        const imageSource = project.modulePhoneImages?.[index];
+        if (imageSource) {
+          const image = document.createElement("img");
+          image.className = "project-evolution-media";
+          image.src = imageSource;
+          image.alt = "";
+          image.loading = "lazy";
+          image.decoding = "async";
+          phone.querySelector(".project-evolution-screen")?.prepend(image);
+        }
         return phone;
       });
       mediaRow.replaceChildren(...phones);
-      mediaRow.setAttribute("aria-label", `${project.moduleHeading} phone screen placeholders`);
+      mediaRow.setAttribute("aria-label", `${project.moduleHeading} phone screen previews`);
     }
   }
 
@@ -1942,6 +1995,7 @@ function hydrateModule(project) {
   project.followupModules?.forEach((item) => {
     const section = document.createElement("section");
     section.className = "module-one mdlinx-story-module";
+    section.classList.add(`module-${item.heading.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")}`);
 
     const sectionHeading = document.createElement("h3");
     sectionHeading.className = "module-one-process-title";
@@ -2074,7 +2128,8 @@ function hydrateEvolutionStages(project) {
 
     const phone = document.createElement("div");
     phone.className = "project-evolution-phone";
-    phone.innerHTML = getStoryPhoneMarkup();
+    if (stage.layout === "feed") phone.classList.add("is-feed-phone");
+    phone.innerHTML = stage.layout === "feed" ? getFeedPhoneMarkup() : getStoryPhoneMarkup();
     if (stage.imageSrc) {
       const image = document.createElement("img");
       image.className = "project-evolution-media";

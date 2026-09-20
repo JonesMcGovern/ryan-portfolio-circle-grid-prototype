@@ -702,6 +702,8 @@ html.is-safari body.is-safari-restoring-home:not(.project-page):not(.playground-
   display: block;
   width: 100%;
   height: clamp(260px, 24vw, 390px);
+  box-sizing: border-box;
+  padding-top: clamp(10px, 1vw, 16px);
   border-top: var(--stroke) solid var(--line);
   color: var(--line);
   overflow: hidden;
@@ -847,7 +849,7 @@ html.is-safari body.is-safari-restoring-home:not(.project-page):not(.playground-
 
 .home-selected-work .portfolio-puck-one {
   left: 30%;
-  top: 39%;
+  top: 42%;
 }
 
 .home-selected-work .portfolio-puck-two {
@@ -9324,10 +9326,6 @@ body[data-project="mdlinx-rebrand-marketing-material-development"] .project-evol
     gap: 14px;
   }
 
-  .project-evolution-item:nth-child(2) {
-    display: none;
-  }
-
   .project-evolution-grid::before {
     content: "";
     position: absolute;
@@ -9680,19 +9678,19 @@ body[data-project="mdlinx-rebrand-marketing-material-development"] .story-action
   z-index: 3;
   left: 4%;
   right: 4%;
-  bottom: 3.2%;
+  bottom: 1.5%;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) repeat(4, auto);
-  gap: clamp(4px, 0.55vw, 8px);
+  grid-template-columns: minmax(0, 1fr) repeat(3, auto);
+  gap: clamp(3px, 0.45vw, 6px);
   align-items: center;
   color: var(--line);
-  font-size: clamp(6px, 0.72vw, 10px);
+  font-size: clamp(5px, 0.62vw, 8px);
 }
 
 body[data-project="mdlinx-rebrand-marketing-material-development"] .story-message {
   display: flex;
   min-width: 0;
-  height: 2.65em;
+  height: 2.4em;
   padding: 0 0.8em;
   align-items: center;
   overflow: hidden;
@@ -9709,67 +9707,48 @@ body[data-project="mdlinx-rebrand-marketing-material-development"] .story-action
   aspect-ratio: 1;
 }
 
-body[data-project="mdlinx-rebrand-marketing-material-development"] .story-heart::before {
-  content: "";
-  position: absolute;
-  top: 30%;
-  left: 28%;
-  width: 0.8em;
-  height: 0.8em;
-  border-right: max(var(--stroke), 1px) solid currentColor;
-  border-bottom: max(var(--stroke), 1px) solid currentColor;
-  transform: rotate(45deg);
+body[data-project="mdlinx-rebrand-marketing-material-development"] .story-heart {
+  width: 1.7em;
+  aspect-ratio: 1;
 }
 
-body[data-project="mdlinx-rebrand-marketing-material-development"] .story-heart::after {
-  content: "";
-  position: absolute;
-  top: 20%;
-  left: 28%;
-  width: 0.8em;
-  height: 0.58em;
-  border: max(var(--stroke), 1px) solid currentColor;
-  border-bottom: 0;
-  border-radius: 0.5em 0.5em 0 0;
-}
-
-body[data-project="mdlinx-rebrand-marketing-material-development"] .story-comment {
-  width: 1.5em;
-  height: 1.25em;
-  border: max(var(--stroke), 1px) solid currentColor;
-  border-radius: 48%;
-}
-
-body[data-project="mdlinx-rebrand-marketing-material-development"] .story-comment::after {
-  content: "";
-  position: absolute;
-  right: 0.05em;
-  bottom: -0.22em;
-  width: 0.45em;
-  height: 0.45em;
-  border-right: max(var(--stroke), 1px) solid currentColor;
-  border-bottom: max(var(--stroke), 1px) solid currentColor;
-  transform: skew(-18deg);
+body[data-project="mdlinx-rebrand-marketing-material-development"] .story-heart svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
 }
 
 body[data-project="mdlinx-rebrand-marketing-material-development"] .story-send {
-  width: 1.55em;
-  height: 1.45em;
-  border-top: max(var(--stroke), 1px) solid currentColor;
-  border-right: max(var(--stroke), 1px) solid currentColor;
-  transform: rotate(28deg) skew(-12deg);
+  width: 1.7em;
+  aspect-ratio: 1;
 }
 
-body[data-project="mdlinx-rebrand-marketing-material-development"] .story-send::after {
-  content: "";
-  position: absolute;
-  top: 46%;
-  left: 0.12em;
-  width: 1.4em;
-  height: max(var(--stroke), 1px);
-  background: currentColor;
-  transform: rotate(-45deg);
-  transform-origin: left center;
+body[data-project="mdlinx-rebrand-marketing-material-development"] .story-send svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+body[data-project="mdlinx-rebrand-marketing-material-development"] .story-send-outline {
+  stroke-linecap: butt;
+}
+
+body[data-project="mdlinx-rebrand-marketing-material-development"] .story-send-fold {
+  stroke-linecap: round;
 }
 
 body[data-project="mdlinx-rebrand-marketing-material-development"] .story-options {
@@ -9789,4 +9768,149 @@ body[data-project="mdlinx-rebrand-marketing-material-development"] .story-option
 body[data-project="mdlinx-rebrand-marketing-material-development"] .story-options i:last-child {
   width: 72%;
   justify-self: end;
+}
+
+
+body[data-project="mdlinx-rebrand-marketing-material-development"] .project-evolution-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+@media (min-width: 701px) {
+  body[data-project="mdlinx-rebrand-marketing-material-development"] .project-evolution-grid::before {
+    left: calc(25% + 5.5rem);
+    right: calc(25% + 5.5rem);
+  }
+
+  body[data-project="mdlinx-rebrand-marketing-material-development"] .project-evolution-grid::after {
+    right: calc(25% + 5.5rem);
+  }
+}
+
+@media (max-width: 700px) {
+  body[data-project="mdlinx-rebrand-marketing-material-development"] .project-evolution-grid::before {
+    left: calc(25% + 3.5rem);
+    right: calc(25% + 3.5rem);
+  }
+
+  body[data-project="mdlinx-rebrand-marketing-material-development"] .project-evolution-grid::after {
+    right: calc(25% + 3.5rem);
+  }
+}
+
+
+body[data-project="mdlinx-rebrand-marketing-material-development"] .is-feed-phone .project-evolution-media {
+  top: 42%;
+}
+
+body[data-project="mdlinx-rebrand-marketing-material-development"] .feed-account {
+  position: absolute;
+  z-index: 3;
+  top: 10.8%;
+  left: 4%;
+  right: 4%;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 0.5em;
+  align-items: center;
+  color: var(--line);
+  font-family: var(--body-font);
+  font-size: clamp(6px, 0.72vw, 10px);
+}
+
+body[data-project="mdlinx-rebrand-marketing-material-development"] .feed-account strong {
+  font-weight: 700;
+}
+
+body[data-project="mdlinx-rebrand-marketing-material-development"] .feed-more {
+  display: flex;
+  gap: 0.22em;
+  align-items: center;
+}
+
+body[data-project="mdlinx-rebrand-marketing-material-development"] .feed-more i {
+  width: 0.22em;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+body[data-project="mdlinx-rebrand-marketing-material-development"] .feed-actions {
+  position: absolute;
+  z-index: 3;
+  top: 69%;
+  left: 4%;
+  right: 4%;
+  display: flex;
+  gap: clamp(4px, 0.65vw, 9px);
+  align-items: center;
+  color: var(--line);
+  font-size: clamp(6px, 0.72vw, 10px);
+}
+
+body[data-project="mdlinx-rebrand-marketing-material-development"] .feed-icon {
+  display: block;
+  width: 1.65em;
+  aspect-ratio: 1;
+}
+
+body[data-project="mdlinx-rebrand-marketing-material-development"] .feed-icon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+body[data-project="mdlinx-rebrand-marketing-material-development"] .feed-bookmark {
+  margin-left: auto;
+}
+
+body[data-project="mdlinx-rebrand-marketing-material-development"] .feed-caption {
+  position: absolute;
+  z-index: 3;
+  top: 74%;
+  left: 4%;
+  right: 4%;
+  display: grid;
+  gap: 0.55em;
+  color: var(--line);
+}
+
+body[data-project="mdlinx-rebrand-marketing-material-development"] .feed-next-edge {
+  position: absolute;
+  z-index: 3;
+  top: 85%;
+  left: 0;
+  right: 0;
+  height: max(var(--stroke), 1px);
+  background: var(--line);
+}
+body[data-project="mdlinx-rebrand-marketing-material-development"] .module-early-designs .module-one-copy p,
+body[data-project="mdlinx-rebrand-marketing-material-development"] .module-iterating .module-one-copy p,
+body[data-project="mdlinx-rebrand-marketing-material-development"] .module-final-creative .module-one-copy p {
+  text-align: justify;
+  text-align-last: left;
+  text-justify: inter-word;
+  hyphens: auto;
+}
+body[data-project="mdlinx-rebrand-marketing-material-development"] .module-one:not(.mdlinx-story-module) .module-one-copy p {
+  text-align: justify;
+  text-align-last: left;
+  text-justify: inter-word;
+  hyphens: auto;
+}
+body[data-project="mdlinx-rebrand-marketing-material-development"] .feed-caption-line {
+  display: block;
+  width: 72%;
+  height: max(var(--stroke), 1px);
+  background: currentColor;
+}
+
+body[data-project="mdlinx-rebrand-marketing-material-development"] .feed-caption-line.is-short {
+  width: 46%;
 }

@@ -1,12 +1,3 @@
-const LOCAL_ONLY_PROJECT = "mdlinx-rebrand-marketing-material-development";
-const requestedProject = new URLSearchParams(window.location.search).get("project");
-const isLocalPreview = ["localhost", "127.0.0.1", "::1"].includes(window.location.hostname);
-
-if (requestedProject === LOCAL_ONLY_PROJECT && !isLocalPreview) {
-  document.documentElement.hidden = true;
-  window.location.replace("./index.html");
-}
-
 const field = document.querySelector(".line-field");
 const canvas = document.querySelector(".smudge-canvas");
 const context = canvas?.getContext("2d");

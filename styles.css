@@ -1163,6 +1163,7 @@ html.is-safari body.is-safari-restoring-home:not(.project-page):not(.playground-
   .home-feature-row {
     grid-template-columns: 1fr;
     column-gap: 0;
+    row-gap: 0;
   }
 
   .home-selected-list::after,
@@ -1184,22 +1185,28 @@ html.is-safari body.is-safari-restoring-home:not(.project-page):not(.playground-
 
   .home-additional-list {
     order: 2;
+    margin-top: 0;
+  }
+
+  .home-additional-list .home-selected-list-items {
+    border-top: 0;
   }
 
   .home-wheel-module {
     order: 3;
-    margin-top: 10px;
+    margin-top: clamp(30px, 4.2vw, 46px);
   }
 
   .home-selected-work {
     order: 4;
+    margin-top: clamp(20px, 2.2vw, 36px);
   }
 
   .home-playground-grid {
     order: 5;
   }
 
-  .home-selected-heading-spacer {
+  .selected-work-heading.home-selected-heading.home-selected-heading-spacer {
     display: none;
   }
 

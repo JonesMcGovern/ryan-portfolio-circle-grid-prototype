@@ -421,6 +421,7 @@ const projectOrder = [
   "skimmu-money",
   "flashpoint-mdlinx",
   "skimm-money-newsletter",
+  "mdlinx-rebrand-marketing-material-development",
   "interface-studies",
   "launch-cutdowns",
   "social-system",

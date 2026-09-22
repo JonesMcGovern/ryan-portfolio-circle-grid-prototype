@@ -150,8 +150,27 @@ const projectData = {
     metaAfterMedia: true,
     hideMeta: true,
     evolutionStages: [
-      { date: "Agency Handoff", title: "", layout: "feed", imageSrc: "./assets/images/mdlinx-creative-refresh/broth-paid-social-square.png" },
-      { date: "Final Iteration", title: "", imageSrc: "./assets/images/mdlinx-creative-refresh/acquisition-6-1.jpg" },
+      {
+        date: "Agency Handoff",
+        title: "",
+        layout: "feed",
+        imageSrc: "./assets/images/mdlinx-creative-refresh/broth-paid-social-square.png",
+        carouselImages: [
+          "./assets/images/mdlinx-creative-refresh/broth-handoff-post-2.png",
+          "./assets/images/mdlinx-creative-refresh/broth-paid-social-square.png",
+        ],
+      },
+      {
+        date: "Final Iteration",
+        title: "",
+        imageSrc: "./assets/images/mdlinx-creative-refresh/acquisition-6-1.jpg",
+        carouselImages: [
+          "./assets/images/mdlinx-creative-refresh/acquisition-6-1.jpg",
+          "./assets/images/mdlinx-creative-refresh/acquisition-2-1-9-16.jpg",
+          "./assets/images/mdlinx-creative-refresh/acquisition-1-2-9-16.jpg",
+          "./assets/images/mdlinx-creative-refresh/pfiq-meta-9-16-4.png",
+        ],
+      },
     ],
     role: "Lead Graphic Designer",
     format: "Paid Ads",
@@ -168,10 +187,72 @@ const projectData = {
       "./assets/images/mdlinx-creative-refresh/broth-handoff-post-2.png",
     ],
     moduleAssetPlaceholder: true,
+    moduleAssetImage: "./assets/images/mdlinx-creative-refresh/original-stethoscope.png",
+    moduleAssetImages: [
+      { src: "./assets/images/mdlinx-creative-refresh/original-stethoscope.png", alt: "Original stethoscope frame supplied in the agency handoff" },
+      { src: "./assets/images/mdlinx-creative-refresh/broth-icons.png", alt: "Original medical topic icon set supplied in the agency handoff" },
+    ],
     followupModules: [
-      { heading: "Early Designs", copy: "My first instinct was to identify which elements from Broth’s handoff had the most potential to evolve into a flexible, long-term visual system. The strongest was the stethoscope frame, an element adapted from an earlier design of mine. To me, it seemed malleable and reconfigurable across formats while maintaining its branded feel. Its simple structure gave me room to experiment while creating a recognizable connection between different pieces of creative. Before expanding its use, I softened its sharp corners, which felt slightly retro, to give the shape a more contemporary and adaptable form." },
-      { heading: "Iterating", copy: "Once the new elements had time to become familiar to the audience, I began evolving the system without changing it too dramatically. I took a deliberately conservative approach, having seen less-established brands iterate so frequently that their creative never had time to build recognizable equity. The next step was to close the stethoscope frame and allow the subject of the photography to break through it, creating a stronger sense of depth and dimensionality. I also began expanding the palette, introducing light purple against lavender in place of the pink used in earlier designs while preserving the structure and visual language we had already established." },
-      { heading: "Final Creative", copy: "The final versions of this creative represented what I had envisioned from the beginning as the natural conclusion of these elements. The stethoscope became an active part of the composition, contributing shape and texture throughout the work. Its ends were enlarged and treated with grain and gradients to create depth, while cutout photography was positioned between layers to strengthen the dimensional effect. I also introduced UI-inspired topic tags that immediately communicated the subject of each post. Their interface-like appearance was intentional, as I hoped to eventually incorporate similar tags across articles and other MDLinx products. The accompanying email templates extended these elements and layering techniques into another format while maintaining a consistent visual system." },
+      {
+        heading: "Early Designs",
+        copy: "My first instinct was to identify which elements from Broth’s handoff had the most potential to evolve into a flexible, long-term visual system. The strongest was the stethoscope frame, an element adapted from an earlier design of mine. To me, it seemed malleable and reconfigurable across formats while maintaining its branded feel. Its simple structure gave me room to experiment while creating a recognizable connection between different pieces of creative. Before expanding its use, I softened its sharp corners, which felt slightly retro, to give the shape a more contemporary and adaptable form.",
+        imageSrc: "./assets/images/mdlinx-creative-refresh/updated-stethoscope.png",
+        imageAlt: "Updated stethoscope frame with softened corners",
+        phoneLayouts: ["story", "email"],
+        phoneCarouselImages: [
+          [
+            "./assets/images/mdlinx-creative-refresh/mdl-meta-paid-9-16-2.jpg",
+            "./assets/images/mdlinx-creative-refresh/mdl-meta-paid-9-16.jpg",
+          ],
+          [
+            "./assets/images/mdlinx-creative-refresh/ziihera-email-mobile-3.jpg",
+            "./assets/images/mdlinx-creative-refresh/welcome-email-3-hero-mobile.jpg",
+          ],
+        ],
+      },
+      {
+        heading: "Iterating",
+        copy: "Once the new elements had time to become familiar to the audience, I began evolving the system without changing it too dramatically. I took a deliberately conservative approach, having seen less-established brands iterate so frequently that their creative never had time to build recognizable equity. The next step was to close the stethoscope frame and allow the subject of the photography to break through it, creating a stronger sense of depth and dimensionality. I also expanded the palette, introducing lavender and other pastels in place of the pink used in earlier designs while preserving the structure and visual language we had already established. Category tags became another consistent element, quickly signaling the kind of content each post linked to and helping readers understand its subject at a glance.",
+        imageSrc: "./assets/images/mdlinx-creative-refresh/mdl-topic-tags.jpg",
+        imageAlt: "MDLinx topic tag system across medical and editorial categories",
+        phoneLayouts: ["story", "email"],
+        phoneCarouselImages: [
+          [
+            "./assets/images/mdlinx-creative-refresh/sitc-organic-social-9-16-1.jpg",
+            "./assets/images/mdlinx-creative-refresh/abbvie-rinvoq-paid-social-9-16-1.png",
+            "./assets/images/mdlinx-creative-refresh/abbvie-skyrizi-paid-social-9-16-1.png",
+            "./assets/images/mdlinx-creative-refresh/vyepti-cs-3-meta-9-16.png",
+            "./assets/images/mdlinx-creative-refresh/vyepti-article-8-meta-9-16.jpg",
+            "./assets/images/mdlinx-creative-refresh/merck-keytruda-meta-9-16-trivia-uc.png",
+          ],
+          [
+            "./assets/images/mdlinx-creative-refresh/vyepti-article-9-email-mobile.jpg",
+            "./assets/images/mdlinx-creative-refresh/zepzelca-sd-email-mobile-1-1.jpg",
+            "./assets/images/mdlinx-creative-refresh/keytruda-email-ics-mobile-2.jpg",
+          ],
+        ],
+      },
+      {
+        heading: "Final Creative",
+        copy: "The final versions of this creative represented what I had envisioned from the beginning as the natural conclusion of these elements. The stethoscope became an active part of the composition, contributing shape and texture throughout the work. Its ends were enlarged and treated with grain and gradients to create depth, while cutout photography was positioned between layers to strengthen the dimensional effect. I also introduced UI-inspired topic tags that immediately communicated the subject of each post. Their interface-like appearance was intentional, as I hoped to eventually incorporate similar tags across articles and other MDLinx products. The accompanying email templates extended these elements and layering techniques into another format while maintaining a consistent visual system.",
+        imageSrc: "./assets/images/mdlinx-creative-refresh/updated-stethoscope-2.png",
+        imageAlt: "Final stethoscope forms with gradient and grain treatments",
+        phoneLayouts: ["story", "full-email"],
+        phoneCarouselImages: [
+          [
+            "./assets/images/mdlinx-creative-refresh/final-acquisition-2-1-9-16.jpg",
+            "./assets/images/mdlinx-creative-refresh/final-acquisition-1-1-9-16.jpg",
+            "./assets/images/mdlinx-creative-refresh/final-acquisition-6-1-9-16.jpg",
+            "./assets/images/mdlinx-creative-refresh/final-pfiq-meta-9-16-2.png",
+            "./assets/images/mdlinx-creative-refresh/final-pfiq-meta-9-16-1.png",
+            "./assets/images/mdlinx-creative-refresh/final-acquisition-4-2-9-16.jpg",
+          ],
+          [
+            "./assets/images/mdlinx-creative-refresh/trending-dedicated-send-buttons.jpg",
+            "./assets/images/mdlinx-creative-refresh/out-to-lunch-mobile.jpg",
+          ],
+        ],
+      },
     ],
   },
   "interface-studies": {
@@ -1862,6 +1943,16 @@ function revealProjectContentWhenReady() {
   });
 }
 
+function revealHomeContent() {
+  if (document.body.classList.contains("project-page") || document.body.classList.contains("playground-page")) return;
+  window.requestAnimationFrame(() => {
+    window.requestAnimationFrame(() => {
+      document.body.classList.remove("home-content-loading");
+      document.body.classList.add("home-content-ready");
+    });
+  });
+}
+
 
 function getStoryPhoneMarkup() {
   const phoneTime = new Intl.DateTimeFormat([], { hour: "numeric", minute: "2-digit" }).format(new Date());
@@ -1934,6 +2025,92 @@ function getFeedPhoneMarkup() {
   `;
 }
 
+function getEmailPhoneMarkup(imageSrc, carouselImages = []) {
+  const phoneTime = new Intl.DateTimeFormat([], { hour: "numeric", minute: "2-digit" }).format(new Date());
+  const images = carouselImages.length ? carouselImages : (imageSrc ? [imageSrc] : []);
+  const getEmailCopyMarkup = (groupCount = 2) => Array.from({ length: groupCount }, (_, index) => `
+    <div class="email-wireframe-copy-group">
+      <span></span><span></span><span class="${index === groupCount - 1 ? "is-medium" : "is-short"}"></span>
+    </div>
+  `).join("");
+  const heroMarkup = images.length > 1
+    ? `<div class="phone-carousel email-hero-carousel"><div class="phone-carousel-track">${images.map((src) => {
+        const isLandscape = src.includes("welcome-email");
+        return `
+          <div class="phone-carousel-slide email-carousel-slide${isLandscape ? " is-landscape" : ""}">
+            <img class="email-wireframe-hero" src="${src}" alt="MDLinx email hero design" loading="lazy" decoding="async">
+            <div class="email-wireframe-copy" aria-hidden="true">${getEmailCopyMarkup(isLandscape ? 4 : 2)}</div>
+          </div>
+        `;
+      }).join("")}</div></div>`
+    : (images.length
+      ? `<img class="email-wireframe-hero" src="${images[0]}" alt="MDLinx email hero design" loading="lazy" decoding="async">`
+      : `<div class="email-wireframe-hero is-placeholder" aria-hidden="true"></div>`);
+  const staticCopyMarkup = images.length > 1 ? "" : `<div class="email-wireframe-copy" aria-hidden="true">${getEmailCopyMarkup(2)}</div>`;
+  return `
+    <span class="project-evolution-island" aria-hidden="true"></span>
+    <span class="project-evolution-button project-evolution-volume-up" aria-hidden="true"></span>
+    <span class="project-evolution-button project-evolution-volume-down" aria-hidden="true"></span>
+    <span class="project-evolution-button project-evolution-power" aria-hidden="true"></span>
+    <div class="project-evolution-screen">
+      <div class="story-status" aria-hidden="true">
+        <span class="story-time">${phoneTime}</span>
+        <span class="story-status-icons">
+          <span class="story-signal"><i></i><i></i><i></i><i></i></span>
+          <span class="story-wifi"></span>
+          <span class="story-battery"><i></i></span>
+        </span>
+      </div>
+      <div class="email-wireframe" aria-label="Abstracted email preview">
+        <div class="email-wireframe-header" aria-hidden="true"></div>
+        ${heroMarkup}
+        ${staticCopyMarkup}
+      </div>
+      ${images.length > 1 ? `
+        <div class="phone-carousel-controls">
+          <button class="phone-carousel-button is-previous" type="button" aria-label="Show previous email hero"><span aria-hidden="true"></span></button>
+          <button class="phone-carousel-button is-next" type="button" aria-label="Show next email hero"><span aria-hidden="true"></span></button>
+        </div>
+      ` : ""}
+    </div>
+  `;
+}
+
+function getFullEmailPhoneMarkup(images = []) {
+  const phoneTime = new Intl.DateTimeFormat([], { hour: "numeric", minute: "2-digit" }).format(new Date());
+  return `
+    <span class="project-evolution-island" aria-hidden="true"></span>
+    <span class="project-evolution-button project-evolution-volume-up" aria-hidden="true"></span>
+    <span class="project-evolution-button project-evolution-volume-down" aria-hidden="true"></span>
+    <span class="project-evolution-button project-evolution-power" aria-hidden="true"></span>
+    <div class="project-evolution-screen">
+      <div class="story-status" aria-hidden="true">
+        <span class="story-time">${phoneTime}</span>
+        <span class="story-status-icons">
+          <span class="story-signal"><i></i><i></i><i></i><i></i></span>
+          <span class="story-wifi"></span>
+          <span class="story-battery"><i></i></span>
+        </span>
+      </div>
+      <div class="phone-carousel full-email-carousel">
+        <div class="phone-carousel-track">
+          ${images.map((src) => `
+            <div class="phone-carousel-slide full-email-slide">
+              <img src="${src}" alt="Complete MDLinx email design" loading="lazy" decoding="async">
+            </div>
+          `).join("")}
+        </div>
+      </div>
+      ${images.length > 1 ? `
+        <div class="phone-carousel-controls">
+          <button class="phone-carousel-button is-previous" type="button" aria-label="Show previous full email"><span aria-hidden="true"></span></button>
+          <button class="phone-carousel-button is-next" type="button" aria-label="Show next full email"><span aria-hidden="true"></span></button>
+        </div>
+      ` : ""}
+    </div>
+  `;
+}
+
 function hydrateModule(project) {
   const module = document.querySelector(".module-one");
   if (!module) return;
@@ -1980,14 +2157,35 @@ function hydrateModule(project) {
     }
   }
 
-  module.querySelector(".module-assets-image-placeholder")?.remove();
+  module.querySelector(".module-assets-stack")?.remove();
+  module.querySelectorAll(".module-assets-image-placeholder").forEach((element) => element.remove());
   if (project.moduleAssetPlaceholder) {
-    const imagePlaceholder = document.createElement("div");
-    imagePlaceholder.className = "module-assets-image-placeholder";
-    imagePlaceholder.setAttribute("role", "img");
-    imagePlaceholder.setAttribute("aria-label", "Original brand elements image placeholder");
-    imagePlaceholder.innerHTML = "<span>Image Placeholder</span>";
-    module.append(imagePlaceholder);
+    const assetStack = document.createElement("div");
+    assetStack.className = "module-assets-stack";
+    const assets = project.moduleAssetImages || (project.moduleAssetImage
+      ? [{ src: project.moduleAssetImage, alt: "Original brand elements supplied in the agency handoff" }]
+      : []);
+    if (assets.length) {
+      assets.forEach((asset) => {
+        const imageFrame = document.createElement("div");
+        imageFrame.className = "module-assets-image-placeholder has-image";
+        const image = document.createElement("img");
+        image.src = asset.src;
+        image.alt = asset.alt || "";
+        image.loading = "lazy";
+        image.decoding = "async";
+        imageFrame.append(image);
+        assetStack.append(imageFrame);
+      });
+    } else {
+      const imagePlaceholder = document.createElement("div");
+      imagePlaceholder.className = "module-assets-image-placeholder";
+      imagePlaceholder.setAttribute("role", "img");
+      imagePlaceholder.setAttribute("aria-label", "Original brand elements image placeholder");
+      imagePlaceholder.innerHTML = "<span>Image Placeholder</span>";
+      assetStack.append(imagePlaceholder);
+    }
+    module.append(assetStack);
   }
 
   document.querySelectorAll(".mdlinx-story-module").forEach((section) => section.remove());
@@ -2013,7 +2211,33 @@ function hydrateModule(project) {
     for (let index = 0; index < 2; index += 1) {
       const phone = document.createElement("div");
       phone.className = "project-evolution-phone module-wireframe-phone";
-      phone.innerHTML = getStoryPhoneMarkup();
+      const layout = item.phoneLayouts?.[index] || "story";
+      const carouselImages = item.phoneCarouselImages?.[index] || [];
+      if (layout === "email") phone.classList.add("is-email-phone");
+      if (layout === "full-email") phone.classList.add("is-full-email-phone");
+      phone.innerHTML = layout === "email"
+        ? getEmailPhoneMarkup(item.phoneImages?.[index], carouselImages)
+        : layout === "full-email"
+          ? getFullEmailPhoneMarkup(carouselImages)
+          : getStoryPhoneMarkup();
+      if (layout === "story" && carouselImages.length > 1) {
+        phone.classList.add("is-carousel-phone");
+        const carousel = document.createElement("div");
+        carousel.className = "phone-carousel";
+        carousel.innerHTML = `
+          <div class="phone-carousel-track">
+            ${carouselImages.map((src) => `<img class="phone-carousel-slide" src="${src}" alt="MDLinx paid social Story creative" loading="lazy" decoding="async">`).join("")}
+          </div>
+        `;
+        const controls = document.createElement("div");
+        controls.className = "phone-carousel-controls";
+        controls.innerHTML = `
+          <button class="phone-carousel-button is-previous" type="button" aria-label="Show previous Story creative"><span aria-hidden="true"></span></button>
+          <button class="phone-carousel-button is-next" type="button" aria-label="Show next Story creative"><span aria-hidden="true"></span></button>
+        `;
+        phone.querySelector(".project-evolution-screen")?.prepend(carousel);
+        phone.querySelector(".project-evolution-screen")?.append(controls);
+      }
       phoneRow.append(phone);
     }
 
@@ -2021,10 +2245,21 @@ function hydrateModule(project) {
     imagePlaceholder.className = "module-assets-image-placeholder";
     imagePlaceholder.setAttribute("role", "img");
     imagePlaceholder.setAttribute("aria-label", item.heading + " image placeholder");
-    imagePlaceholder.innerHTML = "<span>Image Placeholder</span>";
+    if (item.imageSrc) {
+      imagePlaceholder.classList.add("has-image");
+      const image = document.createElement("img");
+      image.src = item.imageSrc;
+      image.alt = item.imageAlt || "";
+      image.loading = "lazy";
+      image.decoding = "async";
+      imagePlaceholder.replaceChildren(image);
+    } else {
+      imagePlaceholder.innerHTML = "<span>Image Placeholder</span>";
+    }
 
     section.append(sectionHeading, copyWrap, phoneRow, imagePlaceholder);
     insertionPoint.insertAdjacentElement("afterend", section);
+    initializePhoneCarousels(section);
     insertionPoint = section;
   });
 
@@ -2130,7 +2365,17 @@ function hydrateEvolutionStages(project) {
     phone.className = "project-evolution-phone";
     if (stage.layout === "feed") phone.classList.add("is-feed-phone");
     phone.innerHTML = stage.layout === "feed" ? getFeedPhoneMarkup() : getStoryPhoneMarkup();
-    if (stage.imageSrc) {
+    if (stage.carouselImages?.length > 1) {
+      phone.classList.add("is-carousel-phone");
+      const carousel = document.createElement("div");
+      carousel.className = "phone-carousel";
+      carousel.innerHTML = `
+        <div class="phone-carousel-track">
+          ${stage.carouselImages.map((src) => `<img class="phone-carousel-slide" src="${src}" alt="" loading="lazy" decoding="async">`).join("")}
+        </div>
+      `;
+      phone.querySelector(".project-evolution-screen")?.prepend(carousel);
+    } else if (stage.imageSrc) {
       const image = document.createElement("img");
       image.className = "project-evolution-media";
       image.src = stage.imageSrc;
@@ -2141,9 +2386,125 @@ function hydrateEvolutionStages(project) {
     }
 
     item.append(heading, phone);
+    if (stage.carouselImages?.length > 1) {
+      const controls = document.createElement("div");
+      controls.className = "phone-carousel-controls";
+      controls.innerHTML = `
+        <button class="phone-carousel-button is-previous" type="button" aria-label="Show previous ${stage.date} creative"><span aria-hidden="true"></span></button>
+        <button class="phone-carousel-button is-next" type="button" aria-label="Show next ${stage.date} creative"><span aria-hidden="true"></span></button>
+      `;
+      phone.querySelector(".project-evolution-screen")?.append(controls);
+    }
     overview.append(item);
   });
+  const transitionMarker = document.createElement("div");
+  transitionMarker.className = "project-evolution-transition";
+  transitionMarker.setAttribute("aria-hidden", "true");
+  transitionMarker.innerHTML = "<i></i><i></i><i></i><i></i><i></i>";
+  overview.append(transitionMarker);
   frame.replaceChildren(overview);
+  initializeEvolutionTransition(overview);
+  initializePhoneCarousels(overview);
+}
+
+function initializeEvolutionTransition(scope) {
+  const marker = scope.querySelector(".project-evolution-transition");
+  const lines = [...(marker?.querySelectorAll("i") || [])];
+  if (!marker || !lines.length) return;
+
+  let animationFrame;
+  const initialScrollY = window.scrollY;
+  const update = () => {
+    animationFrame = undefined;
+    const isDesktop = window.matchMedia("(min-width: 701px)").matches;
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!isDesktop || reduceMotion) {
+      lines.forEach((line) => {
+        line.style.setProperty("--line-progress", "1");
+        line.style.setProperty("--arrow-opacity", "1");
+      });
+      return;
+    }
+
+    const travel = Math.max(window.innerHeight * 0.5, 1);
+    const progress = Math.min(1, Math.max(0, (window.scrollY - initialScrollY) / travel));
+    lines.forEach((line, index) => {
+      const lineProgress = Math.min(1, Math.max(0, (progress - index * 0.13) / 0.48));
+      line.style.setProperty("--line-progress", lineProgress.toFixed(3));
+      line.style.setProperty("--arrow-opacity", Math.min(1, lineProgress * 4).toFixed(3));
+    });
+  };
+  const requestUpdate = () => {
+    if (!animationFrame) animationFrame = window.requestAnimationFrame(update);
+  };
+
+  window.addEventListener("scroll", requestUpdate, { passive: true });
+  window.addEventListener("resize", requestUpdate);
+  update();
+}
+
+function initializePhoneCarousels(scope) {
+  scope.querySelectorAll(".project-evolution-item:has(.phone-carousel), .module-wireframe-phone:has(.phone-carousel)").forEach((item) => {
+    const track = item.querySelector(".phone-carousel-track");
+    const slides = [...item.querySelectorAll(".phone-carousel-slide")];
+    if (!track || slides.length < 2) return;
+
+    let index = 0;
+    let timer;
+    let autoAdvance = true;
+    const verticalOffset = track.closest(".email-hero-carousel") ? "0" : "-50%";
+    const isFullEmail = item.classList.contains("is-full-email-phone");
+    let emailScrollTimer;
+    let emailReturnTimer;
+    const startFullEmailScroll = (slideIndex) => {
+      if (!isFullEmail) return;
+      window.clearTimeout(emailScrollTimer);
+      window.clearTimeout(emailReturnTimer);
+      const emailImages = [...item.querySelectorAll(".full-email-slide img")];
+      emailImages.forEach((image) => {
+        image.style.transition = "none";
+        image.style.transform = "translate3d(0, 0, 0)";
+      });
+      const image = emailImages[slideIndex];
+      const viewport = image?.closest(".full-email-slide");
+      if (!image || !viewport) return;
+      emailScrollTimer = window.setTimeout(() => {
+        const distance = Math.max(0, image.getBoundingClientRect().height - viewport.clientHeight);
+        image.style.transition = "transform 7000ms linear";
+        image.style.transform = `translate3d(0, -${distance}px, 0)`;
+        emailReturnTimer = window.setTimeout(() => {
+          image.style.transition = "transform 3500ms linear";
+          image.style.transform = "translate3d(0, 0, 0)";
+        }, 7000);
+      }, 3000);
+    };
+    const showSlide = (nextIndex) => {
+      index = (nextIndex + slides.length) % slides.length;
+      track.style.transform = `translate3d(-${index * 100}%, ${isFullEmail ? "0" : verticalOffset}, 0)`;
+      startFullEmailScroll(index);
+    };
+    const start = () => {
+      window.clearInterval(timer);
+      if (!autoAdvance) return;
+      timer = window.setInterval(() => showSlide(index + 1), isFullEmail ? 14500 : 3000);
+    };
+    const move = (step) => {
+      autoAdvance = false;
+      window.clearInterval(timer);
+      showSlide(index + step);
+    };
+
+    item.querySelector(".is-previous")?.addEventListener("click", () => move(-1));
+    item.querySelector(".is-next")?.addEventListener("click", () => move(1));
+    item.addEventListener("mouseenter", () => window.clearInterval(timer));
+    item.addEventListener("mouseleave", start);
+    item.addEventListener("focusin", () => window.clearInterval(timer));
+    item.addEventListener("focusout", (event) => {
+      if (!item.contains(event.relatedTarget)) start();
+    });
+    showSlide(0);
+    start();
+  });
 }
 
 function hydrateProjectPage() {
@@ -3247,6 +3608,7 @@ scheduleInitialHomeScrollReset();
 syncVisualViewportWidth();
 fillMarquees();
 initializePalette();
+revealHomeContent();
 hydrateProjectPage();
 initializeSiteMenu();
 initializeHomeSmudgeModuleLink();

@@ -473,10 +473,15 @@ html.is-safari body.is-safari-restoring-home:not(.project-page):not(.playground-
   margin-top: 0;
 }
 
+@media (min-width: 901px) {
+  .home-feature-row {
+    row-gap: clamp(38px, calc(2.2vw + 18px), 54px);
+  }
+}
+
 .home-selected-list,
 .home-additional-list {
   position: relative;
-  grid-column: 1;
   width: 100%;
 }
 
@@ -489,16 +494,24 @@ html.is-safari body.is-safari-restoring-home:not(.project-page):not(.playground-
   bottom: 0;
   width: var(--stroke);
   background: var(--line);
+  display: none;
   pointer-events: none;
 }
 
+.home-additional-list::after {
+  display: none;
+}
+
 .home-selected-list {
+  grid-column: 1;
   grid-row: 1;
   transform: translateY(15px);
 }
 
 .home-additional-list {
-  grid-row: 2;
+  grid-column: 2;
+  grid-row: 1;
+  transform: translateY(15px);
 }
 
 .home-selected-work {
@@ -512,10 +525,9 @@ html.is-safari body.is-safari-restoring-home:not(.project-page):not(.playground-
 }
 
 .home-wheel-module {
-  grid-column: 2;
-  grid-row: 1;
+  grid-column: 1;
+  grid-row: 2;
   width: 100%;
-  transform: translateY(15px);
 }
 
 .home-playground-grid {
@@ -546,6 +558,10 @@ html.is-safari body.is-safari-restoring-home:not(.project-page):not(.playground-
   text-decoration: none;
 }
 
+.home-selected-heading-spacer {
+  visibility: hidden;
+}
+
 .home-selected-list-items {
   display: grid;
   gap: 0;
@@ -555,11 +571,11 @@ html.is-safari body.is-safari-restoring-home:not(.project-page):not(.playground-
 .home-selected-list-item {
   position: relative;
   display: grid;
-  grid-template-columns: clamp(18px, 1.7vw, 26px) minmax(0, 1fr) clamp(28px, 3.2vw, 40px);
+  grid-template-columns: clamp(22px, 2vw, 30px) minmax(0, 1fr) clamp(55px, 6.24vw, 82px);
   gap: clamp(8px, 0.85vw, 14px);
   align-items: center;
-  min-height: clamp(33px, 3.75vw, 50px);
-  padding: clamp(6px, 0.68vw, 10px) 13px clamp(6px, 0.68vw, 10px) 14px;
+  min-height: clamp(66px, 7.5vw, 100px);
+  padding: clamp(9px, 1vw, 15px) 13px clamp(9px, 1vw, 15px) 14px;
   border-bottom: var(--stroke) dotted var(--line);
   background: var(--drum-clickable-fill, #463027);
   color: var(--line);
@@ -630,7 +646,7 @@ html.is-safari body.is-safari-restoring-home:not(.project-page):not(.playground-
 .home-selected-preview {
   justify-self: end;
   grid-column: 3;
-  width: clamp(25px, 2.8vw, 36px);
+  width: clamp(52px, 5.76vw, 74px);
   margin: 0;
 }
 
@@ -822,21 +838,25 @@ html.is-safari body.is-safari-restoring-home:not(.project-page):not(.playground-
   overflow: hidden;
 }
 
-.home-selected-work .line-field[data-smudge-link] {
+.home-selected-work .line-field[data-smudge-link],
+.home-smudge-module .line-field[data-smudge-link] {
   cursor: pointer;
 }
 
-.home-selected-work .line-field[data-smudge-link]:focus-visible {
+.home-selected-work .line-field[data-smudge-link]:focus-visible,
+.home-smudge-module .line-field[data-smudge-link]:focus-visible {
   outline: var(--stroke) solid var(--line);
   outline-offset: 4px;
 }
 
-.home-selected-work .smudge-canvas {
+.home-selected-work .smudge-canvas,
+.home-smudge-module .smudge-canvas {
   left: 0;
   width: 100%;
 }
 
-.home-selected-work .portfolio-puck {
+.home-selected-work .portfolio-puck,
+.home-smudge-module .portfolio-puck {
   --leader-length: clamp(42px, 6vw, 84px);
   --leader-run: clamp(30px, 4.3vw, 60px);
   width: clamp(54px, 6vw, 92px);
@@ -847,34 +867,42 @@ html.is-safari body.is-safari-restoring-home:not(.project-page):not(.playground-
   cursor: grab;
 }
 
-.home-selected-work .portfolio-puck-one {
+.home-selected-work .portfolio-puck-one,
+.home-smudge-module .portfolio-puck-one {
   left: 30%;
   top: 42%;
 }
 
-.home-selected-work .portfolio-puck-two {
+.home-selected-work .portfolio-puck-two,
+.home-smudge-module .portfolio-puck-two {
   left: 67%;
   top: 64%;
 }
 
 .home-selected-work .portfolio-puck::before,
-.home-selected-work .puck-label {
+.home-selected-work .puck-label,
+.home-smudge-module .portfolio-puck::before,
+.home-smudge-module .puck-label {
   display: none;
 }
 
-.home-selected-work .portfolio-puck::after {
+.home-selected-work .portfolio-puck::after,
+.home-smudge-module .portfolio-puck::after {
   display: block;
   inset: -12%;
 }
 
 .home-selected-work .portfolio-puck:hover::after,
-.home-selected-work .portfolio-puck:focus-visible::after {
+.home-selected-work .portfolio-puck:focus-visible::after,
+.home-smudge-module .portfolio-puck:hover::after,
+.home-smudge-module .portfolio-puck:focus-visible::after {
   opacity: 1;
   scale: 1;
   animation: puck-orbit-ring 1800ms linear infinite;
 }
 
-.home-selected-work .puck-shell {
+.home-selected-work .puck-shell,
+.home-smudge-module .puck-shell {
   background: color-mix(in srgb, var(--drum-clickable-fill, #463027) 88%, var(--bg));
   border-color: var(--line);
 }
@@ -936,7 +964,8 @@ html.is-safari body.is-safari-restoring-home:not(.project-page):not(.playground-
 }
 
 @media (hover: none), (max-width: 700px) {
-  .home-selected-work .portfolio-puck.is-puck-ready::after {
+  .home-selected-work .portfolio-puck.is-puck-ready::after,
+  .home-smudge-module .portfolio-puck.is-puck-ready::after {
     animation:
       mobile-puck-orbit-on 360ms cubic-bezier(0.22, 1, 0.36, 1) calc(var(--puck-reveal-delay, 180ms) + 500ms) both,
       puck-orbit-ring 1800ms linear calc(var(--puck-reveal-delay, 180ms) + 860ms) infinite;
@@ -1153,13 +1182,13 @@ html.is-safari body.is-safari-restoring-home:not(.project-page):not(.playground-
     order: 1;
   }
 
-  .home-wheel-module {
+  .home-additional-list {
     order: 2;
-    margin-top: 10px;
   }
 
-  .home-additional-list {
+  .home-wheel-module {
     order: 3;
+    margin-top: 10px;
   }
 
   .home-selected-work {
@@ -1168,6 +1197,10 @@ html.is-safari body.is-safari-restoring-home:not(.project-page):not(.playground-
 
   .home-playground-grid {
     order: 5;
+  }
+
+  .home-selected-heading-spacer {
+    display: none;
   }
 
   .home-wheel-preview {
@@ -2603,7 +2636,7 @@ body.palette-enter .shape-field::after {
 }
 
 .home-selected-list-item .home-selected-preview {
-  width: clamp(28px, 3.15vw, 41px);
+  width: clamp(49px, 5.51vw, 72px);
 }
 
 .secondary-project-preview-media {
@@ -2915,6 +2948,15 @@ body.palette-enter .shape-field::after {
   min-height: clamp(210px, 22vw, 344px);
   aspect-ratio: 1.24;
   border: 0;
+  border-top: var(--stroke) solid var(--line);
+}
+
+.home-smudge-module .line-field {
+  flex: 1 1 auto;
+  height: auto;
+  min-height: clamp(210px, 22vw, 344px);
+  aspect-ratio: 1.24;
+  overflow: hidden;
   border-top: var(--stroke) solid var(--line);
 }
 
@@ -4702,7 +4744,31 @@ body.playground-page {
   }
 }
 
+.home-content-loading .home-intro,
+.home-content-loading .home-feature-row {
+  opacity: 0;
+  transform: translateY(18px);
+}
+
+.home-content-ready .home-intro,
+.home-content-ready .home-feature-row {
+  animation: project-content-rise 760ms cubic-bezier(0.18, 0.82, 0.24, 1) both;
+  animation-delay: var(--home-content-delay, 0ms);
+}
+
+.home-content-ready .home-intro {
+  --home-content-delay: 40ms;
+}
+
+.home-content-ready .home-feature-row {
+  --home-content-delay: 110ms;
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .home-content-loading .home-intro,
+  .home-content-loading .home-feature-row,
+  .home-content-ready .home-intro,
+  .home-content-ready .home-feature-row,
   .project-content-loading .project-hero h2,
   .project-content-loading .project-hero p,
   .project-content-loading .project-content-grid,
@@ -9403,7 +9469,7 @@ body[data-project="mdlinx-rebrand-marketing-material-development"] .module-phone
 }
 
 body[data-project="mdlinx-rebrand-marketing-material-development"] .module-wireframe-phone {
-  width: min(100%, 250px);
+  width: min(100%, clamp(250px, 18vw, 290px));
 }
 
 @media (max-width: 700px) {
@@ -9441,11 +9507,17 @@ body[data-project="mdlinx-rebrand-marketing-material-development"] .module-phone
   grid-row: 2 / span 2;
 }
 
-body[data-project="mdlinx-rebrand-marketing-material-development"] .module-assets-image-placeholder {
-  position: relative;
+body[data-project="mdlinx-rebrand-marketing-material-development"] .module-assets-stack {
   display: grid;
   grid-column: 1;
   grid-row: 3;
+  gap: clamp(10px, 1vw, 16px);
+  width: 100%;
+}
+
+body[data-project="mdlinx-rebrand-marketing-material-development"] .module-assets-image-placeholder {
+  position: relative;
+  display: grid;
   place-items: center;
   width: 100%;
   aspect-ratio: 16 / 9;
@@ -9468,12 +9540,13 @@ body[data-project="mdlinx-rebrand-marketing-material-development"] .module-asset
 @media (max-width: 700px) {
   body[data-project="mdlinx-rebrand-marketing-material-development"] .module-one-copy,
   body[data-project="mdlinx-rebrand-marketing-material-development"] .module-phone-row,
+  body[data-project="mdlinx-rebrand-marketing-material-development"] .module-assets-stack,
   body[data-project="mdlinx-rebrand-marketing-material-development"] .module-assets-image-placeholder {
     grid-column: 1;
     grid-row: auto;
   }
 
-  body[data-project="mdlinx-rebrand-marketing-material-development"] .module-assets-image-placeholder {
+  body[data-project="mdlinx-rebrand-marketing-material-development"] .module-assets-stack {
     margin-top: 4px;
   }
 }
@@ -9605,7 +9678,7 @@ body[data-project="mdlinx-rebrand-marketing-material-development"] .story-progre
 body[data-project="mdlinx-rebrand-marketing-material-development"] .story-account {
   position: absolute;
   z-index: 3;
-  top: 10.8%;
+  top: 10.2%;
   left: 4%;
   right: 4%;
   display: grid;
@@ -9775,6 +9848,58 @@ body[data-project="mdlinx-rebrand-marketing-material-development"] .project-evol
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
+body[data-project="mdlinx-rebrand-marketing-material-development"] .project-evolution-grid::before,
+body[data-project="mdlinx-rebrand-marketing-material-development"] .project-evolution-grid::after {
+  content: none;
+}
+
+body[data-project="mdlinx-rebrand-marketing-material-development"] .project-evolution-transition {
+  position: absolute;
+  z-index: 6;
+  top: 52%;
+  left: 50%;
+  display: grid;
+  gap: clamp(10px, 1.2vw, 16px);
+  width: 12%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+body[data-project="mdlinx-rebrand-marketing-material-development"] .project-evolution-transition i {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 9px;
+  background:
+    radial-gradient(circle at 4.5px 50%, var(--bg) 0 2.5px, var(--line) 3px 4px, transparent 4.5px) 0 50% / 9px 9px no-repeat,
+    linear-gradient(var(--line), var(--line)) 8px 50% / calc(100% - 8px) var(--stroke) no-repeat;
+}
+
+body[data-project="mdlinx-rebrand-marketing-material-development"] .project-evolution-transition i::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 0;
+  width: 7px;
+  height: 7px;
+  border-top: var(--stroke) solid var(--line);
+  border-right: var(--stroke) solid var(--line);
+  transform: translateY(-50%) rotate(45deg);
+  opacity: var(--arrow-opacity, 1);
+}
+
+@media (min-width: 701px) {
+  body[data-project="mdlinx-rebrand-marketing-material-development"] .project-evolution-transition i {
+    width: calc(9px + (100% - 9px) * var(--line-progress, 0));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body[data-project="mdlinx-rebrand-marketing-material-development"] .project-evolution-transition i {
+    width: 100%;
+  }
+}
+
 @media (min-width: 701px) {
   body[data-project="mdlinx-rebrand-marketing-material-development"] .project-evolution-grid::before {
     left: calc(25% + 5.5rem);
@@ -9787,6 +9912,24 @@ body[data-project="mdlinx-rebrand-marketing-material-development"] .project-evol
 }
 
 @media (max-width: 700px) {
+  body[data-project="mdlinx-rebrand-marketing-material-development"] .project-evolution-transition {
+    top: calc(0.82rem - 4px);
+    right: calc(25% + 3.5rem);
+    left: calc(25% + 3.5rem);
+    display: block;
+    width: auto;
+    transform: none;
+  }
+
+  body[data-project="mdlinx-rebrand-marketing-material-development"] .project-evolution-transition i:nth-child(n + 2) {
+    display: none;
+  }
+
+  body[data-project="mdlinx-rebrand-marketing-material-development"] .project-evolution-transition i::after {
+    width: 5px;
+    height: 5px;
+  }
+
   body[data-project="mdlinx-rebrand-marketing-material-development"] .project-evolution-grid::before {
     left: calc(25% + 3.5rem);
     right: calc(25% + 3.5rem);
@@ -9800,6 +9943,94 @@ body[data-project="mdlinx-rebrand-marketing-material-development"] .project-evol
 
 body[data-project="mdlinx-rebrand-marketing-material-development"] .is-feed-phone .project-evolution-media {
   top: 42%;
+}
+
+body[data-project="mdlinx-rebrand-marketing-material-development"] .phone-carousel {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  overflow: hidden;
+}
+
+body[data-project="mdlinx-rebrand-marketing-material-development"] .phone-carousel-track {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  display: flex;
+  width: 100%;
+  transform: translate3d(0, -50%, 0);
+  transition: transform 520ms cubic-bezier(0.65, 0, 0.35, 1);
+  will-change: transform;
+}
+
+body[data-project="mdlinx-rebrand-marketing-material-development"] .phone-carousel-slide {
+  display: block;
+  flex: 0 0 100%;
+  width: 100%;
+  height: auto;
+}
+
+body[data-project="mdlinx-rebrand-marketing-material-development"] .phone-carousel-controls {
+  position: absolute;
+  z-index: 5;
+  left: 50%;
+  bottom: 8.5%;
+  display: grid;
+  grid-template-columns: repeat(2, 1.6875rem);
+  align-items: center;
+  justify-content: center;
+  gap: clamp(0.4rem, 0.75vw, 0.65rem);
+  color: var(--line);
+  transform: translateX(-50%);
+}
+
+body[data-project="mdlinx-rebrand-marketing-material-development"] .is-feed-phone .phone-carousel-track {
+  top: 42%;
+}
+
+body[data-project="mdlinx-rebrand-marketing-material-development"] .is-feed-phone .phone-carousel-controls {
+  right: 5%;
+  bottom: 2.75%;
+  left: auto;
+  transform: none;
+}
+
+body[data-project="mdlinx-rebrand-marketing-material-development"] .phone-carousel-button {
+  display: grid;
+  place-items: center;
+  width: 1.6875rem;
+  aspect-ratio: 1;
+  padding: 0;
+  border: var(--stroke) solid currentColor;
+  border-radius: 50%;
+  color: var(--line);
+  background: var(--drum-clickable-fill, #463027);
+  cursor: pointer;
+}
+
+body[data-project="mdlinx-rebrand-marketing-material-development"] .phone-carousel-button span {
+  width: 0.39rem;
+  aspect-ratio: 1;
+  border-top: var(--stroke) solid currentColor;
+  border-right: var(--stroke) solid currentColor;
+  transform: rotate(45deg) translate(-8%, 8%);
+}
+
+body[data-project="mdlinx-rebrand-marketing-material-development"] .phone-carousel-button.is-previous span {
+  transform: rotate(-135deg) translate(-8%, 8%);
+}
+
+body[data-project="mdlinx-rebrand-marketing-material-development"] .phone-carousel-button:hover,
+body[data-project="mdlinx-rebrand-marketing-material-development"] .phone-carousel-button:focus-visible {
+  color: var(--bg);
+  background: var(--line);
+  outline: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body[data-project="mdlinx-rebrand-marketing-material-development"] .phone-carousel-track {
+    transition: none;
+  }
 }
 
 body[data-project="mdlinx-rebrand-marketing-material-development"] .feed-account {
@@ -9913,4 +10144,148 @@ body[data-project="mdlinx-rebrand-marketing-material-development"] .feed-caption
 
 body[data-project="mdlinx-rebrand-marketing-material-development"] .feed-caption-line.is-short {
   width: 46%;
+}
+
+body[data-project="mdlinx-rebrand-marketing-material-development"] .email-wireframe {
+  position: absolute;
+  z-index: 1;
+  top: 9.5%;
+  right: 5%;
+  bottom: 3%;
+  left: 5%;
+  overflow: hidden;
+  border: var(--stroke) solid var(--line);
+  background: var(--bg);
+}
+
+body[data-project="mdlinx-rebrand-marketing-material-development"] .email-wireframe-header {
+  width: 100%;
+  height: 12%;
+  border-bottom: var(--stroke) solid var(--line);
+  background: var(--drum-clickable-fill, #463027);
+}
+
+body[data-project="mdlinx-rebrand-marketing-material-development"] .email-wireframe-hero {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-bottom: var(--stroke) solid var(--line);
+}
+
+body[data-project="mdlinx-rebrand-marketing-material-development"] .email-wireframe .email-hero-carousel {
+  position: relative;
+  inset: auto;
+  width: 100%;
+  height: 88%;
+  overflow: hidden;
+}
+
+body[data-project="mdlinx-rebrand-marketing-material-development"] .email-wireframe .phone-carousel-track {
+  position: relative;
+  top: auto;
+  left: auto;
+  width: 100%;
+  height: 100%;
+  align-items: stretch;
+  transform: translate3d(0, 0, 0);
+}
+
+body[data-project="mdlinx-rebrand-marketing-material-development"] .email-carousel-slide {
+  flex: 0 0 100%;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+body[data-project="mdlinx-rebrand-marketing-material-development"] .email-carousel-slide .email-wireframe-hero {
+  flex: 0 0 100%;
+}
+
+body[data-project="mdlinx-rebrand-marketing-material-development"] .is-email-phone .phone-carousel-controls {
+  bottom: 4.5%;
+}
+
+body[data-project="mdlinx-rebrand-marketing-material-development"] .full-email-carousel {
+  position: absolute;
+  z-index: 1;
+  top: 9.5%;
+  right: 5%;
+  bottom: 3%;
+  left: 5%;
+  overflow: hidden;
+  border: var(--stroke) solid var(--line);
+  background: #fff;
+}
+
+body[data-project="mdlinx-rebrand-marketing-material-development"] .full-email-carousel .phone-carousel-track {
+  position: relative;
+  top: auto;
+  left: auto;
+  width: 100%;
+  height: 100%;
+  align-items: stretch;
+  transform: translate3d(0, 0, 0);
+}
+
+body[data-project="mdlinx-rebrand-marketing-material-development"] .full-email-slide {
+  position: relative;
+  flex: 0 0 100%;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #fff;
+}
+
+body[data-project="mdlinx-rebrand-marketing-material-development"] .full-email-slide img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  height: auto;
+  will-change: transform;
+}
+
+body[data-project="mdlinx-rebrand-marketing-material-development"] .is-full-email-phone .phone-carousel-controls {
+  bottom: 4.5%;
+}
+
+body[data-project="mdlinx-rebrand-marketing-material-development"] .email-wireframe-hero.is-placeholder {
+  aspect-ratio: 700 / 408;
+}
+
+body[data-project="mdlinx-rebrand-marketing-material-development"] .email-wireframe-copy {
+  display: grid;
+  gap: clamp(10px, 1.2vw, 16px);
+  padding: 9%;
+}
+
+body[data-project="mdlinx-rebrand-marketing-material-development"] .email-wireframe-copy-group {
+  display: grid;
+  gap: clamp(4px, 0.5vw, 7px);
+}
+
+body[data-project="mdlinx-rebrand-marketing-material-development"] .email-wireframe-copy span {
+  display: block;
+  width: 100%;
+  height: max(var(--stroke), 1px);
+  background: var(--line);
+}
+
+body[data-project="mdlinx-rebrand-marketing-material-development"] .email-wireframe-copy .is-short {
+  width: 48%;
+}
+
+body[data-project="mdlinx-rebrand-marketing-material-development"] .email-wireframe-copy .is-medium {
+  width: 72%;
+}
+body[data-project="mdlinx-rebrand-marketing-material-development"] .module-assets-image-placeholder.has-image {
+  aspect-ratio: auto;
+  background: none;
+}
+
+body[data-project="mdlinx-rebrand-marketing-material-development"] .module-assets-image-placeholder.has-image img {
+  display: block;
+  width: 100%;
+  height: auto;
 }
